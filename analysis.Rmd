@@ -98,16 +98,41 @@ I will use the {gh} package to inspect the features of each repository:
  - dependencies
 
 The first thing I'm going to do is to separate the github pages into usernames
-and repositories:
+and repositories. After that, I can use the GitHub API to get the contents of
+the repositories: <https://developer.github.com/v3/repos/contents/#get-contents>
 
-```{r}
-stable <- stable %>%
-  tidyr::separate(URL, 
-    into = c(NA, NA, "user", "repo"), 
-    sep = "/<?[A-Za-z]"
+One of the tripping points here is that not all of the repositories will have
+`_episodes_rmd/` directories, so I will need to walk over these with `purrr::possibly()`, a nice little failsafe function.
+
+
+```{r get_rmd_episodes}
+safegh <- purrr::possibly(gh::gh, otherwise = list(NA))
+
+rmd_episodes <- function(owner, repo) {
+  safegh <- purrr::possibly(gh::gh, otherwise = list(NA))
+  OR <- glue::glue("{owner}--{repo}")
+  safegh("/repos/:owner/:repo/contents/_episodes_rmd", 
+    owner = owner, 
+    repo = repo, 
+    .destfile = here::here(fs::path("data", "rmd_JSON", OR, ext = "json"))
   )
+}
+
+has_rmd <- stable %>%
+  tidyr::separate(URL, 
+    into = c(NA, NA, NA, "user", "repo"), 
+    sep = "/"
+  ) %>%
+  mutate(user = purrr::walk2(.x = user, .y = repo, .f = rmd_episodes)) %>%
+  mutate(JSON = purrr::map2(.x = user, .y = repo,
+    .f = ~jsonlite::read_json(
+      here::here("data", "rmd_JSON", glue::glue("{.x}--{.y}.json"))
+    )
+  )) %>%
+  filter(lengths(JSON) > 2)
 ```
 
+After parsing, we find that we have RMarkdown files for a grand total of `r nrow(has_rmd)` repositories. 
 
 # Session Information
 
