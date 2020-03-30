@@ -21,9 +21,11 @@ library("fs")       # Filesystem navigation
 library("jsonlite") # parsing JSON files
 library("purrr")    # handling lists (JSON files)
 library("dplyr")    # handling data frames and magic
+library("tidyr")    # separating values
 library("ggplot2")  # visualization
 library("forcats")  # ordering factors
 library("magrittr") # for the %T>% pipe I love so well
+library("gh")       # accessing GitHub's API
 library("here")     # so I can always remember where I started
 ```
 
@@ -94,6 +96,18 @@ I will use the {gh} package to inspect the features of each repository:
  - tags
  - directory structure
  - dependencies
+
+The first thing I'm going to do is to separate the github pages into usernames
+and repositories:
+
+```{r}
+stable <- stable %>%
+  tidyr::separate(URL, 
+    into = c(NA, NA, "user", "repo"), 
+    sep = "/<?[A-Za-z]"
+  )
+```
+
 
 # Session Information
 
