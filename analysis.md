@@ -54,13 +54,14 @@ library("magrittr") # for the %T>% pipe I love so well
 
 ``` r
 library("gh")       # accessing GitHub's API
+library("polite")   # being respectful when downloading files
 library("here")     # so I can always remember where I started
 ```
 
     ## here() starts at /home/zhian/Documents/Carpentries/Git/zkamvar--postmaul
 
 ``` r
-raw_data<- here::here("data", "raw")
+raw_data <- here::here("data", "raw")
 raw_lessons <- fs::path(raw_data, "carpentries_lessons.json")
 if (fs::file_exists(raw_lessons)) {
   
@@ -181,7 +182,10 @@ with `purrr::possibly()`, a nice little failsafe function.
 safegh <- purrr::possibly(gh::gh, otherwise = list(NA))
 
 rmd_episodes <- function(owner, repo) {
-  safegh <- purrr::possibly(gh::gh, otherwise = list(NA))
+  safegh <- purrr::slowly(
+    f    = purrr::possibly(gh::gh, otherwise = list(NA)),
+    rate = rate_delay(pause = 2)
+  )
   OR <- glue::glue("{owner}--{repo}")
   safegh("/repos/:owner/:repo/contents/_episodes_rmd", 
     owner = owner, 
@@ -191,7 +195,7 @@ rmd_episodes <- function(owner, repo) {
 }
 
 has_rmd <- stable %>%
-  tidyr::separate(URL, into = c(NA, NA, NA, "user", NA), sep = "/") %>%
+  tidyr::separate(URL, into = c(NA, NA, NA, "user", NA), sep = "/", remove = FALSE) %>%
   mutate(user = purrr::walk2(.x = user, .y = repository, .f = rmd_episodes)) %>%
   mutate(JSON = purrr::map2(.x = user, .y = repository,
     .f = ~jsonlite::read_json(
@@ -206,20 +210,35 @@ After parsing, we find that we have RMarkdown files for a grand total of
 
 ``` r
 all_rmd_files <- has_rmd %>%
-  select(user, repository, JSON) %T>%
+  select(user, repository, URL, JSON) %T>%
   print() %>%
   unnest(JSON) %>%
-  unnest_wider(JSON)
+  unnest_wider(JSON) %>%
+  filter(!grepl("^\\.git", name))
 ```
 
-    ## # A tibble: 3 x 3
-    ##   user        repository            JSON       
-    ##   <chr>       <chr>                 <list>     
-    ## 1 swcarpentry r-novice-inflammation <list [35]>
-    ## 2 swcarpentry r-novice-gapminder    <list [18]>
-    ## 3 swcarpentry r-novice-gapminder-es <list [19]>
+    ## # A tibble: 3 x 4
+    ##   user       repository         URL                                    JSON     
+    ##   <chr>      <chr>              <chr>                                  <list>   
+    ## 1 swcarpent… r-novice-inflamma… https://github.com/swcarpentry/r-novi… <list [3…
+    ## 2 swcarpent… r-novice-gapminder https://github.com/swcarpentry/r-novi… <list [1…
+    ## 3 swcarpent… r-novice-gapminde… https://github.com/swcarpentry/r-novi… <list [1…
 
 ``` r
+download_r_file <- purrr::slowly(function(user, repo, name, url) {
+  dir <- fs::dir_create(here::here("data", "r-files", user, repo))
+  if (fs::file_exists(fs::path(dir, name))) {
+    # no need
+    0
+  } else {
+    download.file(
+      url = url,
+      destfile = fs::path(dir, name)
+    )
+  }
+}, rate = purrr::rate_delay(pause = 2))
+
+
 all_rmd_files %>%
   select(name, download_url) %>%
   knitr::kable()
@@ -227,7 +246,6 @@ all_rmd_files %>%
 
 | name                         | download\_url                                                                                                                                                                                                                                                             |
 |:-----------------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| .gitignore                   | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/.gitignore" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/.gitignore</a>                                         |
 | 01-starting-with-data.Rmd    | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/01-starting-with-data.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/01-starting-with-data.Rmd</a>           |
 | 02-func-R.Rmd                | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/02-func-R.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/02-func-R.Rmd</a>                                   |
 | 03-loops-R.Rmd               | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/03-loops-R.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/03-loops-R.Rmd</a>                                 |
@@ -262,7 +280,6 @@ all_rmd_files %>%
 | readings-short.R             | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/readings-short.R" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/readings-short.R</a>                             |
 | readings-usage.R             | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/readings-usage.R" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/readings-usage.R</a>                             |
 | session-info.R               | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/session-info.R" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/session-info.R</a>                                 |
-| .gitkeep                     | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/master/_episodes_rmd/.gitkeep" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/master/_episodes_rmd/.gitkeep</a>                                                   |
 | 01-rstudio-intro.Rmd         | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/master/_episodes_rmd/01-rstudio-intro.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/master/_episodes_rmd/01-rstudio-intro.Rmd</a>                           |
 | 02-project-intro.Rmd         | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/master/_episodes_rmd/02-project-intro.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/master/_episodes_rmd/02-project-intro.Rmd</a>                           |
 | 03-seeking-help.Rmd          | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/master/_episodes_rmd/03-seeking-help.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/master/_episodes_rmd/03-seeking-help.Rmd</a>                             |
@@ -299,6 +316,27 @@ all_rmd_files %>%
 | data                         | NA                                                                                                                                                                                                                                                                        |
 | index.md                     | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder-es/gh-pages/_episodes_rmd/index.md" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder-es/gh-pages/_episodes_rmd/index.md</a>                                         |
 | reference.md                 | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder-es/gh-pages/_episodes_rmd/reference.md" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder-es/gh-pages/_episodes_rmd/reference.md</a>                                 |
+
+``` r
+all_rmd_files %>%
+  mutate(result = pmap_chr(list(user, repository, name, download_url), download_r_file))
+```
+
+    ## # A tibble: 70 x 14
+    ##    user  repository URL   name  path  sha    size url   html_url git_url
+    ##    <chr> <chr>      <chr> <chr> <chr> <chr> <int> <chr> <chr>    <chr>  
+    ##  1 swca… r-novice-… http… 01-s… _epi… 47b1… 24895 http… https:/… https:…
+    ##  2 swca… r-novice-… http… 02-f… _epi… 9e54… 18464 http… https:/… https:…
+    ##  3 swca… r-novice-… http… 03-l… _epi… 7c3d… 12132 http… https:/… https:…
+    ##  4 swca… r-novice-… http… 04-c… _epi… 6a63… 15431 http… https:/… https:…
+    ##  5 swca… r-novice-… http… 05-c… _epi… a481… 15090 http… https:/… https:…
+    ##  6 swca… r-novice-… http… 06-b… _epi… 03dc…  9227 http… https:/… https:…
+    ##  7 swca… r-novice-… http… 07-k… _epi… 5bd0…  3746 http… https:/… https:…
+    ##  8 swca… r-novice-… http… 08-m… _epi… 983f…  6978 http… https:/… https:…
+    ##  9 swca… r-novice-… http… 09-s… _epi… db80…  3594 http… https:/… https:…
+    ## 10 swca… r-novice-… http… 10-s… _epi… 34e3…  6219 http… https:/… https:…
+    ## # … with 60 more rows, and 4 more variables: download_url <chr>, type <chr>,
+    ## #   `_links` <list>, result <chr>
 
 Session Information
 ===================
@@ -347,15 +385,20 @@ sessioninfo::session_info()
     ##  labeling      0.3     2014-08-23 [1] CRAN (R 3.6.3)
     ##  lifecycle     0.2.0   2020-03-06 [1] CRAN (R 3.6.3)
     ##  magrittr    * 1.5     2014-11-22 [1] CRAN (R 3.6.3)
+    ##  memoise       1.1.0   2017-04-21 [1] CRAN (R 3.6.3)
     ##  munsell       0.5.0   2018-06-12 [1] CRAN (R 3.6.3)
     ##  pillar        1.4.3   2019-12-20 [1] CRAN (R 3.6.3)
     ##  pkgconfig     2.0.3   2019-09-22 [1] CRAN (R 3.6.3)
+    ##  polite      * 0.1.1   2019-11-30 [1] CRAN (R 3.6.3)
     ##  purrr       * 0.3.3   2019-10-18 [1] CRAN (R 3.6.3)
     ##  R6            2.4.1   2019-11-12 [1] CRAN (R 3.6.3)
+    ##  ratelimitr    0.4.1   2018-10-07 [1] CRAN (R 3.6.3)
     ##  Rcpp          1.0.4   2020-03-17 [1] CRAN (R 3.6.3)
     ##  rlang         0.4.5   2020-03-01 [1] CRAN (R 3.6.3)
     ##  rmarkdown     2.1     2020-01-20 [1] CRAN (R 3.6.3)
+    ##  robotstxt     0.6.2   2018-07-18 [1] CRAN (R 3.6.3)
     ##  rprojroot     1.3-2   2018-01-03 [1] CRAN (R 3.6.3)
+    ##  rvest         0.3.5   2019-11-08 [1] CRAN (R 3.6.3)
     ##  scales        1.1.0   2019-11-18 [1] CRAN (R 3.6.3)
     ##  sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 3.6.3)
     ##  stringi       1.4.6   2020-02-17 [1] CRAN (R 3.6.3)
@@ -363,10 +406,12 @@ sessioninfo::session_info()
     ##  tibble        3.0.0   2020-03-30 [1] CRAN (R 3.6.3)
     ##  tidyr       * 1.0.2   2020-01-24 [1] CRAN (R 3.6.3)
     ##  tidyselect    1.0.0   2020-01-27 [1] CRAN (R 3.6.3)
+    ##  usethis       1.5.1   2019-07-04 [1] CRAN (R 3.6.3)
     ##  utf8          1.1.4   2018-05-24 [1] CRAN (R 3.6.3)
     ##  vctrs         0.2.4   2020-03-10 [1] CRAN (R 3.6.3)
     ##  withr         2.1.2   2018-03-15 [1] CRAN (R 3.6.3)
     ##  xfun          0.12    2020-01-13 [1] CRAN (R 3.6.3)
+    ##  xml2          1.2.5   2020-03-11 [1] CRAN (R 3.6.3)
     ##  yaml          2.2.1   2020-02-01 [1] CRAN (R 3.6.3)
     ## 
     ## [1] /home/zhian/R/library

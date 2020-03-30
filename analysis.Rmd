@@ -26,12 +26,13 @@ library("ggplot2")  # visualization
 library("forcats")  # ordering factors
 library("magrittr") # for the %T>% pipe I love so well
 library("gh")       # accessing GitHub's API
+library("polite")   # being respectful when downloading files
 library("here")     # so I can always remember where I started
 ```
 
 
 ```{r data}
-raw_data<- here::here("data", "raw")
+raw_data <- here::here("data", "raw")
 raw_lessons <- fs::path(raw_data, "carpentries_lessons.json")
 if (fs::file_exists(raw_lessons)) {
   
@@ -112,7 +113,10 @@ One of the tripping points here is that not all of the repositories will have
 safegh <- purrr::possibly(gh::gh, otherwise = list(NA))
 
 rmd_episodes <- function(owner, repo) {
-  safegh <- purrr::possibly(gh::gh, otherwise = list(NA))
+  safegh <- purrr::slowly(
+    f    = purrr::possibly(gh::gh, otherwise = list(NA)),
+    rate = rate_delay(pause = 2)
+  )
   OR <- glue::glue("{owner}--{repo}")
   safegh("/repos/:owner/:repo/contents/_episodes_rmd", 
     owner = owner, 
@@ -122,7 +126,7 @@ rmd_episodes <- function(owner, repo) {
 }
 
 has_rmd <- stable %>%
-  tidyr::separate(URL, into = c(NA, NA, NA, "user", NA), sep = "/") %>%
+  tidyr::separate(URL, into = c(NA, NA, NA, "user", NA), sep = "/", remove = FALSE) %>%
   mutate(user = purrr::walk2(.x = user, .y = repository, .f = rmd_episodes)) %>%
   mutate(JSON = purrr::map2(.x = user, .y = repository,
     .f = ~jsonlite::read_json(
@@ -136,14 +140,32 @@ After parsing, we find that we have RMarkdown files for a grand total of `r nrow
 
 ```{r rmd_episodes_repos}
 all_rmd_files <- has_rmd %>%
-  select(user, repository, JSON) %T>%
+  select(user, repository, URL, JSON) %T>%
   print() %>%
   unnest(JSON) %>%
-  unnest_wider(JSON)
+  unnest_wider(JSON) %>%
+  filter(!grepl("^\\.git", name))
+
+download_r_file <- purrr::slowly(function(user, repo, name, url) {
+  dir <- fs::dir_create(here::here("data", "r-files", user, repo))
+  if (fs::file_exists(fs::path(dir, name))) {
+    # no need
+    0
+  } else {
+    download.file(
+      url = url,
+      destfile = fs::path(dir, name)
+    )
+  }
+}, rate = purrr::rate_delay(pause = 2))
+
 
 all_rmd_files %>%
   select(name, download_url) %>%
   knitr::kable()
+
+all_rmd_files %>%
+  mutate(result = pmap_chr(list(user, repository, name, download_url), download_r_file))
 ```
 
 
