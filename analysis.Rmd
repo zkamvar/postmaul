@@ -97,12 +97,15 @@ I will use the {gh} package to inspect the features of each repository:
  - directory structure
  - dependencies
 
-The first thing I'm going to do is to separate the github pages into usernames
-and repositories. After that, I can use the GitHub API to get the contents of
-the repositories: <https://developer.github.com/v3/repos/contents/#get-contents>
+I can use the GitHub API to get the contents of the repositories:
+<https://developer.github.com/v3/repos/contents/#get-contents>. The {gh} package
+allows me to write the responses to disk so that I don't have to query every 
+time I want to re-run the analysis. If I wanted to do this with fresh data, all
+I would need to do is to clear the data folder.
 
 One of the tripping points here is that not all of the repositories will have
-`_episodes_rmd/` directories, so I will need to walk over these with `purrr::possibly()`, a nice little failsafe function.
+`_episodes_rmd/` directories, so I will need to walk over these with
+`purrr::possibly()`, a nice little failsafe function.
 
 
 ```{r get_rmd_episodes}
@@ -119,12 +122,9 @@ rmd_episodes <- function(owner, repo) {
 }
 
 has_rmd <- stable %>%
-  tidyr::separate(URL, 
-    into = c(NA, NA, NA, "user", "repo"), 
-    sep = "/"
-  ) %>%
-  mutate(user = purrr::walk2(.x = user, .y = repo, .f = rmd_episodes)) %>%
-  mutate(JSON = purrr::map2(.x = user, .y = repo,
+  tidyr::separate(URL, into = c(NA, NA, NA, "user", NA), sep = "/") %>%
+  mutate(user = purrr::walk2(.x = user, .y = repository, .f = rmd_episodes)) %>%
+  mutate(JSON = purrr::map2(.x = user, .y = repository,
     .f = ~jsonlite::read_json(
       here::here("data", "rmd_JSON", glue::glue("{.x}--{.y}.json"))
     )
@@ -132,7 +132,20 @@ has_rmd <- stable %>%
   filter(lengths(JSON) > 2)
 ```
 
-After parsing, we find that we have RMarkdown files for a grand total of `r nrow(has_rmd)` repositories. 
+After parsing, we find that we have RMarkdown files for a grand total of `r nrow(has_rmd)`:
+
+```{r rmd_episodes_repos}
+all_rmd_files <- has_rmd %>%
+  select(user, repository, JSON) %T>%
+  print() %>%
+  unnest(JSON) %>%
+  unnest_wider(JSON)
+
+all_rmd_files %>%
+  select(name, download_url) %>%
+  knitr::kable()
+```
+
 
 # Session Information
 

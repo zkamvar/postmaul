@@ -35,6 +35,7 @@ library("dplyr")    # handling data frames and magic
     ##     intersect, setdiff, setequal, union
 
 ``` r
+library("tidyr")    # separating values
 library("ggplot2")  # visualization
 library("forcats")  # ordering factors
 library("magrittr") # for the %T>% pipe I love so well
@@ -43,11 +44,16 @@ library("magrittr") # for the %T>% pipe I love so well
     ## 
     ## Attaching package: 'magrittr'
 
+    ## The following object is masked from 'package:tidyr':
+    ## 
+    ##     extract
+
     ## The following object is masked from 'package:purrr':
     ## 
     ##     set_names
 
 ``` r
+library("gh")       # accessing GitHub's API
 library("here")     # so I can always remember where I started
 ```
 
@@ -160,6 +166,140 @@ I will use the {gh} package to inspect the features of each repository:
 -   directory structure
 -   dependencies
 
+I can use the GitHub API to get the contents of the repositories:
+<a href="https://developer.github.com/v3/repos/contents/#get-contents" class="uri">https://developer.github.com/v3/repos/contents/#get-contents</a>.
+The {gh} package allows me to write the responses to disk so that I
+don’t have to query every time I want to re-run the analysis. If I
+wanted to do this with fresh data, all I would need to do is to clear
+the data folder.
+
+One of the tripping points here is that not all of the repositories will
+have `_episodes_rmd/` directories, so I will need to walk over these
+with `purrr::possibly()`, a nice little failsafe function.
+
+``` r
+safegh <- purrr::possibly(gh::gh, otherwise = list(NA))
+
+rmd_episodes <- function(owner, repo) {
+  safegh <- purrr::possibly(gh::gh, otherwise = list(NA))
+  OR <- glue::glue("{owner}--{repo}")
+  safegh("/repos/:owner/:repo/contents/_episodes_rmd", 
+    owner = owner, 
+    repo = repo, 
+    .destfile = here::here(fs::path("data", "rmd_JSON", OR, ext = "json"))
+  )
+}
+
+has_rmd <- stable %>%
+  tidyr::separate(URL, into = c(NA, NA, NA, "user", NA), sep = "/") %>%
+  mutate(user = purrr::walk2(.x = user, .y = repository, .f = rmd_episodes)) %>%
+  mutate(JSON = purrr::map2(.x = user, .y = repository,
+    .f = ~jsonlite::read_json(
+      here::here("data", "rmd_JSON", glue::glue("{.x}--{.y}.json"))
+    )
+  )) %>%
+  filter(lengths(JSON) > 2)
+```
+
+After parsing, we find that we have RMarkdown files for a grand total of
+3:
+
+``` r
+all_rmd_files <- has_rmd %>%
+  select(user, repository, JSON) %T>%
+  print() %>%
+  unnest(JSON) %>%
+  unnest_wider(JSON)
+```
+
+    ## # A tibble: 3 x 3
+    ##   user        repository            JSON       
+    ##   <chr>       <chr>                 <list>     
+    ## 1 swcarpentry r-novice-inflammation <list [35]>
+    ## 2 swcarpentry r-novice-gapminder    <list [18]>
+    ## 3 swcarpentry r-novice-gapminder-es <list [19]>
+
+``` r
+all_rmd_files %>%
+  select(name, download_url) %>%
+  knitr::kable()
+```
+
+| name                         | download\_url                                                                                                                                                                                                                                                             |
+|:-----------------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| .gitignore                   | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/.gitignore" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/.gitignore</a>                                         |
+| 01-starting-with-data.Rmd    | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/01-starting-with-data.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/01-starting-with-data.Rmd</a>           |
+| 02-func-R.Rmd                | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/02-func-R.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/02-func-R.Rmd</a>                                   |
+| 03-loops-R.Rmd               | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/03-loops-R.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/03-loops-R.Rmd</a>                                 |
+| 04-cond.Rmd                  | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/04-cond.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/04-cond.Rmd</a>                                       |
+| 05-cmdline.Rmd               | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/05-cmdline.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/05-cmdline.Rmd</a>                                 |
+| 06-best-practices-R.Rmd      | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/06-best-practices-R.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/06-best-practices-R.Rmd</a>               |
+| 07-knitr-R.Rmd               | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/07-knitr-R.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/07-knitr-R.Rmd</a>                                 |
+| 08-making-packages-R.Rmd     | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/08-making-packages-R.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/08-making-packages-R.Rmd</a>             |
+| 09-supp-intro-rstudio.Rmd    | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/09-supp-intro-rstudio.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/09-supp-intro-rstudio.Rmd</a>           |
+| 10-supp-addressing-data.Rmd  | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/10-supp-addressing-data.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/10-supp-addressing-data.Rmd</a>       |
+| 11-supp-read-write-csv.Rmd   | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/11-supp-read-write-csv.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/11-supp-read-write-csv.Rmd</a>         |
+| 12-supp-factors.Rmd          | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/12-supp-factors.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/12-supp-factors.Rmd</a>                       |
+| 13-supp-data-structures.Rmd  | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/13-supp-data-structures.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/13-supp-data-structures.Rmd</a>       |
+| 14-supp-call-stack.Rmd       | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/14-supp-call-stack.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/14-supp-call-stack.Rmd</a>                 |
+| 15-supp-loops-in-depth.Rmd   | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/15-supp-loops-in-depth.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/15-supp-loops-in-depth.Rmd</a>         |
+| arith.R                      | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/arith.R" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/arith.R</a>                                               |
+| check.R                      | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/check.R" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/check.R</a>                                               |
+| count-stdin.R                | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/count-stdin.R" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/count-stdin.R</a>                                   |
+| data                         | NA                                                                                                                                                                                                                                                                        |
+| find-pattern.R               | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/find-pattern.R" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/find-pattern.R</a>                                 |
+| inflammation.R               | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/inflammation.R" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/inflammation.R</a>                                 |
+| inflammation\_fxns.R         | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/inflammation_fxns.R" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/inflammation_fxns.R</a>                       |
+| line-count.R                 | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/line-count.R" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/line-count.R</a>                                     |
+| print-args-trailing.R        | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/print-args-trailing.R" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/print-args-trailing.R</a>                   |
+| print-args.R                 | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/print-args.R" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/print-args.R</a>                                     |
+| readings-01.R                | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/readings-01.R" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/readings-01.R</a>                                   |
+| readings-02.R                | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/readings-02.R" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/readings-02.R</a>                                   |
+| readings-03.R                | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/readings-03.R" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/readings-03.R</a>                                   |
+| readings-04.R                | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/readings-04.R" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/readings-04.R</a>                                   |
+| readings-05.R                | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/readings-05.R" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/readings-05.R</a>                                   |
+| readings-06.R                | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/readings-06.R" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/readings-06.R</a>                                   |
+| readings-short.R             | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/readings-short.R" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/readings-short.R</a>                             |
+| readings-usage.R             | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/readings-usage.R" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/readings-usage.R</a>                             |
+| session-info.R               | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/session-info.R" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-inflammation/master/_episodes_rmd/session-info.R</a>                                 |
+| .gitkeep                     | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/master/_episodes_rmd/.gitkeep" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/master/_episodes_rmd/.gitkeep</a>                                                   |
+| 01-rstudio-intro.Rmd         | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/master/_episodes_rmd/01-rstudio-intro.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/master/_episodes_rmd/01-rstudio-intro.Rmd</a>                           |
+| 02-project-intro.Rmd         | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/master/_episodes_rmd/02-project-intro.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/master/_episodes_rmd/02-project-intro.Rmd</a>                           |
+| 03-seeking-help.Rmd          | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/master/_episodes_rmd/03-seeking-help.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/master/_episodes_rmd/03-seeking-help.Rmd</a>                             |
+| 04-data-structures-part1.Rmd | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/master/_episodes_rmd/04-data-structures-part1.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/master/_episodes_rmd/04-data-structures-part1.Rmd</a>           |
+| 05-data-structures-part2.Rmd | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/master/_episodes_rmd/05-data-structures-part2.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/master/_episodes_rmd/05-data-structures-part2.Rmd</a>           |
+| 06-data-subsetting.Rmd       | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/master/_episodes_rmd/06-data-subsetting.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/master/_episodes_rmd/06-data-subsetting.Rmd</a>                       |
+| 07-control-flow.Rmd          | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/master/_episodes_rmd/07-control-flow.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/master/_episodes_rmd/07-control-flow.Rmd</a>                             |
+| 08-plot-ggplot2.Rmd          | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/master/_episodes_rmd/08-plot-ggplot2.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/master/_episodes_rmd/08-plot-ggplot2.Rmd</a>                             |
+| 09-vectorization.Rmd         | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/master/_episodes_rmd/09-vectorization.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/master/_episodes_rmd/09-vectorization.Rmd</a>                           |
+| 10-functions.Rmd             | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/master/_episodes_rmd/10-functions.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/master/_episodes_rmd/10-functions.Rmd</a>                                   |
+| 11-writing-data.Rmd          | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/master/_episodes_rmd/11-writing-data.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/master/_episodes_rmd/11-writing-data.Rmd</a>                             |
+| 12-plyr.Rmd                  | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/master/_episodes_rmd/12-plyr.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/master/_episodes_rmd/12-plyr.Rmd</a>                                             |
+| 13-dplyr.Rmd                 | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/master/_episodes_rmd/13-dplyr.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/master/_episodes_rmd/13-dplyr.Rmd</a>                                           |
+| 14-tidyr.Rmd                 | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/master/_episodes_rmd/14-tidyr.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/master/_episodes_rmd/14-tidyr.Rmd</a>                                           |
+| 15-knitr-markdown.Rmd        | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/master/_episodes_rmd/15-knitr-markdown.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/master/_episodes_rmd/15-knitr-markdown.Rmd</a>                         |
+| 16-wrap-up.Rmd               | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/master/_episodes_rmd/16-wrap-up.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/master/_episodes_rmd/16-wrap-up.Rmd</a>                                       |
+| data                         | NA                                                                                                                                                                                                                                                                        |
+| 01-rstudio-intro.Rmd         | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder-es/gh-pages/_episodes_rmd/01-rstudio-intro.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder-es/gh-pages/_episodes_rmd/01-rstudio-intro.Rmd</a>                 |
+| 02-project-intro.Rmd         | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder-es/gh-pages/_episodes_rmd/02-project-intro.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder-es/gh-pages/_episodes_rmd/02-project-intro.Rmd</a>                 |
+| 03-seeking-help.Rmd          | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder-es/gh-pages/_episodes_rmd/03-seeking-help.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder-es/gh-pages/_episodes_rmd/03-seeking-help.Rmd</a>                   |
+| 04-data-structures-part1.Rmd | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder-es/gh-pages/_episodes_rmd/04-data-structures-part1.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder-es/gh-pages/_episodes_rmd/04-data-structures-part1.Rmd</a> |
+| 05-data-structures-part2.Rmd | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder-es/gh-pages/_episodes_rmd/05-data-structures-part2.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder-es/gh-pages/_episodes_rmd/05-data-structures-part2.Rmd</a> |
+| 06-data-subsetting.Rmd       | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder-es/gh-pages/_episodes_rmd/06-data-subsetting.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder-es/gh-pages/_episodes_rmd/06-data-subsetting.Rmd</a>             |
+| 07-control-flow.Rmd          | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder-es/gh-pages/_episodes_rmd/07-control-flow.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder-es/gh-pages/_episodes_rmd/07-control-flow.Rmd</a>                   |
+| 08-plot-ggplot2.Rmd          | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder-es/gh-pages/_episodes_rmd/08-plot-ggplot2.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder-es/gh-pages/_episodes_rmd/08-plot-ggplot2.Rmd</a>                   |
+| 09-vectorization.Rmd         | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder-es/gh-pages/_episodes_rmd/09-vectorization.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder-es/gh-pages/_episodes_rmd/09-vectorization.Rmd</a>                 |
+| 10-functions.Rmd             | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder-es/gh-pages/_episodes_rmd/10-functions.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder-es/gh-pages/_episodes_rmd/10-functions.Rmd</a>                         |
+| 11-writing-data.Rmd          | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder-es/gh-pages/_episodes_rmd/11-writing-data.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder-es/gh-pages/_episodes_rmd/11-writing-data.Rmd</a>                   |
+| 12-plyr.Rmd                  | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder-es/gh-pages/_episodes_rmd/12-plyr.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder-es/gh-pages/_episodes_rmd/12-plyr.Rmd</a>                                   |
+| 13-dplyr.Rmd                 | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder-es/gh-pages/_episodes_rmd/13-dplyr.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder-es/gh-pages/_episodes_rmd/13-dplyr.Rmd</a>                                 |
+| 14-tidyr.Rmd                 | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder-es/gh-pages/_episodes_rmd/14-tidyr.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder-es/gh-pages/_episodes_rmd/14-tidyr.Rmd</a>                                 |
+| 15-knitr-markdown.Rmd        | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder-es/gh-pages/_episodes_rmd/15-knitr-markdown.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder-es/gh-pages/_episodes_rmd/15-knitr-markdown.Rmd</a>               |
+| 16-wrap-up.Rmd               | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder-es/gh-pages/_episodes_rmd/16-wrap-up.Rmd" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder-es/gh-pages/_episodes_rmd/16-wrap-up.Rmd</a>                             |
+| data                         | NA                                                                                                                                                                                                                                                                        |
+| index.md                     | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder-es/gh-pages/_episodes_rmd/index.md" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder-es/gh-pages/_episodes_rmd/index.md</a>                                         |
+| reference.md                 | <a href="https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder-es/gh-pages/_episodes_rmd/reference.md" class="uri">https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder-es/gh-pages/_episodes_rmd/reference.md</a>                                 |
+
 Session Information
 ===================
 
@@ -195,10 +335,13 @@ sessioninfo::session_info()
     ##  forcats     * 0.5.0   2020-03-01 [1] CRAN (R 3.6.3)
     ##  fs          * 1.3.2   2020-03-05 [1] CRAN (R 3.6.3)
     ##  ggplot2     * 3.3.0   2020-03-05 [1] CRAN (R 3.6.3)
+    ##  gh          * 1.1.0   2020-01-24 [1] CRAN (R 3.6.3)
     ##  glue          1.3.2   2020-03-12 [1] CRAN (R 3.6.3)
     ##  gtable        0.3.0   2019-03-25 [1] CRAN (R 3.6.3)
     ##  here        * 0.1     2017-05-28 [1] CRAN (R 3.6.3)
+    ##  highr         0.8     2019-03-20 [1] CRAN (R 3.6.3)
     ##  htmltools     0.4.0   2019-10-04 [1] CRAN (R 3.6.3)
+    ##  httr          1.4.1   2019-08-05 [1] CRAN (R 3.6.3)
     ##  jsonlite    * 1.6.1   2020-02-02 [1] CRAN (R 3.6.3)
     ##  knitr         1.28    2020-02-06 [1] CRAN (R 3.6.3)
     ##  labeling      0.3     2014-08-23 [1] CRAN (R 3.6.3)
@@ -218,6 +361,7 @@ sessioninfo::session_info()
     ##  stringi       1.4.6   2020-02-17 [1] CRAN (R 3.6.3)
     ##  stringr       1.4.0   2019-02-10 [1] CRAN (R 3.6.3)
     ##  tibble        3.0.0   2020-03-30 [1] CRAN (R 3.6.3)
+    ##  tidyr       * 1.0.2   2020-01-24 [1] CRAN (R 3.6.3)
     ##  tidyselect    1.0.0   2020-01-27 [1] CRAN (R 3.6.3)
     ##  utf8          1.1.4   2018-05-24 [1] CRAN (R 3.6.3)
     ##  vctrs         0.2.4   2020-03-10 [1] CRAN (R 3.6.3)
