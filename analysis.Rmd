@@ -1,0 +1,103 @@
+---
+title: "GitHub Analysis"
+author: "Zhian N. Kamvar"
+date: "3/30/2020"
+output: 
+  md_document:
+    variant: markdown_github
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Setup
+
+The source for all the repositories is located at <https://carpentries.github.io/curriculum-feed/carpentries_lessons.json>. To 
+avoid having to pull from it multiple times I'm going to set up a folder:
+
+```{r packages}
+library("fs")       # Filesystem navigation
+library("jsonlite") # parsing JSON files
+library("purrr")    # handling lists (JSON files)
+library("dplyr")    # handling data frames and magic
+library("ggplot2")  # visualization
+library("forcats")  # ordering factors
+library("magrittr") # for the %T>% pipe I love so well
+library("here")     # so I can always remember where I started
+```
+
+
+```{r data}
+raw_data<- here::here("data", "raw")
+raw_lessons <- fs::path(raw_data, "carpentries_lessons.json")
+if (fs::file_exists(raw_lessons)) {
+  
+} else {
+  fs::dir_create(raw_data)
+  res <- download.file(
+    url = "https://carpentries.github.io/curriculum-feed/carpentries_lessons.json",
+    destfile = raw_lessons
+  )
+  if (res == 0L) {
+    fs::file_chmod(raw_lessons, "a-wx")
+  }
+}
+
+lessons <- read_json(raw_lessons, simplifyVector = FALSE) %>%
+  purrr::map_dfr(.f = dplyr::as_tibble) %>%
+  dplyr::mutate_if(is.character, 
+    ~dplyr::if_else(. == "NA", as.character(NA), .)) %>%
+  dplyr::mutate(life_cycle = forcats::fct_relevel(life_cycle,
+      "pre-alpha", "alpha", "beta", "stable", "on-hold", "deprecated"
+    )) %>%
+  dplyr::mutate(life_cycle = forcats::fct_explicit_na(life_cycle)) %>%
+  print()
+```
+
+# First look at available lessons
+
+I'm going to take a look at all of the software carpentry lessons first. There
+are currently `r nrow(lessons)` available lessons, but they are in different
+stages of completion:
+
+```{r lesson vis}
+ggplot(lessons, aes(y = life_cycle, fill = curriculum)) +
+  geom_bar(orientation = "y")
+```
+
+Let's inspect the ones that are stable and then look at the ones that are lower
+down, first we should filter for those that are stable and actually have GitHub
+URLs:
+
+```{r stable}
+stable <- lessons %>% filter(
+  life_cycle == "stable", 
+  curriculum != "instructor-training",
+  !is.na(curriculum), # these are template repositories
+  !is.na(URL)         # no GitHub URL is not very useful for me
+)
+stable
+```
+
+I end up with `r nrow(stable)` repositories to play with:
+
+```{r curriculum-language}
+ggplot(stable, aes(y = curriculum, fill = language)) +
+  geom_bar(orientation = "y")
+```
+
+# Inspection of repository features
+
+I will use the {gh} package to inspect the features of each repository:
+
+ - tags
+ - directory structure
+ - dependencies
+
+# Session Information
+
+```{r sessioninfo}
+sessioninfo::session_info()
+```
+
