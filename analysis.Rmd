@@ -28,6 +28,9 @@ library("magrittr") # for the %T>% pipe I love so well
 library("gh")       # accessing GitHub's API
 library("polite")   # being respectful when downloading files
 library("here")     # so I can always remember where I started
+library("pegboard") # parsing and analysis of carpentries episodes
+library("git2r")    # downloading github repositories
+library("waldo")    # comparing objects
 ```
 
 
@@ -125,47 +128,111 @@ rmd_episodes <- function(owner, repo) {
   )
 }
 
-has_rmd <- stable %>%
+vorhees <- purrr::possibly(jsonlite::read_json, otherwise = list())
+
+lesson_has_rmd <- . %>%
   tidyr::separate(URL, into = c(NA, NA, NA, "user", NA), sep = "/", remove = FALSE) %>%
   mutate(user = purrr::walk2(.x = user, .y = repository, .f = rmd_episodes)) %>%
   mutate(JSON = purrr::map2(.x = user, .y = repository,
-    .f = ~jsonlite::read_json(
+    .f = ~vorhees(
       here::here("data", "rmd_JSON", glue::glue("{.x}--{.y}.json"))
     )
   )) %>%
   filter(lengths(JSON) > 2)
+has_rmd <- stable %>% lesson_has_rmd
+has_rmd_all <- lessons %>% 
+  lesson_has_rmd %>% 
+  filter(repository != "lesson-example") %>%
+  arrange(life_cycle)
 ```
 
-After parsing, we find that we have RMarkdown files for a grand total of `r nrow(has_rmd)`:
+After parsing, we find that we have RMarkdown files for a grand total of 
+`r nrow(has_rmd_all)` lessons and `r nrow(has_rmd)` stable lessons. From here,
+we can grab these lessons to see if we can build them with our docker container.
+
+
+The command to use is:
+
+```bash
+docker run --rm -it -e USER=$(id -u) -e GROUP=$(id -g) -v ${PWD}:/home/rstudio rocker/verse:4.0.0 make -C /home/rstudio lesson-md
+```
+
+
+Let's download these repos:
 
 ```{r rmd_episodes_repos}
-all_rmd_files <- has_rmd %>%
-  select(user, repository, URL, JSON) %T>%
-  print() %>%
-  unnest(JSON) %>%
-  unnest_wider(JSON) %>%
-  filter(!grepl("^\\.git", name))
-
-download_r_file <- purrr::slowly(function(user, repo, name, url) {
-  dir <- fs::dir_create(here::here("data", "r-files", user, repo))
-  if (fs::file_exists(fs::path(dir, name))) {
-    # no need
-    0
+rmdpath <- path("data", "rmd-repos")
+if (!dir_exists(rmdpath)) {
+  dir_create(path = rmdpath)
+}
+g <- function(u, r, path = rmdpath) {
+  URL <- glue::glue("https://github.com/{u}/{r}.git")
+  path <- glue::glue("{path}/{u}--{r}")
+  if (fs::dir_exists(path)) {
+    git2r::pull(repo = path)
   } else {
-    download.file(
-      url = url,
-      destfile = fs::path(dir, name)
-    )
+    git2r::clone(URL, local_path = path)
   }
-}, rate = purrr::rate_delay(pause = 2))
+}
+purrr::walk2(has_rmd_all$user, has_rmd_all$repository, g, rmdpath) 
+```
+
+Now all the repos have been downloaded, we can render the episodes under
+different versions of R and see how they go. Note that I have to use the
+geospatial R container in order to get things to work properly.
+
+```{r dokken, results = "hide"}
+
+run_docker <- function(the_path, R_VERSION) {
+  docker_run <- "docker run --rm -it -v {the_path}:/home/rstudio"
+  contai_ner <- "rocker/geospatial:{R_VERSION} make -C /home/rstudio lesson-md"
+  system(glue::glue("cd {the_path}; git clean -fd .; git checkout -- ."))
+  system(glue::glue("rm -rf {the_path}/_episodes/*"))
+  system(glue::glue("{glue::glue(docker_run)} {glue::glue(contai_ner)}"))
+}
+
+dockin <- function(u, r) {
+
+  pth <- glue::glue("{u}--{r}")
+  the_path <- fs::path_abs(fs::path("data", "rmd-repos", pth))
+
+  # Run with R 3.6.3 ---------------------------
+  run_docker(the_path, "3.6.3")
+  r3 <- try(Lesson$new(the_path, rmd = FALSE))
+
+  # Run with R 4.0.0 ---------------------------
+  run_docker(the_path, "4.0.0")
+  r4 <- try(Lesson$new(the_path, rmd = FALSE))
+
+  system(glue::glue("cd {the_path}; git clean -fd .; git checkout -- ."))
 
 
-all_rmd_files %>%
-  select(name, download_url) %>%
-  knitr::kable()
+  list(r3, r4)
 
-all_rmd_files %>%
-  mutate(result = pmap_chr(list(user, repository, name, download_url), download_r_file))
+}
+
+res <- purrr::map2(has_rmd_all$user, has_rmd_all$repository, dockin)
+```
+
+We can iterate and compare:
+
+```{r}
+cmpr <- function(lesson) {
+
+  if (!inherits(lesson[[1]], "Lesson")) {
+    return(NULL)
+  }
+  otag    <- ".//self::d1:code_block[@ktag='{: .output}']"
+  o1 <- map(lesson[[1]]$episodes, ~.x$code %>% xml2::xml_find_all(otag) %>% xml2::xml_text())
+  o2 <- map(lesson[[2]]$episodes, ~.x$code %>% xml2::xml_find_all(otag) %>% xml2::xml_text())
+  for (i in length(o1)) {
+    
+    message(glue::glue("Lesson: {basename(lesson[[1]]$path)}  Episode: {basename(lesson[[1]]$files[i])}"))
+    print(waldo::compare(o1[[i]], o2[[i]]))
+  }
+}
+
+purrr::walk(res, cmpr)
 ```
 
 
@@ -174,4 +241,5 @@ all_rmd_files %>%
 ```{r sessioninfo}
 sessioninfo::session_info()
 ```
+
 

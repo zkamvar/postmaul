@@ -37,3 +37,7 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+
+data/rmd-repos
+data/rmd_JSON
+data/r-files
