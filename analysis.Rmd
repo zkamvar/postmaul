@@ -254,7 +254,7 @@ cmpr <- function(lesson, name) {
 
     cat(glue::glue("\n#### Episode: {name}/{basename(lesson[[1]]$files[i])}\n"))
     cat("\n```diff\n")
-    print(waldo::compare(o1[[i]], o2[[i]], x_arg = "Rv3", y_arg = "Rv4"))
+    print(waldo::compare(o2[[i]], o1[[i]], x_arg = "Rv4", y_arg = "Rv3"))
     cat("\n```\n")
   }
 }
