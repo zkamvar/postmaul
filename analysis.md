@@ -437,14 +437,14 @@ cmpr <- function(lesson, name) {
     return(invisible(NULL))
   }
 
-  o1 <- map(lesson[[1]]$episodes, ~.x$output %>% xml2::xml_text())
-  o2 <- map(lesson[[2]]$episodes, ~.x$output %>% xml2::xml_text())
+  o1 <- map(lesson[[1]]$episodes, ~setNames(xml2::xml_text(.x$output), xml2::xml_attr(.x$output, "sourcepos")))
+  o2 <- map(lesson[[2]]$episodes, ~setNames(xml2::xml_text(.x$output), xml2::xml_attr(.x$output, "sourcepos")))
 
   for (i in seq_along(lesson[[1]]$episodes)) {
 
     cat(glue::glue("\n#### Episode: {name}/{basename(lesson[[1]]$files[i])}\n"))
     cat("\n```diff\n")
-    print(waldo::compare(o1[[i]], o2[[i]]))
+    print(waldo::compare(o1[[i]], o2[[i]], x_arg = "Rv3", y_arg = "Rv4"))
     cat("\n```\n")
   }
 }
@@ -469,7 +469,7 @@ purrr::walk2(res, names(res), cmpr)
 #### Episode: lc-r/02-starting-with-data.md
 
 ``` diff
-lines(x[[2]]) vs lines(y[[2]])
+lines(Rv3[[2]]) vs lines(Rv4[[2]])
 + "✔ ggplot2 3.3.0     ✔ dplyr   0.8.5"
 - "✔ ggplot2 3.3.1     ✔ dplyr   1.0.0"
   "✔ tibble  3.0.1     ✔ stringr 1.4.0"
@@ -482,7 +482,16 @@ lines(x[[2]]) vs lines(y[[2]])
 #### Episode: lc-r/03-data-cleaning-and-transformation.md
 
 ``` diff
-lines(x[[2]]) vs lines(y[[2]])
+     names(Rv3)    | names(Rv4)        
+[11] "422:1-437:3" | "422:1-437:3" [11]
+[12] "467:1-483:3" | "467:1-483:3" [12]
+[13] "557:1-572:3" | "557:1-572:3" [13]
+[14] "625:1-639:3" - "625:1-627:3" [14]
+[15] "659:1-674:3" - "632:1-646:3" [15]
+                   - "666:1-668:3" [16]
+                   - "673:1-688:3" [17]
+
+lines(Rv3[[2]]) vs lines(Rv4[[2]])
 + "✔ ggplot2 3.3.0     ✔ dplyr   0.8.5"
 - "✔ ggplot2 3.3.1     ✔ dplyr   1.0.0"
   "✔ tibble  3.0.1     ✔ stringr 1.4.0"
@@ -491,7 +500,7 @@ lines(x[[2]]) vs lines(y[[2]])
   "✔ purrr   0.3.4     "
   ""
 
-lines(x[[14]]) vs lines(y[[14]])
+lines(Rv3[[14]]) vs lines(Rv4[[14]])
 + "# A tibble: 10 x 2"
 - "`summarise()` ungrouping output (override with `.groups` argument)"
 + "   format       mean_checkouts"
@@ -508,7 +517,7 @@ lines(x[[14]]) vs lines(y[[14]])
 + "10 serial              0      "
   ""
 
-lines(x[[15]]) vs lines(y[[15]])
+lines(Rv3[[15]]) vs lines(Rv4[[15]])
 + "# A tibble: 34 x 3"
 - "# A tibble: 10 x 2"
 + "   call_class count sum_tot_chkout"
@@ -531,17 +540,27 @@ lines(x[[15]]) vs lines(y[[15]])
 - " 7 map                10.6    "
 and 8 more ...
 
-`lines(x[[16]])` is absent
-`lines(y[[16]])` is a character vector ('`summarise()` ungrouping output (override with `.groups` argument)', '')
+`lines(Rv3[[16]])` is absent
+`lines(Rv4[[16]])` is a character vector ('`summarise()` ungrouping output (override with `.groups` argument)', '')
 
-`lines(x[[17]])` is absent
-`lines(y[[17]])` is a character vector ('# A tibble: 34 x 3', '   call_class count sum_tot_chkout', '   <chr>      <int>          <dbl>', ' 1 E            487           3114', ' 2 <NA>         459           3024', ...)
+`lines(Rv3[[17]])` is absent
+`lines(Rv4[[17]])` is a character vector ('# A tibble: 34 x 3', '   call_class count sum_tot_chkout', '   <chr>      <int>          <dbl>', ' 1 E            487           3114', ' 2 <NA>         459           3024', ...)
 ```
 
 #### Episode: lc-r/04-data-viz-ggplot.md
 
 ``` diff
-lines(x[[2]]) vs lines(y[[2]])
+     names(Rv3)    | names(Rv4)        
+ [3] "68:1-72:3"   | "68:1-72:3"   [3] 
+ [4] "84:1-87:3"   | "84:1-87:3"   [4] 
+ [5] "92:1-96:3"   | "92:1-96:3"   [5] 
+ [6] "101:1-105:3" - "273:1-275:3" [6] 
+ [7] "282:1-284:3" - "334:1-344:3" [7] 
+ [8] "343:1-353:3" - "610:1-612:3" [8] 
+ [9] "619:1-621:3" - "624:1-626:3" [9] 
+[10] "633:1-635:3" - "880:5-882:7" [10]
+
+lines(Rv3[[2]]) vs lines(Rv4[[2]])
 + "✔ ggplot2 3.3.0     ✔ dplyr   0.8.5"
 - "✔ ggplot2 3.3.1     ✔ dplyr   1.0.0"
   "✔ tibble  3.0.1     ✔ stringr 1.4.0"
@@ -550,7 +569,7 @@ lines(x[[2]]) vs lines(y[[2]])
   "✔ purrr   0.3.4     "
   ""
 
-lines(x[[5]]) vs lines(y[[5]])
+lines(Rv3[[5]]) vs lines(Rv4[[5]])
 + "The following objects are masked from 'package:dplyr':"
 - "The following objects are masked from 'package:base':"
   ""
@@ -558,14 +577,14 @@ lines(x[[5]]) vs lines(y[[5]])
 - "    date, intersect, setdiff, union"
   ""
 
-lines(x[[6]]) vs lines(y[[6]])
+lines(Rv3[[6]]) vs lines(Rv4[[6]])
 + "The following objects are masked from 'package:base':"
 - "`stat_bin()` using `bins = 30`. Pick better value with `binwidth`."
 + ""
 + "    date, intersect, setdiff, union"
   ""
 
-lines(x[[7]]) vs lines(y[[7]])
+lines(Rv3[[7]]) vs lines(Rv4[[7]])
 + "`stat_bin()` using `bins = 30`. Pick better value with `binwidth`."
 - ""
 - "   0    1    2    3    4    5    6    7    8    9   10   11   12   13   14   15 "
@@ -578,7 +597,7 @@ lines(x[[7]]) vs lines(y[[7]])
 - "   1 "
   ""
 
-lines(x[[8]]) vs lines(y[[8]])
+lines(Rv3[[8]]) vs lines(Rv4[[8]])
 + ""
 - "[1] \"numeric\""
 + "   0    1    2    3    4    5    6    7    8    9   10   11   12   13   14   15 "
@@ -591,10 +610,10 @@ lines(x[[8]]) vs lines(y[[8]])
 + "   1 "
   ""
 
-`lines(x[[9]])`: "[1] \"numeric\"" ""
-`lines(y[[9]])`: "[1] \"Date\""    ""
+`lines(Rv3[[9]])`: "[1] \"numeric\"" ""
+`lines(Rv4[[9]])`: "[1] \"Date\""    ""
 
-lines(x[[10]]) vs lines(y[[10]])
+lines(Rv3[[10]]) vs lines(Rv4[[10]])
 + "[1] \"Date\""
 - "`summarise()` ungrouping output (override with `.groups` argument)"
   ""
@@ -633,7 +652,20 @@ lines(x[[10]]) vs lines(y[[10]])
 
 ``` 
 
-lines(x[[1]]) vs lines(y[[1]])
+     names(Rv3)    | names(Rv4)                   
+ [1] "148:1-213:3" - "148:1-205:3" [1]            
+ [2] "239:1-270:3" - "231:1-262:3" [2]            
+ [3] "312:1-315:3" - "304:1-306:3" [3]            
+ [4] "333:1-335:3" - "324:1-326:3" [4]            
+ [5] "430:4-433:6" - "449:4-451:6" [5]            
+ [6] "445:4-447:6" - "463:4-465:6" [6]            
+ [7] "459:4-462:6" - "477:4-479:6" [7]            
+ [8] "474:4-483:6" - "491:4-500:6" [8]            
+ [9] "494:4-523:6" - "511:4-540:6" [9]            
+[10] "535:4-538:6" - "552:4-554:6" [10]           
+ ... ...             ...           and 22 more ...
+
+lines(Rv3[[1]]) vs lines(Rv4[[1]])
 + "      sample_id          CHROM          POS             ID         "
 - "  sample_id            CHROM                POS             ID         "
 + " SRR2584863: 25   CP000819.1:801   Min.   :   1521   Mode:logical  "
@@ -656,7 +688,7 @@ lines(x[[1]]) vs lines(y[[1]])
 - " Length:801         Length:801         Min.   :  4.385   Mode:logical  "
 and 101 more ...
 
-lines(x[[2]])[1:10] vs lines(y[[2]])[1:10]
+lines(Rv3[[2]])[1:10] vs lines(Rv4[[2]])[1:10]
   "'data.frame':\t801 obs. of  29 variables:"
 + " $ sample_id    : Factor w/ 3 levels \"SRR2584863\",\"SRR2584866\",..: 1 1 1 1 1 1 1 1 1 1 ..."
 - " $ sample_id    : chr  \"SRR2584863\" \"SRR2584863\" \"SRR2584863\" \"SRR2584863\" ..."
@@ -672,7 +704,7 @@ lines(x[[2]])[1:10] vs lines(y[[2]])[1:10]
   " $ FILTER       : logi  NA NA NA NA NA NA ..."
   " $ INDEL        : logi  FALSE FALSE FALSE TRUE TRUE FALSE ..."
 
-lines(x[[2]])[22:31] vs lines(y[[2]])[22:31]
+lines(Rv3[[2]])[22:31] vs lines(Rv4[[2]])[22:31]
   " $ HOB          : logi  NA NA NA NA NA NA ..."
   " $ AC           : int  1 1 1 1 1 1 1 1 1 1 ..."
   " $ AN           : int  1 1 1 1 1 1 1 1 1 1 ..."
@@ -688,52 +720,54 @@ lines(x[[2]])[22:31] vs lines(y[[2]])[22:31]
 - " $ gt_GT_alleles: chr  \"G\" \"T\" \"T\" \"CTTTTTTTT\" ..."
   ""
 
-lines(x[[3]]) vs lines(y[[3]])
+lines(Rv3[[3]]) vs lines(Rv4[[3]])
 + "[1] T        G        G        CTTTTTTT CCGC     C       "
 - "[1] \"T\"        \"G\"        \"G\"        \"CTTTTTTT\" \"CCGC\"     \"C\"       "
 + "59 Levels: A ACAGCCAGCCAGCCAGCCAGCCAGCCAGCCAG ACCCC ACCCCCCC ... TGGGGGGG"
   ""
 
-lines(x[[4]]) vs lines(y[[4]])
+lines(Rv3[[4]]) vs lines(Rv4[[4]])
 + " Factor w/ 59 levels \"A\",\"ACAGCCAGCCAGCCAGCCAGCCAGCCAGCCAG\",..: 49 33 33 30 24 16 16 33 2 12 ..."
 - " chr [1:801] \"T\" \"G\" \"G\" \"CTTTTTTT\" \"CCGC\" \"C\" \"C\" \"G\" ..."
   ""
 
-    lines(x[[5]])                              | lines(y[[5]])           
+    lines(Rv3[[5]])                            | lines(Rv4[[5]])         
 [1] "[1] SRR2584863"                           - "[1] \"SRR2584863\"" [1]
 [2] "Levels: SRR2584863 SRR2584866 SRR2589044" -                         
 [3] ""                                         | ""                   [2]
 
-`lines(x[[7]])`: "[1] T"     "57 Levels: A AC ... TGGGGGGGGG" ""
-`lines(y[[7]])`: "[1] \"T\""                                  ""
+`lines(Rv3[[7]])`: "[1] T"     "57 Levels: A AC ... TGGGGGGGGG" ""
+`lines(Rv4[[7]])`: "[1] \"T\""                                  ""
 
-lines(x[[10]]) vs lines(y[[10]])
+lines(Rv3[[10]]) vs lines(Rv4[[10]])
 + "[1] SRR2584863 SRR2584863 SRR2584863 SRR2584863"
 - "[1] \"SRR2584863\" \"SRR2584863\" \"SRR2584863\" \"SRR2584863\""
 + "Levels: SRR2584863 SRR2584866 SRR2589044"
   ""
 
-lines(x[[12]]) vs lines(y[[12]])
+lines(Rv3[[12]]) vs lines(Rv4[[12]])
 + "[1] SRR2584863 SRR2584863 SRR2584863 SRR2584863 SRR2584863 SRR2584863"
 - "[1] \"SRR2584863\" \"SRR2584863\" \"SRR2584863\" \"SRR2584863\" \"SRR2584863\""
 + "Levels: SRR2584863 SRR2584866 SRR2589044"
 - "[6] \"SRR2584863\""
   ""
 
-lines(x[[15]]) vs lines(y[[15]])
-+ "[1] SRR2584863 SRR2584863 SRR2584863 SRR2584863 SRR2584863 SRR2584863"
-- "[1] \"SRR2584863\" \"SRR2584863\" \"SRR2584863\" \"SRR2584863\" \"SRR2584863\""
-+ "Levels: SRR2584863 SRR2584866 SRR2589044"
-- "[6] \"SRR2584863\""
-  ""
-
-And 3 more differences ...
+And 4 more differences ...
 ```
 
 #### Episode: genomics-r-intro/04-dplyr.md
 
 ``` diff
-lines(x[[4]]) vs lines(y[[4]])
+     names(Rv3)      | names(Rv4)          
+ [7] "329:1-362:3"   | "329:1-362:3"   [7] 
+ [8] "382:4-415:6"   | "382:4-415:6"   [8] 
+ [9] "420:4-1223:6"  | "420:4-1223:6"  [9] 
+[10] "1250:1-1257:3" - "1250:1-1252:3" [10]
+[11] "1285:1-1292:3" - "1257:1-1264:3" [11]
+                     - "1292:1-1294:3" [12]
+                     - "1299:1-1306:3" [13]
+
+lines(Rv3[[4]]) vs lines(Rv4[[4]])
   "Rows: 25"
   "Columns: 3"
 + "$ REF <fct> T, G, G, CTTTTTTT, CCGC, C, C, G, ACAGCCAGCCAGCCAGCCAGCCAGCCAGCCA…"
@@ -743,7 +777,7 @@ lines(x[[4]]) vs lines(y[[4]])
   "$ DP  <int> 4, 6, 10, 12, 10, 10, 8, 11, 3, 7, 9, 20, 12, 19, 15, 10, 14, 9, …"
   ""
 
-lines(x[[7]])[1:11] vs lines(y[[7]])[1:11]
+lines(Rv3[[7]])[1:11] vs lines(Rv4[[7]])[1:11]
   "Rows: 801"
   "Columns: 30"
 + "$ sample_id     <fct> SRR2584863, SRR2584863, SRR2584863, SRR2584863, SRR2584…"
@@ -760,7 +794,7 @@ lines(x[[7]])[1:11] vs lines(y[[7]])[1:11]
   "$ FILTER        <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…"
   "$ INDEL         <lgl> FALSE, FALSE, FALSE, TRUE, TRUE, FALSE, FALSE, FALSE, T…"
 
-lines(x[[7]])[23:33] vs lines(y[[7]])[23:33]
+lines(Rv3[[7]])[23:33] vs lines(Rv4[[7]])[23:33]
   "$ HOB           <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…"
   "$ AC            <int> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…"
   "$ AN            <int> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…"
@@ -777,7 +811,7 @@ lines(x[[7]])[23:33] vs lines(y[[7]])[23:33]
   "$ POLPROB       <dbl> 1.0000000, 1.0000000, 1.0000000, 0.9999996, 1.0000000, …"
   ""
 
-lines(x[[8]])[1:11] vs lines(y[[8]])[1:11]
+lines(Rv3[[8]])[1:11] vs lines(Rv4[[8]])[1:11]
   "Rows: 801"
   "Columns: 30"
 + "$ sample_id     <fct> SRR2584863, SRR2584863, SRR2584863, SRR2584863, SRR2584…"
@@ -794,7 +828,7 @@ lines(x[[8]])[1:11] vs lines(y[[8]])[1:11]
   "$ FILTER        <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…"
   "$ INDEL         <lgl> FALSE, FALSE, FALSE, TRUE, TRUE, FALSE, FALSE, FALSE, T…"
 
-lines(x[[8]])[23:33] vs lines(y[[8]])[23:33]
+lines(Rv3[[8]])[23:33] vs lines(Rv4[[8]])[23:33]
   "$ HOB           <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…"
   "$ AC            <int> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…"
   "$ AN            <int> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…"
@@ -811,7 +845,7 @@ lines(x[[8]])[23:33] vs lines(y[[8]])[23:33]
   "$ POLPROB       <dbl> 1.0000000, 1.0000000, 1.0000000, 0.9999996, 1.0000000, …"
   ""
 
-lines(x[[10]]) vs lines(y[[10]])
+lines(Rv3[[10]]) vs lines(Rv4[[10]])
 + "# A tibble: 3 x 2"
 - "`summarise()` ungrouping output (override with `.groups` argument)"
 + "  sample_id  `n()`"
@@ -821,7 +855,7 @@ lines(x[[10]]) vs lines(y[[10]])
 + "3 SRR2589044    10"
   ""
 
-    lines(x[[11]])           | lines(y[[11]])          
+    lines(Rv3[[11]])         | lines(Rv4[[11]])        
 [1] "# A tibble: 3 x 2"      | "# A tibble: 3 x 2"  [1]
 [2] "  sample_id  `max(DP)`" - "  sample_id  `n()`" [2]
 [3] "  <fct>          <int>" - "  <chr>      <int>" [3]
@@ -830,11 +864,11 @@ lines(x[[10]]) vs lines(y[[10]])
 [6] "3 SRR2589044        16" - "3 SRR2589044    10" [6]
 [7] ""                       | ""                   [7]
 
-`lines(x[[12]])` is absent
-`lines(y[[12]])` is a character vector ('`summarise()` ungrouping output (override with `.groups` argument)', '')
+`lines(Rv3[[12]])` is absent
+`lines(Rv4[[12]])` is a character vector ('`summarise()` ungrouping output (override with `.groups` argument)', '')
 
-`lines(x[[13]])` is absent
-`lines(y[[13]])` is a character vector ('# A tibble: 3 x 2', '  sample_id  `max(DP)`', '  <chr>          <int>', '1 SRR2584863        20', '2 SRR2584866        79', ...)
+`lines(Rv3[[13]])` is absent
+`lines(Rv4[[13]])` is a character vector ('# A tibble: 3 x 2', '  sample_id  `max(DP)`', '  <chr>          <int>', '1 SRR2584863        20', '2 SRR2584866        79', ...)
 ```
 
 #### Episode: genomics-r-intro/05-data-visualization.md
@@ -878,7 +912,7 @@ lines(x[[10]]) vs lines(y[[10]])
 #### Episode: r-novice-inflammation/05-cmdline.md
 
 ``` diff
-lines(x[[2]])[1:9] vs lines(y[[2]])[1:9]
+lines(Rv3[[2]])[1:9] vs lines(Rv4[[2]])[1:9]
 + "R version 3.6.3 (2020-02-29)"
 - "R version 4.0.0 (2020-04-24)"
   "Platform: x86_64-pc-linux-gnu (64-bit)"
@@ -892,7 +926,7 @@ lines(x[[2]])[1:9] vs lines(y[[2]])[1:9]
   "locale:"
   " [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              "
 
-lines(x[[2]])[17:21] vs lines(y[[2]])[17:21]
+lines(Rv3[[2]])[17:21] vs lines(Rv4[[2]])[17:21]
   "[1] stats     graphics  grDevices utils     datasets  methods   base     "
   ""
   "loaded via a namespace (and not attached):"
@@ -900,7 +934,7 @@ lines(x[[2]])[17:21] vs lines(y[[2]])[17:21]
 - "[1] compiler_4.0.0"
   ""
 
-    lines(x[[4]])                 | lines(y[[4]])                    
+    lines(Rv3[[4]])               | lines(Rv4[[4]])                  
 [1] "/usr/local/lib/R/bin/exec/R" | "/usr/local/lib/R/bin/exec/R" [1]
 [2] "--no-save"                   | "--no-save"                   [2]
 [3] "--no-restore"                | "--no-restore"                [3]
@@ -909,7 +943,7 @@ lines(x[[2]])[17:21] vs lines(y[[2]])[17:21]
 [6] "--file=print-args.R"         | "--file=print-args.R"         [6]
 [7] ""                            | ""                            [7]
 
-    lines(x[[6]])                 | lines(y[[6]])                    
+    lines(Rv3[[6]])               | lines(Rv4[[6]])                  
 [1] "/usr/local/lib/R/bin/exec/R" | "/usr/local/lib/R/bin/exec/R" [1]
 [2] "--no-save"                   | "--no-save"                   [2]
 [3] "--no-restore"                | "--no-restore"                [3]
@@ -952,7 +986,7 @@ lines(x[[2]])[17:21] vs lines(y[[2]])[17:21]
 #### Episode: r-novice-inflammation/11-supp-read-write-csv.md
 
 ``` diff
-lines(x[[4]]) vs lines(y[[4]])
+lines(Rv3[[4]]) vs lines(Rv4[[4]])
 + "  [1] \"Green\" \"1\"     \"Green\" \"5\"     \"4\"     \"Green\" \"Green\" \"2\"     \"5\"    "
 - "  [1] \"Green\" \" Red\"  \"Green\" \"White\" \"Red\"   \"Green\" \"Green\" \"Black\" \"White\""
 + " [10] \"4\"     \"4\"     \"5\"     \"Green\" \"Green\" \"2\"     \"4\"     \"Green\" \"Green\""
@@ -975,7 +1009,7 @@ lines(x[[4]]) vs lines(y[[4]])
 - " [82] \"Green\" \"White\" \"Black\" \"Black\" \"Red\"   \"Red\"   \"White\" \"White\" \"White\""
 and 5 more ...
 
-lines(x[[5]]) vs lines(y[[5]])
+lines(Rv3[[5]]) vs lines(Rv4[[5]])
   "'data.frame':\t100 obs. of  3 variables:"
 + " $ Color: chr  \"Green\" \"1\" \"Green\" \"5\" ..."
 - " $ Color: chr  \"Green\" \" Red\" \"Green\" \"White\" ..."
@@ -994,8 +1028,8 @@ lines(x[[5]]) vs lines(y[[5]])
 #### Episode: r-novice-inflammation/13-supp-data-structures.md
 
 ``` diff
-`lines(x[[33]])`: "[1] \"matrix\""            ""
-`lines(y[[33]])`: "[1] \"matrix\" \"array\" " ""
+`lines(Rv3[[33]])`: "[1] \"matrix\""            ""
+`lines(Rv4[[33]])`: "[1] \"matrix\" \"array\" " ""
 ```
 
 #### Episode: r-novice-inflammation/14-supp-call-stack.md
@@ -1007,11 +1041,11 @@ lines(x[[5]]) vs lines(y[[5]])
 #### Episode: r-novice-inflammation/15-supp-loops-in-depth.md
 
 ``` diff
-`lines(x[[6]])`: "   user  system elapsed " "  0.017   0.001   0.017 " ""
-`lines(y[[6]])`: "   user  system elapsed " "  0.019   0.000   0.019 " ""
+`lines(Rv3[[6]])`: "   user  system elapsed " "  0.017   0.001   0.017 " ""
+`lines(Rv4[[6]])`: "   user  system elapsed " "  0.019   0.000   0.019 " ""
 
-`lines(x[[7]])`: "   user  system elapsed " "  0.018   0.000   0.018 " ""
-`lines(y[[7]])`: "   user  system elapsed " "  0.016   0.000   0.016 " ""
+`lines(Rv3[[7]])`: "   user  system elapsed " "  0.018   0.000   0.018 " ""
+`lines(Rv4[[7]])`: "   user  system elapsed " "  0.016   0.000   0.016 " ""
 ```
 
 ## Lesson: r-novice-gapminder
@@ -1019,7 +1053,7 @@ lines(x[[5]]) vs lines(y[[5]])
 #### Episode: r-novice-gapminder/01-rstudio-intro.md
 
 ``` diff
-     lines(x[[23]])                  | lines(y[[23]])                      
+     lines(Rv3[[23]])                | lines(Rv4[[23]])                    
 [29] "    }"                         | "    }"                         [29]
 [30] "    else all.names"            | "    else all.names"            [30]
 [31] "}"                             | "}"                             [31]
@@ -1037,7 +1071,7 @@ lines(x[[5]]) vs lines(y[[5]])
 #### Episode: r-novice-gapminder/03-seeking-help.md
 
 ``` diff
-lines(x[[1]])[1:9] vs lines(y[[1]])[1:9]
+lines(Rv3[[1]])[1:9] vs lines(Rv4[[1]])[1:9]
 + "R version 3.6.3 (2020-02-29)"
 - "R version 4.0.0 (2020-04-24)"
   "Platform: x86_64-pc-linux-gnu (64-bit)"
@@ -1051,7 +1085,7 @@ lines(x[[1]])[1:9] vs lines(y[[1]])[1:9]
   "locale:"
   " [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              "
 
-lines(x[[1]])[20:27] vs lines(y[[1]])[20:27]
+lines(Rv3[[1]])[20:27] vs lines(Rv4[[1]])[20:27]
   "[1] knitr_1.28              requirements_0.0.0.9000 remotes_2.1.1          "
   ""
   "loaded via a namespace (and not attached):"
@@ -1068,45 +1102,78 @@ lines(x[[1]])[20:27] vs lines(y[[1]])[20:27]
 #### Episode: r-novice-gapminder/04-data-structures-part1.md
 
 ``` diff
-    lines(x[[3]])                | lines(y[[3]])                             
+```
+
+## Warning in diff\_myers(args\[\[“a”\]\], args\[\[“b”\]\], max.diffs =
+
+## args\[\[“max.diffs”\]\], : Exceeded `max.diffs`: 27 vs 100 allowed. Diff is probably
+
+## suboptimal.
+
+``` 
+
+     names(Rv3)    | names(Rv4)                   
+ [1] "43:1-48:3"   | "43:1-48:3"   [1]            
+ [2] "73:1-75:3"   | "73:1-75:3"   [2]            
+ [3] "87:1-90:3"   - "87:1-89:3"   [3]            
+ [4] "104:1-106:3" - "103:1-105:3" [4]            
+ [5] "118:1-120:3" - "117:1-119:3" [5]            
+ [6] "140:1-142:3" - "154:1-156:3" [6]            
+ [7] "162:1-164:3" - "169:1-171:3" [7]            
+ [8] "177:1-179:3" - "183:1-185:3" [8]            
+ [9] "191:1-193:3" - "197:1-199:3" [9]            
+[10] "205:1-207:3" - "211:1-213:3" [10]           
+ ... ...             ...           and 66 more ...
+
+    lines(Rv3[[3]])              | lines(Rv4[[3]])                           
 [1] "[1] calico black  tabby "   - "[1] \"calico\" \"black\"  \"tabby\" " [1]
 [2] "Levels: black calico tabby" -                                           
 [3] ""                           | ""                                     [2]
 
-`lines(x[[6]])`: "[1] NA NA NA"   ""
-`lines(y[[6]])`: "[1] \"double\"" ""
+`lines(Rv3[[6]])`: "[1] NA NA NA"   ""
+`lines(Rv4[[6]])`: "[1] \"double\"" ""
 
-`lines(x[[8]])`: "[1] \"double\""  ""
-`lines(y[[8]])`: "[1] \"integer\"" ""
+`lines(Rv3[[8]])`: "[1] \"double\""  ""
+`lines(Rv4[[8]])`: "[1] \"integer\"" ""
 
-`lines(x[[9]])`: "[1] \"integer\"" ""
-`lines(y[[9]])`: "[1] \"complex\"" ""
+`lines(Rv3[[9]])`: "[1] \"integer\"" ""
+`lines(Rv4[[9]])`: "[1] \"complex\"" ""
 
-`lines(x[[10]])`: "[1] \"complex\"" ""
-`lines(y[[10]])`: "[1] \"logical\"" ""
+`lines(Rv3[[10]])`: "[1] \"complex\"" ""
+`lines(Rv4[[10]])`: "[1] \"logical\"" ""
 
-`lines(x[[11]])`: "[1] \"logical\""   ""
-`lines(y[[11]])`: "[1] \"character\"" ""
+`lines(Rv3[[11]])`: "[1] \"logical\""   ""
+`lines(Rv4[[11]])`: "[1] \"character\"" ""
 
-`lines(x[[13]])`: "[1] \"integer\""    ""
-`lines(y[[13]])`: "[1] \"data.frame\"" ""
+`lines(Rv3[[13]])`: "[1] \"integer\""    ""
+`lines(Rv4[[13]])`: "[1] \"data.frame\"" ""
 
-`lines(x[[14]])`: "[1] NA NA NA NA"       ""
-`lines(y[[14]])`: "[1] FALSE FALSE FALSE" ""
+`lines(Rv3[[14]])`: "[1] NA NA NA NA"       ""
+`lines(Rv4[[14]])`: "[1] FALSE FALSE FALSE" ""
 
-`lines(x[[15]])`: "[1] \"data.frame\"" ""
-`lines(y[[15]])`: "[1] \"\" \"\" \"\"" ""
+`lines(Rv3[[15]])`: "[1] \"data.frame\"" ""
+`lines(Rv4[[15]])`: "[1] \"\" \"\" \"\"" ""
 
-`lines(x[[16]])`: "[1] FALSE FALSE FALSE"     ""
-`lines(y[[16]])`: " chr [1:3] \"\" \"\" \"\"" ""
-
-And 60 more differences ...
+And 61 more differences ...
 ```
 
 #### Episode: r-novice-gapminder/05-data-structures-part2.md
 
 ``` diff
-lines(x[[5]]) vs lines(y[[5]])
+     names(Rv3)    | names(Rv4)                   
+ [2] "44:1-49:3"   | "44:1-49:3"   [2]            
+ [3] "94:1-96:3"   | "94:1-96:3"   [3]            
+ [4] "108:1-110:3" | "108:1-110:3" [4]            
+ [5] "150:1-156:3" - "142:1-148:3" [5]            
+ [6] "179:1-181:3" - "171:1-173:3" [6]            
+ [7] "204:1-210:3" | "204:1-210:3" [7]            
+ [8] "223:1-229:3" | "223:1-229:3" [8]            
+ [9] "259:1-266:3" | "259:1-266:3" [9]            
+[10] "279:1-285:3" | "279:1-285:3" [10]           
+[11] "303:1-309:3" - "303:1-307:3" [11]           
+ ... ...             ...           and 16 more ...
+
+lines(Rv3[[5]]) vs lines(Rv4[[5]])
 + "    coat weight likes_string age"
 - "           coat weight likes_string age"
 + "1 calico    2.1            1   2"
@@ -1119,10 +1186,10 @@ lines(x[[5]]) vs lines(y[[5]])
 - "4 tortoiseshell    3.3            1   9"
   ""
 
-`lines(x[[6]])`: "[1] \"black\"  \"calico\" \"tabby\" " ""
-`lines(y[[6]])`: "NULL"                                 ""
+`lines(Rv3[[6]])`: "[1] \"black\"  \"calico\" \"tabby\" " ""
+`lines(Rv4[[6]])`: "NULL"                                 ""
 
-lines(x[[7]])[1:5] vs lines(y[[7]])[1:5]
+lines(Rv3[[7]])[1:5] vs lines(Rv4[[7]])[1:5]
   "'data.frame':\t5 obs. of  4 variables:"
 + " $ coat        : Factor w/ 4 levels \"black\",\"calico\",..: 2 1 3 NA 4"
 - " $ coat        : Factor w/ 1 level \"tortoiseshell\": NA NA NA 1 1"
@@ -1130,7 +1197,7 @@ lines(x[[7]])[1:5] vs lines(y[[7]])[1:5]
   " $ likes_string: int  1 0 1 1 1"
   " $ age         : num  2 3 5 9 9"
 
-lines(x[[8]])[1:5] vs lines(y[[8]])[1:5]
+lines(Rv3[[8]])[1:5] vs lines(Rv4[[8]])[1:5]
   "'data.frame':\t5 obs. of  4 variables:"
 + " $ coat        : chr  \"calico\" \"black\" \"tabby\" NA ..."
 - " $ coat        : chr  NA NA NA \"tortoiseshell\" ..."
@@ -1138,7 +1205,7 @@ lines(x[[8]])[1:5] vs lines(y[[8]])[1:5]
   " $ likes_string: int  1 0 1 1 1"
   " $ age         : num  2 3 5 9 9"
 
-lines(x[[9]]) vs lines(y[[9]])
+lines(Rv3[[9]]) vs lines(Rv4[[9]])
   "           coat weight likes_string age"
 + "1        calico    2.1            1   2"
 - "1          <NA>    2.1            1   2"
@@ -1151,7 +1218,7 @@ lines(x[[9]]) vs lines(y[[9]])
   "5 tortoiseshell    3.3            1   9"
   ""
 
-lines(x[[10]]) vs lines(y[[10]])
+lines(Rv3[[10]]) vs lines(Rv4[[10]])
   "           coat weight likes_string age"
 + "1        calico    2.1            1   2"
 - "1          <NA>    2.1            1   2"
@@ -1162,7 +1229,7 @@ lines(x[[10]]) vs lines(y[[10]])
   "5 tortoiseshell    3.3            1   9"
   ""
 
-lines(x[[11]]) vs lines(y[[11]])
+lines(Rv3[[11]]) vs lines(Rv4[[11]])
   "           coat weight likes_string age"
 + "1        calico    2.1            1   2"
 - "4 tortoiseshell    3.3            1   9"
@@ -1171,7 +1238,7 @@ lines(x[[11]]) vs lines(y[[11]])
   "5 tortoiseshell    3.3            1   9"
   ""
 
-lines(x[[12]]) vs lines(y[[12]])
+lines(Rv3[[12]]) vs lines(Rv4[[12]])
   "           coat weight likes_string"
 + "1        calico    2.1            1"
 - "4 tortoiseshell    3.3            1"
@@ -1180,7 +1247,7 @@ lines(x[[12]]) vs lines(y[[12]])
   "5 tortoiseshell    3.3            1"
   ""
 
-lines(x[[13]]) vs lines(y[[13]])
+lines(Rv3[[13]]) vs lines(Rv4[[13]])
   "           coat weight likes_string"
 + "1        calico    2.1            1"
 - "4 tortoiseshell    3.3            1"
@@ -1189,21 +1256,7 @@ lines(x[[13]]) vs lines(y[[13]])
   "5 tortoiseshell    3.3            1"
   ""
 
-lines(x[[14]]) vs lines(y[[14]])
-  "            coat weight likes_string age"
-+ "1         calico    2.1            1   2"
-- "4  tortoiseshell    3.3            1   9"
-+ "2          black    5.0            0   3"
-+ "3          tabby    3.2            1   5"
-  "5  tortoiseshell    3.3            1   9"
-+ "11        calico    2.1            1   2"
-- "41 tortoiseshell    3.3            1   9"
-+ "21         black    5.0            0   3"
-+ "31         tabby    3.2            1   5"
-  "51 tortoiseshell    3.3            1   9"
-  ""
-
-And 5 more differences ...
+And 6 more differences ...
 ```
 
 #### Episode: r-novice-gapminder/06-data-subsetting.md
@@ -1251,7 +1304,20 @@ And 5 more differences ...
 #### Episode: r-novice-gapminder/13-dplyr.md
 
 ``` diff
-lines(x[[4]]) vs lines(y[[4]])
+     names(Rv3)    | names(Rv4)                   
+ [2] "31:1-33:3"   | "31:1-33:3"   [2]            
+ [3] "45:1-47:3"   | "45:1-47:3"   [3]            
+ [4] "175:1-183:3" | "175:1-183:3" [4]            
+ [5] "195:1-212:3" - "195:1-213:3" [5]            
+ [6] "275:4-281:6" - "242:1-244:3" [6]            
+ [7] "298:4-303:6" - "281:4-283:6" [7]            
+ [8] "317:4-322:6" - "296:4-302:6" [8]            
+ [9] "371:1-380:3" - "319:4-324:6" [9]            
+[10] "396:1-405:3" - "338:4-343:6" [10]           
+[11] "424:1-433:3" - "361:1-363:3" [11]           
+ ... ...             ...           and 10 more ...
+
+lines(Rv3[[4]]) vs lines(Rv4[[4]])
   "'data.frame':\t1704 obs. of  6 variables:"
 + " $ country  : Factor w/ 142 levels \"Afghanistan\",..: 1 1 1 1 1 1 1 1 1 1 ..."
 - " $ country  : chr  \"Afghanistan\" \"Afghanistan\" \"Afghanistan\" \"Afghanistan\" ..."
@@ -1263,7 +1329,7 @@ lines(x[[4]]) vs lines(y[[4]])
   " $ gdpPercap: num  779 821 853 836 740 ..."
   ""
 
-lines(x[[5]]) vs lines(y[[5]])
+lines(Rv3[[5]]) vs lines(Rv4[[5]])
   "tibble [1,704 × 6] (S3: grouped_df/tbl_df/tbl/data.frame)"
 + " $ country  : Factor w/ 142 levels \"Afghanistan\",..: 1 1 1 1 1 1 1 1 1 1 ..."
 - " $ country  : chr [1:1704] \"Afghanistan\" \"Afghanistan\" \"Afghanistan\" \"Afghanistan\" ..."
@@ -1286,7 +1352,7 @@ lines(x[[5]]) vs lines(y[[5]])
 - "  .. ..@ ptype: int(0) "
 and 2 more ...
 
-lines(x[[6]]) vs lines(y[[6]])
+lines(Rv3[[6]]) vs lines(Rv4[[6]])
 + "# A tibble: 2 x 2"
 - "`summarise()` ungrouping output (override with `.groups` argument)"
 + " country      mean_lifeExp"
@@ -1295,7 +1361,7 @@ lines(x[[6]]) vs lines(y[[6]])
 + "2 Sierra Leone         36.8"
   ""
 
-lines(x[[7]]) vs lines(y[[7]])
+lines(Rv3[[7]]) vs lines(Rv4[[7]])
 + "# A tibble: 1 x 2"
 - "`summarise()` ungrouping output (override with `.groups` argument)"
 + " country      mean_lifeExp"
@@ -1303,7 +1369,7 @@ lines(x[[7]]) vs lines(y[[7]])
 + "1 Sierra Leone         36.8"
   ""
 
-    lines(x[[8]])            | lines(y[[8]])                    
+    lines(Rv3[[8]])          | lines(Rv4[[8]])                  
 [1] "# A tibble: 1 x 2"      - "# A tibble: 2 x 2"           [1]
 [2] " country mean_lifeExp"  - " country      mean_lifeExp"  [2]
 [3] " <fct>          <dbl>"  - " <chr>               <dbl>"  [3]
@@ -1311,7 +1377,7 @@ lines(x[[7]]) vs lines(y[[7]])
                              - "2 Sierra Leone         36.8" [5]
 [5] ""                       | ""                            [6]
 
-    lines(x[[9]])       | lines(y[[9]])                    
+    lines(Rv3[[9]])     | lines(Rv4[[9]])                  
 [1] "# A tibble: 5 x 2" - "# A tibble: 1 x 2"           [1]
 [2] "  continent     n" - " country      mean_lifeExp"  [2]
 [3] "  <fct>     <int>" - " <chr>               <dbl>"  [3]
@@ -1322,7 +1388,7 @@ lines(x[[7]]) vs lines(y[[7]])
 [8] "5 Oceania       2" -                                  
 [9] ""                  | ""                            [5]
 
-    lines(x[[10]])      | lines(y[[10]])              
+    lines(Rv3[[10]])    | lines(Rv4[[10]])            
 [1] "# A tibble: 5 x 2" - "# A tibble: 1 x 2"      [1]
 [2] "  continent se_le" - " country mean_lifeExp"  [2]
 [3] "  <fct>     <dbl>" - " <chr>          <dbl>"  [3]
@@ -1333,7 +1399,7 @@ lines(x[[7]]) vs lines(y[[7]])
 [8] "5 Oceania   0.775" -                             
 [9] ""                  | ""                       [5]
 
-lines(x[[11]]) vs lines(y[[11]])
+lines(Rv3[[11]]) vs lines(Rv4[[11]])
 + "# A tibble: 5 x 5"
 - "`summarise()` regrouping output by 'continent' (override with `.groups` argument)"
 + "  continent mean_le min_le max_le se_le"
@@ -1345,19 +1411,29 @@ lines(x[[11]]) vs lines(y[[11]])
 + "5 Oceania      74.3   69.1   81.2 0.775"
   ""
 
-`lines(x[[12]])` is absent
-`lines(y[[12]])` is a character vector ('`summarise()` regrouping output by \'continent\' (override with `.groups` argument)', '')
+`lines(Rv3[[12]])` is absent
+`lines(Rv4[[12]])` is a character vector ('`summarise()` regrouping output by \'continent\' (override with `.groups` argument)', '')
 
-`lines(x[[13]])` is absent
-`lines(y[[13]])` is a character vector ('  continent  n', '1    Africa 52', '2      Asia 33', '3    Europe 30', '4  Americas 25', ...)
-
-And 8 more differences ...
+And 9 more differences ...
 ```
 
 #### Episode: r-novice-gapminder/14-tidyr.md
 
 ``` diff
-lines(x[[5]]) vs lines(y[[5]])
+     names(Rv3)    | names(Rv4)                  
+ [2] "123:1-163:3" | "123:1-163:3" [2]           
+ [3] "188:1-194:3" | "188:1-194:3" [3]           
+ [4] "228:1-234:3" | "228:1-234:3" [4]           
+ [5] "269:4-289:6" - "269:4-271:6" [5]           
+ [6] "314:1-316:3" - "276:4-296:6" [6]           
+ [7] "328:1-330:3" - "321:1-323:3" [7]           
+ [8] "342:1-344:3" - "335:1-337:3" [8]           
+ [9] "356:1-358:3" - "349:1-351:3" [9]           
+[10] "374:1-376:3" - "363:1-365:3" [10]          
+[11] "388:1-398:3" - "381:1-389:3" [11]          
+ ... ...             ...           and 8 more ...
+
+lines(Rv3[[5]]) vs lines(Rv4[[5]])
 + "# A tibble: 15 x 3"
 - "`summarise()` regrouping output by 'continent' (override with `.groups` argument)"
 + "# Groups:   continent [5]"
@@ -1380,7 +1456,7 @@ lines(x[[5]]) vs lines(y[[5]])
 + "15 Oceania   pop        8874672. "
 and 1 more ...
 
-    lines(x[[6]])   | lines(y[[6]])                                     
+    lines(Rv3[[6]]) | lines(Rv4[[6]])                                   
 [1] "[1] 1704    6" - "# A tibble: 15 x 3"               [1]            
                     - "# Groups:   continent [5]"        [2]            
                     - "  continent obs_type       means" [3]            
@@ -1393,22 +1469,22 @@ and 1 more ...
                     - "6 Americas  pop       24504795. " [10]           
 ... ...               ...                                and 10 more ...
 
-lines(x[[8]]) vs lines(y[[8]])
+lines(Rv3[[8]]) vs lines(Rv4[[8]])
 + "[1] \"continent\" \"country\"   \"year\"      \"gdpPercap\" \"lifeExp\"   \"pop\"      "
 - "[1] 1704    6"
   ""
 
-lines(x[[9]]) vs lines(y[[9]])
+lines(Rv3[[9]]) vs lines(Rv4[[9]])
 + "[1] \"country\"   \"year\"      \"pop\"       \"continent\" \"lifeExp\"   \"gdpPercap\""
 - "[1] \"continent\" \"country\"   \"year\"      \"gdpPercap\" \"lifeExp\"   \"pop\"      "
   ""
 
-lines(x[[10]]) vs lines(y[[10]])
+lines(Rv3[[10]]) vs lines(Rv4[[10]])
 + "[1] TRUE"
 - "[1] \"country\"   \"year\"      \"pop\"       \"continent\" \"lifeExp\"   \"gdpPercap\""
   ""
 
-lines(x[[11]]) vs lines(y[[11]])
+lines(Rv3[[11]]) vs lines(Rv4[[11]])
 + "# A tibble: 6 x 6"
 - "[1] \"Attributes: < Component \\\"class\\\": Lengths (3, 1) differ (string compare on first 1) >\""
 + "  country  year      pop continent lifeExp gdpPercap"
@@ -1427,7 +1503,7 @@ lines(x[[11]]) vs lines(y[[11]])
 + "6 Algeria  1977 17152804 Africa       58.0     4910."
   ""
 
-lines(x[[12]]) vs lines(y[[12]])
+lines(Rv3[[12]]) vs lines(Rv4[[12]])
 + "      country year      pop continent lifeExp gdpPercap"
 - "# A tibble: 6 x 6"
 + "1 Afghanistan 1952  8425333      Asia  28.801  779.4453"
@@ -1446,7 +1522,7 @@ lines(x[[12]]) vs lines(y[[12]])
 - "6 Algeria  1977 17152804 Africa       58.0     4910."
   ""
 
-lines(x[[13]]) vs lines(y[[13]])
+lines(Rv3[[13]]) vs lines(Rv4[[13]])
 + "[1] TRUE"
 - "      country year      pop continent lifeExp gdpPercap"
 - "1 Afghanistan 1952  8425333      Asia  28.801  779.4453"
@@ -1457,7 +1533,7 @@ lines(x[[13]]) vs lines(y[[13]])
 - "6 Afghanistan 1977 14880372      Asia  38.438  786.1134"
   ""
 
-lines(x[[14]]) vs lines(y[[14]])
+lines(Rv3[[14]]) vs lines(Rv4[[14]])
 + "tibble [5,112 × 4] (S3: tbl_df/tbl/data.frame)"
 - "[1] \"Attributes: < Component \\\"class\\\": Lengths (3, 1) differ (string compare on first 1) >\""
 + " $ var_ID    : chr [1:5112] \"Africa_Algeria\" \"Africa_Algeria\" \"Africa_Algeria\" \"Africa_Algeria\" ..."
@@ -1467,18 +1543,7 @@ lines(x[[14]]) vs lines(y[[14]])
 + " $ obs_values: num [1:5112] 2449 3014 2551 3247 4183 ..."
   ""
 
-lines(x[[15]]) vs lines(y[[15]])
-+ "tibble [5,112 × 3] (S3: tbl_df/tbl/data.frame)"
-- "tibble [5,112 × 4] (S3: tbl_df/tbl/data.frame)"
-+ " $ ID_var    : chr [1:5112] \"Africa_Algeria\" \"Africa_Algeria\" \"Africa_Algeria\" \"Africa_Algeria\" ..."
-- " $ var_ID    : chr [1:5112] \"Africa_Algeria\" \"Africa_Algeria\" \"Africa_Algeria\" \"Africa_Algeria\" ..."
-+ " $ var_names : chr [1:5112] \"gdpPercap_1952\" \"gdpPercap_1957\" \"gdpPercap_1962\" \"gdpPercap_1967\" ..."
-- " $ obs_type  : chr [1:5112] \"gdpPercap\" \"gdpPercap\" \"gdpPercap\" \"gdpPercap\" ..."
-- " $ year      : int [1:5112] 1952 1957 1962 1967 1972 1977 1982 1987 1992 1997 ..."
-  " $ obs_values: num [1:5112] 2449 3014 2551 3247 4183 ..."
-  ""
-
-And 4 more differences ...
+And 5 more differences ...
 ```
 
 #### Episode: r-novice-gapminder/15-knitr-markdown.md
@@ -1524,7 +1589,7 @@ And 4 more differences ...
 #### Episode: r-novice-gapminder-es/01-rstudio-intro.md
 
 ``` diff
-     lines(x[[23]])                  | lines(y[[23]])                      
+     lines(Rv3[[23]])                | lines(Rv4[[23]])                    
 [29] "    }"                         | "    }"                         [29]
 [30] "    else all.names"            | "    else all.names"            [30]
 [31] "}"                             | "}"                             [31]
@@ -1542,7 +1607,7 @@ And 4 more differences ...
 #### Episode: r-novice-gapminder-es/03-seeking-help.md
 
 ``` diff
-lines(x[[1]])[1:9] vs lines(y[[1]])[1:9]
+lines(Rv3[[1]])[1:9] vs lines(Rv4[[1]])[1:9]
 + "R version 3.6.3 (2020-02-29)"
 - "R version 4.0.0 (2020-04-24)"
   "Platform: x86_64-pc-linux-gnu (64-bit)"
@@ -1556,7 +1621,7 @@ lines(x[[1]])[1:9] vs lines(y[[1]])[1:9]
   "locale:"
   " [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              "
 
-lines(x[[1]])[20:25] vs lines(y[[1]])[20:25]
+lines(Rv3[[1]])[20:25] vs lines(Rv4[[1]])[20:25]
   "[1] checkpoint_0.4.9 stringr_1.4.0    knitr_1.28      "
   ""
   "loaded via a namespace (and not attached):"
@@ -1569,49 +1634,82 @@ lines(x[[1]])[20:25] vs lines(y[[1]])[20:25]
 #### Episode: r-novice-gapminder-es/04-data-structures-part1.md
 
 ``` diff
-lines(x[[3]]) vs lines(y[[3]])
+```
+
+## Warning in diff\_myers(args\[\[“a”\]\], args\[\[“b”\]\], max.diffs =
+
+## args\[\[“max.diffs”\]\], : Exceeded `max.diffs`: 14 vs 100 allowed. Diff is probably
+
+## suboptimal.
+
+``` 
+
+     names(Rv3)    | names(Rv4)                   
+ [1] "45:1-50:3"   | "45:1-50:3"   [1]            
+ [2] "75:1-77:3"   | "75:1-77:3"   [2]            
+ [3] "89:1-92:3"   - "89:1-91:3"   [3]            
+ [4] "105:1-107:3" - "104:1-106:3" [4]            
+ [5] "120:1-123:3" - "119:1-122:3" [5]            
+ [6] "143:1-145:3" - "160:1-162:3" [6]            
+ [7] "168:1-170:3" - "174:1-176:3" [7]            
+ [8] "182:1-184:3" - "189:1-191:3" [8]            
+ [9] "197:1-199:3" - "219:1-221:3" [9]            
+[10] "227:1-229:3" - "258:1-260:3" [10]           
+ ... ...             ...           and 55 more ...
+
+lines(Rv3[[3]]) vs lines(Rv4[[3]])
 + "[1] mixto    negro    atigrado"
 - "[1] \"mixto\"    \"negro\"    \"atigrado\""
 + "Levels: atigrado mixto negro"
   ""
 
-`lines(x[[6]])`: "[1] NA NA NA"      ""
-`lines(y[[6]])`: "[1] \"character\"" ""
+`lines(Rv3[[6]])`: "[1] NA NA NA"      ""
+`lines(Rv4[[6]])`: "[1] \"character\"" ""
 
-`lines(x[[7]])`: "[1] \"factor\""  ""
-`lines(y[[7]])`: "[1] \"numeric\"" ""
+`lines(Rv3[[7]])`: "[1] \"factor\""  ""
+`lines(Rv4[[7]])`: "[1] \"numeric\"" ""
 
-`lines(x[[8]])`: "[1] \"numeric\""    ""
-`lines(y[[8]])`: "[1] \"data.frame\"" ""
+`lines(Rv3[[8]])`: "[1] \"numeric\""    ""
+`lines(Rv4[[8]])`: "[1] \"data.frame\"" ""
 
-`lines(x[[9]])`: "[1] \"data.frame\""   ""
-`lines(y[[9]])`: " num [1:3] 2.1 5 3.2" ""
+`lines(Rv3[[9]])`: "[1] \"data.frame\""   ""
+`lines(Rv4[[9]])`: " num [1:3] 2.1 5 3.2" ""
 
-`lines(x[[10]])`: " num [1:3] 2.1 5 3.2" ""
-`lines(y[[10]])`: "[1] 2 6 3"            ""
+`lines(Rv3[[10]])`: " num [1:3] 2.1 5 3.2" ""
+`lines(Rv4[[10]])`: "[1] 2 6 3"            ""
 
-`lines(x[[11]])`: "[1] 2 6 3"        ""
-`lines(y[[11]])`: " num [1:3] 2 6 3" ""
+`lines(Rv3[[11]])`: "[1] 2 6 3"        ""
+`lines(Rv4[[11]])`: " num [1:3] 2 6 3" ""
 
-`lines(x[[12]])`: " num [1:3] 2 6 3"          ""
-`lines(y[[12]])`: " chr [1:2] \"a\" \"TRUE\"" ""
+`lines(Rv3[[12]])`: " num [1:3] 2 6 3"          ""
+`lines(Rv4[[12]])`: " chr [1:2] \"a\" \"TRUE\"" ""
 
-`lines(x[[13]])`: " chr [1:2] \"a\" \"TRUE\"" ""
-`lines(y[[13]])`: " num [1:2] 0 1"            ""
+`lines(Rv3[[13]])`: " chr [1:2] \"a\" \"TRUE\"" ""
+`lines(Rv4[[13]])`: " num [1:2] 0 1"            ""
 
-`lines(x[[14]])`: " num [1:2] 0 1"        ""
-`lines(y[[14]])`: "[1] \"0\" \"2\" \"4\"" ""
-
-And 50 more differences ...
+And 51 more differences ...
 ```
 
 #### Episode: r-novice-gapminder-es/05-data-structures-part2.md
 
 ``` diff
-`lines(x[[8]])`: "[1] \"atigrado\" \"mixto\"    \"negro\"   " ""
-`lines(y[[8]])`: "NULL"                                       ""
+     names(Rv3)    | names(Rv4)                   
+ [1] "33:1-38:3"   | "33:1-38:3"   [1]            
+ [2] "59:1-64:3"   | "59:1-64:3"   [2]            
+ [3] "112:1-117:3" | "112:1-117:3" [3]            
+ [4] "162:1-164:3" - "140:1-142:3" [4]            
+ [5] "176:1-178:3" - "154:1-156:3" [5]            
+ [6] "190:1-193:3" - "168:1-171:3" [6]            
+ [7] "206:1-209:3" - "184:1-187:3" [7]            
+ [8] "229:1-231:3" - "207:1-209:3" [8]            
+ [9] "252:1-258:3" - "238:1-244:3" [9]            
+[10] "271:1-277:3" - "257:1-263:3" [10]           
+ ... ...             ...           and 21 more ...
 
-lines(x[[9]])[1:5] vs lines(y[[9]])[1:5]
+`lines(Rv3[[8]])`: "[1] \"atigrado\" \"mixto\"    \"negro\"   " ""
+`lines(Rv4[[8]])`: "NULL"                                       ""
+
+lines(Rv3[[9]])[1:5] vs lines(Rv4[[9]])[1:5]
   "'data.frame':\t6 obs. of  4 variables:"
 + " $ color            : Factor w/ 4 levels \"atigrado\",\"mixto\",..: 2 3 1 NA NA 4"
 - " $ color            : Factor w/ 1 level \"tortoiseshell\": NA NA NA 1 1 1"
@@ -1619,7 +1717,7 @@ lines(x[[9]])[1:5] vs lines(y[[9]])[1:5]
   " $ legusta_la_cuerda: num  1 0 1 1 1 1"
   " $ edad             : num  2 3 5 9 9 9"
 
-lines(x[[10]])[1:5] vs lines(y[[10]])[1:5]
+lines(Rv3[[10]])[1:5] vs lines(Rv4[[10]])[1:5]
   "'data.frame':\t6 obs. of  4 variables:"
 + " $ color            : chr  \"mixto\" \"negro\" \"atigrado\" NA ..."
 - " $ color            : chr  NA NA NA \"tortoiseshell\" ..."
@@ -1627,7 +1725,7 @@ lines(x[[10]])[1:5] vs lines(y[[10]])[1:5]
   " $ legusta_la_cuerda: num  1 0 1 1 1 1"
   " $ edad             : num  2 3 5 9 9 9"
 
-lines(x[[11]]) vs lines(y[[11]])
+lines(Rv3[[11]]) vs lines(Rv4[[11]])
   "          color peso legusta_la_cuerda edad"
 + "1         mixto  2.1                 1    2"
 - "1          <NA>  2.1                 1    2"
@@ -1642,7 +1740,7 @@ lines(x[[11]]) vs lines(y[[11]])
   "6 tortoiseshell  3.3                 1    9"
   ""
 
-lines(x[[12]]) vs lines(y[[12]])
+lines(Rv3[[12]]) vs lines(Rv4[[12]])
   "          color peso legusta_la_cuerda edad"
 + "1         mixto  2.1                 1    2"
 - "1          <NA>  2.1                 1    2"
@@ -1655,7 +1753,7 @@ lines(x[[12]]) vs lines(y[[12]])
   "6 tortoiseshell  3.3                 1    9"
   ""
 
-lines(x[[13]]) vs lines(y[[13]])
+lines(Rv3[[13]]) vs lines(Rv4[[13]])
   "          color peso legusta_la_cuerda edad"
 + "1         mixto  2.1                 1    2"
 - "4 tortoiseshell  3.3                 1    9"
@@ -1665,7 +1763,7 @@ lines(x[[13]]) vs lines(y[[13]])
   "6 tortoiseshell  3.3                 1    9"
   ""
 
-lines(x[[14]]) vs lines(y[[14]])
+lines(Rv3[[14]]) vs lines(Rv4[[14]])
   "          color peso legusta_la_cuerda"
 + "1         mixto  2.1                 1"
 - "4 tortoiseshell  3.3                 1"
@@ -1675,7 +1773,7 @@ lines(x[[14]]) vs lines(y[[14]])
   "6 tortoiseshell  3.3                 1"
   ""
 
-lines(x[[15]]) vs lines(y[[15]])
+lines(Rv3[[15]]) vs lines(Rv4[[15]])
   "          color peso legusta_la_cuerda"
 + "1         mixto  2.1                 1"
 - "4 tortoiseshell  3.3                 1"
@@ -1685,7 +1783,7 @@ lines(x[[15]]) vs lines(y[[15]])
   "6 tortoiseshell  3.3                 1"
   ""
 
-lines(x[[16]]) vs lines(y[[16]])
+lines(Rv3[[16]]) vs lines(Rv4[[16]])
   "           color peso legusta_la_cuerda edad"
 + "1          mixto  2.1                 1    2"
 - "4  tortoiseshell  3.3                 1    9"
@@ -1701,24 +1799,7 @@ lines(x[[16]]) vs lines(y[[16]])
   "61 tortoiseshell  3.3                 1    9"
   ""
 
-lines(x[[17]]) vs lines(y[[17]])
-  "          color peso legusta_la_cuerda edad"
-+ "1         mixto  2.1                 1    2"
-- "1 tortoiseshell  3.3                 1    9"
-+ "2         negro  5.0                 0    3"
-- "2 tortoiseshell  3.3                 1    9"
-+ "3      atigrado  3.2                 1    5"
-- "3 tortoiseshell  3.3                 1    9"
-  "4 tortoiseshell  3.3                 1    9"
-+ "5         mixto  2.1                 1    2"
-- "5 tortoiseshell  3.3                 1    9"
-+ "6         negro  5.0                 0    3"
-- "6 tortoiseshell  3.3                 1    9"
-+ "7      atigrado  3.2                 1    5"
-+ "8 tortoiseshell  3.3                 1    9"
-  ""
-
-And 4 more differences ...
+And 5 more differences ...
 ```
 
 #### Episode: r-novice-gapminder-es/06-data-subsetting.md
@@ -1766,7 +1847,20 @@ And 4 more differences ...
 #### Episode: r-novice-gapminder-es/13-dplyr.md
 
 ``` diff
-lines(x[[4]]) vs lines(y[[4]])
+     names(Rv3)    | names(Rv4)                   
+ [2] "45:1-47:3"   | "45:1-47:3"   [2]            
+ [3] "59:1-61:3"   | "59:1-61:3"   [3]            
+ [4] "161:1-169:3" | "161:1-169:3" [4]            
+ [5] "181:1-198:3" - "181:1-199:3" [5]            
+ [6] "253:4-259:6" - "220:1-222:3" [6]            
+ [7] "278:4-283:6" - "259:4-261:6" [7]            
+ [8] "297:4-302:6" - "274:4-280:6" [8]            
+ [9] "346:1-355:3" - "299:4-304:6" [9]            
+[10] "370:1-379:3" - "318:4-323:6" [10]           
+[11] "398:1-407:3" - "340:1-342:3" [11]           
+ ... ...             ...           and 10 more ...
+
+lines(Rv3[[4]]) vs lines(Rv4[[4]])
   "'data.frame':\t1704 obs. of  6 variables:"
 + " $ country  : Factor w/ 142 levels \"Afghanistan\",..: 1 1 1 1 1 1 1 1 1 1 ..."
 - " $ country  : chr  \"Afghanistan\" \"Afghanistan\" \"Afghanistan\" \"Afghanistan\" ..."
@@ -1778,7 +1872,7 @@ lines(x[[4]]) vs lines(y[[4]])
   " $ gdpPercap: num  779 821 853 836 740 ..."
   ""
 
-lines(x[[5]]) vs lines(y[[5]])
+lines(Rv3[[5]]) vs lines(Rv4[[5]])
   "tibble [1,704 × 6] (S3: grouped_df/tbl_df/tbl/data.frame)"
 + " $ country  : Factor w/ 142 levels \"Afghanistan\",..: 1 1 1 1 1 1 1 1 1 1 ..."
 - " $ country  : chr [1:1704] \"Afghanistan\" \"Afghanistan\" \"Afghanistan\" \"Afghanistan\" ..."
@@ -1801,7 +1895,7 @@ lines(x[[5]]) vs lines(y[[5]])
 - "  .. ..@ ptype: int(0) "
 and 2 more ...
 
-lines(x[[6]]) vs lines(y[[6]])
+lines(Rv3[[6]]) vs lines(Rv4[[6]])
 + "# A tibble: 2 x 2"
 - "`summarise()` ungrouping output (override with `.groups` argument)"
 + " country      mean_lifeExp"
@@ -1810,7 +1904,7 @@ lines(x[[6]]) vs lines(y[[6]])
 + "2 Sierra Leone         36.8"
   ""
 
-lines(x[[7]]) vs lines(y[[7]])
+lines(Rv3[[7]]) vs lines(Rv4[[7]])
 + "# A tibble: 1 x 2"
 - "`summarise()` ungrouping output (override with `.groups` argument)"
 + " country      mean_lifeExp"
@@ -1818,7 +1912,7 @@ lines(x[[7]]) vs lines(y[[7]])
 + "1 Sierra Leone         36.8"
   ""
 
-    lines(x[[8]])            | lines(y[[8]])                    
+    lines(Rv3[[8]])          | lines(Rv4[[8]])                  
 [1] "# A tibble: 1 x 2"      - "# A tibble: 2 x 2"           [1]
 [2] " country mean_lifeExp"  - " country      mean_lifeExp"  [2]
 [3] " <fct>          <dbl>"  - " <chr>               <dbl>"  [3]
@@ -1826,7 +1920,7 @@ lines(x[[7]]) vs lines(y[[7]])
                              - "2 Sierra Leone         36.8" [5]
 [5] ""                       | ""                            [6]
 
-    lines(x[[9]])       | lines(y[[9]])                    
+    lines(Rv3[[9]])     | lines(Rv4[[9]])                  
 [1] "# A tibble: 5 x 2" - "# A tibble: 1 x 2"           [1]
 [2] "  continent     n" - " country      mean_lifeExp"  [2]
 [3] "  <fct>     <int>" - " <chr>               <dbl>"  [3]
@@ -1837,7 +1931,7 @@ lines(x[[7]]) vs lines(y[[7]])
 [8] "5 Oceania       2" -                                  
 [9] ""                  | ""                            [5]
 
-    lines(x[[10]])       | lines(y[[10]])              
+    lines(Rv3[[10]])     | lines(Rv4[[10]])            
 [1] "# A tibble: 5 x 2"  - "# A tibble: 1 x 2"      [1]
 [2] "  continent se_pop" - " country mean_lifeExp"  [2]
 [3] "  <fct>      <dbl>" - " <chr>          <dbl>"  [3]
@@ -1848,7 +1942,7 @@ lines(x[[7]]) vs lines(y[[7]])
 [8] "5 Oceania    0.775" -                             
 [9] ""                   | ""                       [5]
 
-lines(x[[11]]) vs lines(y[[11]])
+lines(Rv3[[11]]) vs lines(Rv4[[11]])
 + "# A tibble: 5 x 5"
 - "`summarise()` regrouping output by 'continent' (override with `.groups` argument)"
 + "  continent mean_le min_le max_le se_le"
@@ -1860,19 +1954,29 @@ lines(x[[11]]) vs lines(y[[11]])
 + "5 Oceania      74.3   69.1   81.2 0.775"
   ""
 
-`lines(x[[12]])` is absent
-`lines(y[[12]])` is a character vector ('`summarise()` regrouping output by \'continent\' (override with `.groups` argument)', '')
+`lines(Rv3[[12]])` is absent
+`lines(Rv4[[12]])` is a character vector ('`summarise()` regrouping output by \'continent\' (override with `.groups` argument)', '')
 
-`lines(x[[13]])` is absent
-`lines(y[[13]])` is a character vector ('  continent  n', '1    Africa 52', '2      Asia 33', '3    Europe 30', '4  Americas 25', ...)
-
-And 8 more differences ...
+And 9 more differences ...
 ```
 
 #### Episode: r-novice-gapminder-es/14-tidyr.md
 
 ``` diff
-lines(x[[5]]) vs lines(y[[5]])
+     names(Rv3)    | names(Rv4)                  
+ [2] "114:1-154:3" | "114:1-154:3" [2]           
+ [3] "175:1-181:3" | "175:1-181:3" [3]           
+ [4] "204:1-210:3" | "204:1-210:3" [4]           
+ [5] "247:5-267:7" - "247:5-249:7" [5]           
+ [6] "285:1-287:3" - "254:5-274:7" [6]           
+ [7] "299:1-301:3" - "292:1-294:3" [7]           
+ [8] "313:1-315:3" - "306:1-308:3" [8]           
+ [9] "327:1-329:3" - "320:1-322:3" [9]           
+[10] "346:1-352:3" - "334:1-336:3" [10]          
+[11] "364:1-372:3" - "353:1-359:3" [11]          
+ ... ...             ...           and 7 more ...
+
+lines(Rv3[[5]]) vs lines(Rv4[[5]])
 + "# A tibble: 15 x 3"
 - "`summarise()` regrouping output by 'continent' (override with `.groups` argument)"
 + "# Groups:   continent [5]"
@@ -1895,7 +1999,7 @@ lines(x[[5]]) vs lines(y[[5]])
 + "15 Oceania   pop        8874672. "
 and 1 more ...
 
-    lines(x[[6]])   | lines(y[[6]])                                      
+    lines(Rv3[[6]]) | lines(Rv4[[6]])                                    
 [1] "[1] 1704    6" - "# A tibble: 15 x 3"                [1]            
                     - "# Groups:   continent [5]"         [2]            
                     - "   continent obs_type       means" [3]            
@@ -1908,17 +2012,17 @@ and 1 more ...
                     - " 6 Americas  pop       24504795. " [10]           
 ... ...               ...                                 and 10 more ...
 
-lines(x[[8]]) vs lines(y[[8]])
+lines(Rv3[[8]]) vs lines(Rv4[[8]])
 + "[1] \"continent\" \"country\"   \"year\"      \"gdpPercap\" \"lifeExp\"   \"pop\"      "
 - "[1] 1704    6"
   ""
 
-lines(x[[9]]) vs lines(y[[9]])
+lines(Rv3[[9]]) vs lines(Rv4[[9]])
 + "[1] \"country\"   \"year\"      \"pop\"       \"continent\" \"lifeExp\"   \"gdpPercap\""
 - "[1] \"continent\" \"country\"   \"year\"      \"gdpPercap\" \"lifeExp\"   \"pop\"      "
   ""
 
-lines(x[[10]]) vs lines(y[[10]])
+lines(Rv3[[10]]) vs lines(Rv4[[10]])
 + "[1] \"Component \\\"country\\\": 1704 string mismatches\"              "
 - "[1] \"country\"   \"year\"      \"pop\"       \"continent\" \"lifeExp\"   \"gdpPercap\""
 + "[2] \"Component \\\"pop\\\": Mean relative difference: 1.634504\"      "
@@ -1927,7 +2031,7 @@ lines(x[[10]]) vs lines(y[[10]])
 + "[5] \"Component \\\"gdpPercap\\\": Mean relative difference: 1.162302\""
   ""
 
-lines(x[[11]]) vs lines(y[[11]])
+lines(Rv3[[11]]) vs lines(Rv4[[11]])
 + "  country year      pop continent lifeExp gdpPercap"
 - "[1] \"Component \\\"country\\\": 1704 string mismatches\"              "
 + "1 Algeria 1952  9279525    Africa  43.077  2449.008"
@@ -1942,7 +2046,7 @@ lines(x[[11]]) vs lines(y[[11]])
 + "6 Algeria 1977 17152804    Africa  58.014  4910.417"
   ""
 
-lines(x[[12]]) vs lines(y[[12]])
+lines(Rv3[[12]]) vs lines(Rv4[[12]])
 + "      country year      pop continent lifeExp gdpPercap"
 - "  country year      pop continent lifeExp gdpPercap"
 + "1 Afghanistan 1952  8425333      Asia  28.801  779.4453"
@@ -1959,7 +2063,7 @@ lines(x[[12]]) vs lines(y[[12]])
 - "6 Algeria 1977 17152804    Africa  58.014  4910.417"
   ""
 
-lines(x[[13]]) vs lines(y[[13]])
+lines(Rv3[[13]]) vs lines(Rv4[[13]])
 + "[1] TRUE"
 - "      country year      pop continent lifeExp gdpPercap"
 - "1 Afghanistan 1952  8425333      Asia  28.801  779.4453"
@@ -1970,7 +2074,7 @@ lines(x[[13]]) vs lines(y[[13]])
 - "6 Afghanistan 1977 14880372      Asia  38.438  786.1134"
   ""
 
-lines(x[[14]]) vs lines(y[[14]])
+lines(Rv3[[14]]) vs lines(Rv4[[14]])
 + "'data.frame':\t5112 obs. of  4 variables:"
 - "[1] TRUE"
 + " $ var_ID    : chr  \"Africa_Algeria\" \"Africa_Angola\" \"Africa_Benin\" \"Africa_Botswana\" ..."
@@ -1979,18 +2083,7 @@ lines(x[[14]]) vs lines(y[[14]])
 + " $ obs_values: num  2449 3521 1063 851 543 ..."
   ""
 
-lines(x[[15]]) vs lines(y[[15]])
-+ "'data.frame':\t5112 obs. of  3 variables:"
-- "'data.frame':\t5112 obs. of  4 variables:"
-+ " $ ID_var    : chr  \"Africa_Algeria\" \"Africa_Angola\" \"Africa_Benin\" \"Africa_Botswana\" ..."
-- " $ var_ID    : chr  \"Africa_Algeria\" \"Africa_Angola\" \"Africa_Benin\" \"Africa_Botswana\" ..."
-+ " $ var_names : chr  \"gdpPercap_1952\" \"gdpPercap_1952\" \"gdpPercap_1952\" \"gdpPercap_1952\" ..."
-- " $ obs_type  : chr  \"gdpPercap\" \"gdpPercap\" \"gdpPercap\" \"gdpPercap\" ..."
-- " $ year      : int  1952 1952 1952 1952 1952 1952 1952 1952 1952 1952 ..."
-  " $ obs_values: num  2449 3521 1063 851 543 ..."
-  ""
-
-And 3 more differences ...
+And 4 more differences ...
 ```
 
 #### Episode: r-novice-gapminder-es/15-knitr-markdown.md
@@ -2022,46 +2115,78 @@ And 3 more differences ...
 #### Episode: r-intro-geospatial/03-data-structures-part1.md
 
 ``` diff
-lines(x[[1]]) vs lines(y[[1]])
+```
+
+## Warning in diff\_myers(args\[\[“a”\]\], args\[\[“b”\]\], max.diffs =
+
+## args\[\[“max.diffs”\]\], : Exceeded `max.diffs`: 23 vs 100 allowed. Diff is probably
+
+## suboptimal.
+
+``` 
+
+     names(Rv3)    | names(Rv4)                   
+ [1] "36:1-39:3"   - "36:1-38:3"   [1]            
+ [2] "51:1-53:3"   - "50:1-52:3"   [2]            
+ [3] "66:1-68:3"   - "65:1-67:3"   [3]            
+ [4] "89:1-91:3"   - "102:1-104:3" [4]            
+ [5] "111:1-113:3" - "117:1-119:3" [5]            
+ [6] "126:1-128:3" - "131:1-133:3" [6]            
+ [7] "140:1-142:3" - "145:1-147:3" [7]            
+ [8] "154:1-156:3" - "159:1-161:3" [8]            
+ [9] "168:1-170:3" - "173:1-175:3" [9]            
+[10] "182:1-184:3" - "187:1-189:3" [10]           
+ ... ...             ...           and 55 more ...
+
+lines(Rv3[[1]]) vs lines(Rv4[[1]])
 + "[1] Denmark Sweden  Norway "
 - "[1] \"Denmark\" \"Sweden\"  \"Norway\" "
 + "Levels: Denmark Norway Sweden"
   ""
 
-`lines(x[[4]])`: "[1] NA NA NA"    ""
-`lines(y[[4]])`: "[1] \"numeric\"" ""
+`lines(Rv3[[4]])`: "[1] NA NA NA"    ""
+`lines(Rv4[[4]])`: "[1] \"numeric\"" ""
 
-`lines(x[[6]])`: "[1] \"numeric\"" ""
-`lines(y[[6]])`: "[1] \"integer\"" ""
+`lines(Rv3[[6]])`: "[1] \"numeric\"" ""
+`lines(Rv4[[6]])`: "[1] \"integer\"" ""
 
-`lines(x[[7]])`: "[1] \"integer\"" ""
-`lines(y[[7]])`: "[1] \"complex\"" ""
+`lines(Rv3[[7]])`: "[1] \"integer\"" ""
+`lines(Rv4[[7]])`: "[1] \"complex\"" ""
 
-`lines(x[[8]])`: "[1] \"complex\"" ""
-`lines(y[[8]])`: "[1] \"logical\"" ""
+`lines(Rv3[[8]])`: "[1] \"complex\"" ""
+`lines(Rv4[[8]])`: "[1] \"logical\"" ""
 
-`lines(x[[9]])`: "[1] \"logical\""   ""
-`lines(y[[9]])`: "[1] \"character\"" ""
+`lines(Rv3[[9]])`: "[1] \"logical\""   ""
+`lines(Rv4[[9]])`: "[1] \"character\"" ""
 
-`lines(x[[10]])`: "[1] \"character\"" ""
-`lines(y[[10]])`: "[1] \"factor\""    ""
+`lines(Rv3[[10]])`: "[1] \"character\"" ""
+`lines(Rv4[[10]])`: "[1] \"factor\""    ""
 
-`lines(x[[11]])`: "[1] \"factor\""    ""
-`lines(y[[11]])`: "[1] \"character\"" ""
+`lines(Rv3[[11]])`: "[1] \"factor\""    ""
+`lines(Rv4[[11]])`: "[1] \"character\"" ""
 
-`lines(x[[12]])`: "[1] \"factor\""     ""
-`lines(y[[12]])`: "[1] \"data.frame\"" ""
+`lines(Rv3[[12]])`: "[1] \"factor\""     ""
+`lines(Rv4[[12]])`: "[1] \"data.frame\"" ""
 
-`lines(x[[13]])`: "[1] NA NA NA"          ""
-`lines(y[[13]])`: "[1] FALSE FALSE FALSE" ""
-
-And 52 more differences ...
+And 53 more differences ...
 ```
 
 #### Episode: r-intro-geospatial/04-data-structures-part2.md
 
 ``` diff
-lines(x[[1]]) vs lines(y[[1]])
+     names(Rv3)    | names(Rv4)        
+[14] "387:1-389:3" | "387:1-389:3" [14]
+[15] "401:1-403:3" | "401:1-403:3" [15]
+[16] "417:1-425:3" | "417:1-425:3" [16]
+[17] "464:1-472:3" - "450:1-458:3" [17]
+[18] "502:1-504:3" - "488:1-490:3" [18]
+[19] "519:1-527:3" | "519:1-527:3" [19]
+[20] "542:1-551:3" - "542:1-552:3" [20]
+[21] "564:1-573:3" - "565:1-574:3" [21]
+[22] "591:1-596:3" - "592:1-597:3" [22]
+[23] "610:1-618:3" - "611:1-619:3" [23]
+
+lines(Rv3[[1]]) vs lines(Rv4[[1]])
   "'data.frame':\t1704 obs. of  6 variables:"
 + " $ country  : Factor w/ 142 levels \"Afghanistan\",..: 1 1 1 1 1 1 1 1 1 1 ..."
 - " $ country  : chr  \"Afghanistan\" \"Afghanistan\" \"Afghanistan\" \"Afghanistan\" ..."
@@ -2073,15 +2198,15 @@ lines(x[[1]]) vs lines(y[[1]])
   " $ gdpPercap: num  779 821 853 836 740 ..."
   ""
 
-`lines(x[[3]])`: "[1] \"factor\""    ""
-`lines(y[[3]])`: "[1] \"character\"" ""
+`lines(Rv3[[3]])`: "[1] \"factor\""    ""
+`lines(Rv4[[3]])`: "[1] \"character\"" ""
 
-lines(x[[4]]) vs lines(y[[4]])
+lines(Rv3[[4]]) vs lines(Rv4[[4]])
 + " Factor w/ 142 levels \"Afghanistan\",..: 1 1 1 1 1 1 1 1 1 1 ..."
 - " chr [1:1704] \"Afghanistan\" \"Afghanistan\" \"Afghanistan\" \"Afghanistan\" ..."
   ""
 
-lines(x[[17]])[4:8] vs lines(y[[17]])[4:8]
+lines(Rv3[[17]])[4:8] vs lines(Rv4[[17]])[4:8]
   "1702 Zimbabwe 1997 11404948    Africa  46.809   792.4500          TRUE"
   "1703 Zimbabwe 2002 11926563    Africa  39.989   672.0386          TRUE"
   "1704 Zimbabwe 2007 12311143    Africa  43.487   469.7093          TRUE"
@@ -2089,12 +2214,12 @@ lines(x[[17]])[4:8] vs lines(y[[17]])[4:8]
 - "1705   Norway 2016  5000000    Nordic  80.300 49400.0000         FALSE"
   ""
 
-lines(x[[18]]) vs lines(y[[18]])
+lines(Rv3[[18]]) vs lines(Rv4[[18]])
 + "[1] \"Africa\"   \"Americas\" \"Asia\"     \"Europe\"   \"Oceania\" "
 - "NULL"
   ""
 
-lines(x[[19]]) vs lines(y[[19]])
+lines(Rv3[[19]]) vs lines(Rv4[[19]])
   "      country year      pop continent lifeExp  gdpPercap below_average"
 + "1700 Zimbabwe 1987  9216418    Africa  62.351   706.1573          TRUE"
 - "1700 Zimbabwe 1987  9216418      <NA>  62.351   706.1573          TRUE"
@@ -2109,7 +2234,7 @@ lines(x[[19]]) vs lines(y[[19]])
   "1705   Norway 2016  5000000    Nordic  80.300 49400.0000         FALSE"
   ""
 
-lines(x[[20]])[1:8] vs lines(y[[20]])[1:9]
+lines(Rv3[[20]])[1:8] vs lines(Rv4[[20]])[1:9]
   "'data.frame':\t1704 obs. of  7 variables:"
 + " $ country      : Factor w/ 142 levels \"Afghanistan\",..: 1 1 1 1 1 1 1 1 1 1 ..."
 - " $ country      : chr  \"Afghanistan\" \"Afghanistan\" \"Afghanistan\" \"Afghanistan\" ..."
@@ -2122,7 +2247,7 @@ lines(x[[20]])[1:8] vs lines(y[[20]])[1:9]
   " $ gdpPercap    : num  779 821 853 836 740 ..."
   " $ below_average: logi  TRUE TRUE TRUE TRUE TRUE TRUE ..."
 
-lines(x[[21]])[1:5] vs lines(y[[21]])[1:5]
+lines(Rv3[[21]])[1:5] vs lines(Rv4[[21]])[1:5]
   "'data.frame':\t1704 obs. of  7 variables:"
 + " $ country      : Factor w/ 142 levels \"Afghanistan\",..: 1 1 1 1 1 1 1 1 1 1 ..."
 - " $ country      : chr  \"Afghanistan\" \"Afghanistan\" \"Afghanistan\" \"Afghanistan\" ..."
@@ -2140,7 +2265,20 @@ lines(x[[21]])[1:5] vs lines(y[[21]])[1:5]
 #### Episode: r-intro-geospatial/06-dplyr.md
 
 ``` diff
-lines(x[[4]]) vs lines(y[[4]])
+     names(Rv3)    | names(Rv4)                  
+ [2] "31:1-33:3"   | "31:1-33:3"   [2]           
+ [3] "45:1-47:3"   | "45:1-47:3"   [3]           
+ [4] "176:1-184:3" | "176:1-184:3" [4]           
+ [5] "196:1-213:3" - "196:1-214:3" [5]           
+ [6] "245:1-254:3" - "244:1-246:3" [6]           
+ [7] "283:4-289:6" - "258:1-267:3" [7]           
+ [8] "308:4-313:6" - "293:4-295:6" [8]           
+ [9] "327:4-332:6" - "308:4-314:6" [9]           
+[10] "381:1-390:3" - "333:4-338:6" [10]          
+[11] "407:1-416:3" - "352:4-357:6" [11]          
+ ... ...             ...           and 8 more ...
+
+lines(Rv3[[4]]) vs lines(Rv4[[4]])
   "'data.frame':\t1704 obs. of  6 variables:"
 + " $ country  : Factor w/ 142 levels \"Afghanistan\",..: 1 1 1 1 1 1 1 1 1 1 ..."
 - " $ country  : chr  \"Afghanistan\" \"Afghanistan\" \"Afghanistan\" \"Afghanistan\" ..."
@@ -2152,7 +2290,7 @@ lines(x[[4]]) vs lines(y[[4]])
   " $ gdpPercap: num  779 821 853 836 740 ..."
   ""
 
-lines(x[[5]]) vs lines(y[[5]])
+lines(Rv3[[5]]) vs lines(Rv4[[5]])
   "tibble [1,704 × 6] (S3: grouped_df/tbl_df/tbl/data.frame)"
 + " $ country  : Factor w/ 142 levels \"Afghanistan\",..: 1 1 1 1 1 1 1 1 1 1 ..."
 - " $ country  : chr [1:1704] \"Afghanistan\" \"Afghanistan\" \"Afghanistan\" \"Afghanistan\" ..."
@@ -2175,7 +2313,7 @@ lines(x[[5]]) vs lines(y[[5]])
 - "  .. ..@ ptype: int(0) "
 and 2 more ...
 
-lines(x[[6]]) vs lines(y[[6]])
+lines(Rv3[[6]]) vs lines(Rv4[[6]])
 + "# A tibble: 5 x 2"
 - "`summarise()` ungrouping output (override with `.groups` argument)"
 + "  continent mean_gdpPercap"
@@ -2187,7 +2325,7 @@ lines(x[[6]]) vs lines(y[[6]])
 + "5 Oceania           18622."
   ""
 
-    lines(x[[7]])                 | lines(y[[7]])                   
+    lines(Rv3[[7]])               | lines(Rv4[[7]])                 
 [1] "# A tibble: 2 x 2"           - "# A tibble: 5 x 2"          [1]
 [2] " country      mean_lifeExp"  - "  continent mean_gdpPercap" [2]
 [3] " <fct>               <dbl>"  - "  <chr>              <dbl>" [3]
@@ -2198,7 +2336,7 @@ lines(x[[6]]) vs lines(y[[6]])
                                   - "5 Oceania           18622." [8]
 [6] ""                            | ""                           [9]
 
-lines(x[[8]]) vs lines(y[[8]])
+lines(Rv3[[8]]) vs lines(Rv4[[8]])
 + "# A tibble: 1 x 2"
 - "`summarise()` ungrouping output (override with `.groups` argument)"
 + " country      mean_lifeExp"
@@ -2206,7 +2344,7 @@ lines(x[[8]]) vs lines(y[[8]])
 + "1 Sierra Leone         36.8"
   ""
 
-    lines(x[[9]])            | lines(y[[9]])                    
+    lines(Rv3[[9]])          | lines(Rv4[[9]])                  
 [1] "# A tibble: 1 x 2"      - "# A tibble: 2 x 2"           [1]
 [2] " country mean_lifeExp"  - " country      mean_lifeExp"  [2]
 [3] " <fct>          <dbl>"  - " <chr>               <dbl>"  [3]
@@ -2214,7 +2352,7 @@ lines(x[[8]]) vs lines(y[[8]])
                              - "2 Sierra Leone         36.8" [5]
 [5] ""                       | ""                            [6]
 
-    lines(x[[10]])      | lines(y[[10]])                   
+    lines(Rv3[[10]])    | lines(Rv4[[10]])                 
 [1] "# A tibble: 5 x 2" - "# A tibble: 1 x 2"           [1]
 [2] "  continent     n" - " country      mean_lifeExp"  [2]
 [3] "  <fct>     <int>" - " <chr>               <dbl>"  [3]
@@ -2225,7 +2363,7 @@ lines(x[[8]]) vs lines(y[[8]])
 [8] "5 Oceania       2" -                                  
 [9] ""                  | ""                            [5]
 
-    lines(x[[11]])      | lines(y[[11]])              
+    lines(Rv3[[11]])    | lines(Rv4[[11]])            
 [1] "# A tibble: 5 x 2" - "# A tibble: 1 x 2"      [1]
 [2] "  continent se_le" - " country mean_lifeExp"  [2]
 [3] "  <fct>     <dbl>" - " <chr>          <dbl>"  [3]
@@ -2236,7 +2374,7 @@ lines(x[[8]]) vs lines(y[[8]])
 [8] "5 Oceania   0.775" -                             
 [9] ""                  | ""                       [5]
 
-lines(x[[12]]) vs lines(y[[12]])
+lines(Rv3[[12]]) vs lines(Rv4[[12]])
 + "# A tibble: 5 x 5"
 - "`summarise()` regrouping output by 'continent' (override with `.groups` argument)"
 + "  continent mean_le min_le max_le se_le"
@@ -2248,10 +2386,7 @@ lines(x[[12]]) vs lines(y[[12]])
 + "5 Oceania      74.3   69.1   81.2 0.775"
   ""
 
-`lines(x[[13]])` is absent
-`lines(y[[13]])` is a character vector ('`summarise()` regrouping output by \'continent\' (override with `.groups` argument)', '')
-
-And 6 more differences ...
+And 7 more differences ...
 ```
 
 #### Episode: r-intro-geospatial/07-plot-ggplot2.md
@@ -2271,7 +2406,19 @@ And 6 more differences ...
 #### Episode: r-raster-vector-geospatial/01-raster-structure.md
 
 ``` diff
-lines(x[[2]])[2:8] vs lines(y[[2]])[2:8]
+     names(Rv3)    | names(Rv4)        
+ [3] "154:1-162:3" | "154:1-162:3" [3] 
+ [4] "178:1-186:3" | "178:1-186:3" [4] 
+ [5] "214:1-219:3" | "214:1-219:3" [5] 
+ [6] "278:1-282:3" - "278:1-281:3" [6] 
+ [7] "336:1-338:3" - "335:1-337:3" [7] 
+ [8] "350:1-352:3" - "349:1-351:3" [8] 
+ [9] "389:1-391:3" - "388:1-390:3" [9] 
+[10] "463:5-485:7" - "462:5-484:7" [10]
+[11] "534:1-536:3" - "533:1-535:3" [11]
+[12] "587:5-609:7" - "586:5-608:7" [12]
+
+lines(Rv3[[2]])[2:8] vs lines(Rv4[[2]])[2:8]
   "dimensions : 1367, 1697, 2319799  (nrow, ncol, ncell)"
   "resolution : 1, 1  (x, y)"
   "extent     : 731453, 733150, 4712471, 4713838  (xmin, xmax, ymin, ymax)"
@@ -2281,7 +2428,7 @@ lines(x[[2]])[2:8] vs lines(y[[2]])[2:8]
   "names      : HARV_dsmCrop "
   "values     : 305.07, 416.07  (min, max)"
 
-    lines(x[[3]])          | lines(y[[3]])             
+    lines(Rv3[[3]])        | lines(Rv4[[3]])           
 [1] "        HARV_dsmCrop" | "        HARV_dsmCrop" [1]
 [2] "Min.          305.55" - "Min.          305.33" [2]
 [3] "1st Qu.       345.66" - "1st Qu.       345.50" [3]
@@ -2291,7 +2438,7 @@ lines(x[[2]])[2:8] vs lines(y[[2]])[2:8]
 [7] "NA's            0.00" | "NA's            0.00" [7]
 [8] ""                     | ""                     [8]
 
-lines(x[[6]]) vs lines(y[[6]])
+lines(Rv3[[6]]) vs lines(Rv4[[6]])
   "CRS arguments:"
 + " +proj=utm +zone=18 +datum=WGS84 +units=m +no_defs +ellps=WGS84"
 - " +proj=utm +zone=18 +datum=WGS84 +units=m +no_defs "
@@ -2302,10 +2449,10 @@ lines(x[[6]]) vs lines(y[[6]])
 #### Episode: r-raster-vector-geospatial/02-raster-plot.md
 
 ``` diff
-`lines(x[[5]])`: "[1] \"#00A600FF\" \"#ECB176FF\" \"#F2F2F2FF\"" ""
-`lines(y[[5]])`: "[1] \"#00A600\" \"#ECB176\" \"#F2F2F2\""       ""
+`lines(Rv3[[5]])`: "[1] \"#00A600FF\" \"#ECB176FF\" \"#F2F2F2FF\"" ""
+`lines(Rv4[[5]])`: "[1] \"#00A600\" \"#ECB176\" \"#F2F2F2\""       ""
 
-lines(x[[6]])[2:8] vs lines(y[[6]])[2:8]
+lines(Rv3[[6]])[2:8] vs lines(Rv4[[6]])[2:8]
   "dimensions : 1367, 1697, 2319799  (nrow, ncol, ncell)"
   "resolution : 1, 1  (x, y)"
   "extent     : 731453, 733150, 4712471, 4713838  (xmin, xmax, ymin, ymax)"
@@ -2319,27 +2466,39 @@ lines(x[[6]])[2:8] vs lines(y[[6]])[2:8]
 #### Episode: r-raster-vector-geospatial/03-raster-reproject-in-r.md
 
 ``` diff
-lines(x[[1]]) vs lines(y[[1]])
+     names(Rv3)    | names(Rv4)        
+ [1] "130:5-134:7" - "130:5-133:7" [1] 
+ [2] "147:5-150:7" - "146:5-148:7" [2] 
+ [3] "208:1-212:3" - "230:1-233:3" [3] 
+ [4] "224:1-227:3" - "245:1-247:3" [4] 
+ [5] "240:1-246:3" - "260:1-266:3" [5] 
+ [6] "258:1-264:3" - "278:1-284:3" [6] 
+ [7] "294:1-296:3" - "314:1-316:3" [7] 
+ [8] "308:1-310:3" - "328:1-330:3" [8] 
+ [9] "334:1-336:3" - "370:1-372:3" [9] 
+[10] "348:1-350:3" - "384:1-386:3" [10]
+
+lines(Rv3[[1]]) vs lines(Rv4[[1]])
   "CRS arguments:"
 + " +proj=utm +zone=18 +datum=WGS84 +units=m +no_defs +ellps=WGS84"
 - " +proj=utm +zone=18 +datum=WGS84 +units=m +no_defs "
 + "+towgs84=0,0,0 "
   ""
 
-lines(x[[2]]) vs lines(y[[2]])
+lines(Rv3[[2]]) vs lines(Rv4[[2]])
 + "CRS arguments:"
 - "CRS arguments: +proj=longlat +datum=WGS84 +no_defs "
 + " +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0 "
   ""
 
-lines(x[[3]]) vs lines(y[[3]])
+lines(Rv3[[3]]) vs lines(Rv4[[3]])
   "CRS arguments:"
 + " +proj=utm +zone=18 +datum=WGS84 +units=m +no_defs +ellps=WGS84"
 - " +proj=utm +zone=18 +datum=WGS84 +units=m +no_defs "
 + "+towgs84=0,0,0 "
   ""
 
-lines(x[[4]]) vs lines(y[[4]])
+lines(Rv3[[4]]) vs lines(Rv4[[4]])
 + "CRS arguments:"
 - "CRS arguments: +proj=longlat +datum=WGS84 +no_defs "
 + " +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0 "
@@ -2349,13 +2508,21 @@ lines(x[[4]]) vs lines(y[[4]])
 #### Episode: r-raster-vector-geospatial/04-raster-calculations-in-r.md
 
 ``` diff
-✔ No differences
+    names(Rv3)    | names(Rv4)       
+[5] "252:5-254:7" | "252:5-254:7" [5]
+[6] "270:5-272:7" | "270:5-272:7" [6]
+[7] "489:5-491:7" | "489:5-491:7" [7]
+[8] "537:5-539:7" - "544:5-546:7" [8]
+[9] "559:5-561:7" - "566:5-568:7" [9]
 ```
 
 #### Episode: r-raster-vector-geospatial/05-raster-multi-band-in-r.md
 
 ``` diff
-lines(x[[1]])[3:9] vs lines(y[[1]])[3:9]
+`names(Rv3)[9:12]`: "550:1-552:3" "567:1-569:3" "607:5-668:7" "679:5-688:7"
+`names(Rv4)[9:12]`: "550:1-552:3" "567:1-569:3" "607:5-668:7" "687:5-696:7"
+
+lines(Rv3[[1]])[3:9] vs lines(Rv4[[1]])[3:9]
   "dimensions : 2317, 3073, 7120141  (nrow, ncol, ncell)"
   "resolution : 0.25, 0.25  (x, y)"
   "extent     : 731998.5, 732766.8, 4712956, 4713536  (xmin, xmax, ymin, ymax)"
@@ -2365,7 +2532,7 @@ lines(x[[1]])[3:9] vs lines(y[[1]])[3:9]
   "names      : HARV_RGB_Ortho "
   "values     : 0, 255  (min, max)"
 
-lines(x[[2]])[2:8] vs lines(y[[2]])[2:8]
+lines(Rv3[[2]])[2:8] vs lines(Rv4[[2]])[2:8]
   "dimensions : 2317, 3073, 7120141, 3  (nrow, ncol, ncell, nlayers)"
   "resolution : 0.25, 0.25  (x, y)"
   "extent     : 731998.5, 732766.8, 4712956, 4713536  (xmin, xmax, ymin, ymax)"
@@ -2375,7 +2542,7 @@ lines(x[[2]])[2:8] vs lines(y[[2]])[2:8]
   "min values :                0,                0,                0 "
   "max values :              255,              255,              255 "
 
-lines(x[[3]])[4:10] vs lines(y[[3]])[4:10]
+lines(Rv3[[3]])[4:10] vs lines(Rv4[[3]])[4:10]
   "dimensions : 2317, 3073, 7120141  (nrow, ncol, ncell)"
   "resolution : 0.25, 0.25  (x, y)"
   "extent     : 731998.5, 732766.8, 4712956, 4713536  (xmin, xmax, ymin, ymax)"
@@ -2385,7 +2552,7 @@ lines(x[[3]])[4:10] vs lines(y[[3]])[4:10]
   "names      : HARV_RGB_Ortho.1 "
   "values     : 0, 255  (min, max)"
 
-lines(x[[3]])[16:22] vs lines(y[[3]])[16:22]
+lines(Rv3[[3]])[16:22] vs lines(Rv4[[3]])[16:22]
   "dimensions : 2317, 3073, 7120141  (nrow, ncol, ncell)"
   "resolution : 0.25, 0.25  (x, y)"
   "extent     : 731998.5, 732766.8, 4712956, 4713536  (xmin, xmax, ymin, ymax)"
@@ -2395,7 +2562,7 @@ lines(x[[3]])[16:22] vs lines(y[[3]])[16:22]
   "names      : HARV_RGB_Ortho.2 "
   "values     : 0, 255  (min, max)"
 
-lines(x[[3]])[28:34] vs lines(y[[3]])[28:34]
+lines(Rv3[[3]])[28:34] vs lines(Rv4[[3]])[28:34]
   "dimensions : 2317, 3073, 7120141  (nrow, ncol, ncell)"
   "resolution : 0.25, 0.25  (x, y)"
   "extent     : 731998.5, 732766.8, 4712956, 4713536  (xmin, xmax, ymin, ymax)"
@@ -2405,7 +2572,7 @@ lines(x[[3]])[28:34] vs lines(y[[3]])[28:34]
   "names      : HARV_RGB_Ortho.3 "
   "values     : 0, 255  (min, max)"
 
-lines(x[[4]])[3:9] vs lines(y[[4]])[3:9]
+lines(Rv3[[4]])[3:9] vs lines(Rv4[[4]])[3:9]
   "dimensions : 2317, 3073, 7120141  (nrow, ncol, ncell)"
   "resolution : 0.25, 0.25  (x, y)"
   "extent     : 731998.5, 732766.8, 4712956, 4713536  (xmin, xmax, ymin, ymax)"
@@ -2415,13 +2582,13 @@ lines(x[[4]])[3:9] vs lines(y[[4]])[3:9]
   "names      : HARV_RGB_Ortho.2 "
   "values     : 0, 255  (min, max)"
 
-`lines(x[[9]])`: "44248 bytes" ""
-`lines(y[[9]])`: "50104 bytes" ""
+`lines(Rv3[[9]])`: "44248 bytes" ""
+`lines(Rv4[[9]])`: "50104 bytes" ""
 
-`lines(x[[10]])`: "170897168 bytes" ""
-`lines(y[[10]])`: "15256 bytes"     ""
+`lines(Rv3[[10]])`: "170897168 bytes" ""
+`lines(Rv4[[10]])`: "15256 bytes"     ""
 
-lines(x[[12]]) vs lines(y[[12]])
+lines(Rv3[[12]]) vs lines(Rv4[[12]])
   " [1] [             [<-           anyDuplicated as_tibble     as.data.frame"
 + " [6] as.raster     as.tbl_cube   bind          boxplot       brick        "
 - " [6] as.raster     bind          boxplot       brick         coerce       "
@@ -2442,7 +2609,20 @@ lines(x[[12]]) vs lines(y[[12]])
 #### Episode: r-raster-vector-geospatial/06-vector-open-shapefile-in-r.md
 
 ``` diff
-lines(x[[1]])[3:7] vs lines(y[[1]])[3:7]
+     names(Rv3)    | names(Rv4)                  
+ [1] "51:1-58:3"   | "51:1-58:3"   [1]           
+ [2] "96:1-99:3"   | "96:1-99:3"   [2]           
+ [3] "114:1-140:3" - "114:1-152:3" [3]           
+ [4] "155:1-158:3" - "167:1-170:3" [4]           
+ [5] "176:1-184:3" - "188:1-196:3" [5]           
+ [6] "239:5-246:7" - "251:5-258:7" [6]           
+ [7] "258:5-265:7" - "270:5-277:7" [7]           
+ [8] "277:5-279:7" - "289:5-291:7" [8]           
+ [9] "291:5-293:7" - "303:5-305:7" [9]           
+[10] "304:5-330:7" - "316:5-354:7" [10]          
+ ... ...             ...           and 3 more ...
+
+lines(Rv3[[1]])[3:7] vs lines(Rv4[[1]])[3:7]
   "geometry type:  POLYGON"
   "dimension:      XY"
   "bbox:           xmin: 732128 ymin: 4713209 xmax: 732251.1 ymax: 4713359"
@@ -2450,7 +2630,7 @@ lines(x[[1]])[3:7] vs lines(y[[1]])[3:7]
 - "projected CRS:  WGS 84 / UTM zone 18N"
   ""
 
-lines(x[[3]]) vs lines(y[[3]])
+lines(Rv3[[3]]) vs lines(Rv4[[3]])
   "Coordinate Reference System:"
 + "  User input: 32618 "
 - "  User input: WGS 84 / UTM zone 18N "
@@ -2473,7 +2653,7 @@ lines(x[[3]]) vs lines(y[[3]])
 - "        ID[\"EPSG\",4326]],"
 and 40 more ...
 
-lines(x[[5]])[2:8] vs lines(y[[5]])[2:8]
+lines(Rv3[[5]])[2:8] vs lines(Rv4[[5]])[2:8]
   "geometry type:  POLYGON"
   "dimension:      XY"
   "bbox:           xmin: 732128 ymin: 4713209 xmax: 732251.1 ymax: 4713359"
@@ -2483,7 +2663,7 @@ lines(x[[5]])[2:8] vs lines(y[[5]])[2:8]
   "1  1 POLYGON ((732128 4713359, 7..."
   ""
 
-lines(x[[6]])[3:7] vs lines(y[[6]])[3:7]
+lines(Rv3[[6]])[3:7] vs lines(Rv4[[6]])[3:7]
   "geometry type:  MULTILINESTRING"
   "dimension:      XY"
   "bbox:           xmin: 730741.2 ymin: 4711942 xmax: 733295.5 ymax: 4714260"
@@ -2491,7 +2671,7 @@ lines(x[[6]])[3:7] vs lines(y[[6]])[3:7]
 - "projected CRS:  WGS 84 / UTM zone 18N"
   ""
 
-lines(x[[7]])[3:7] vs lines(y[[7]])[3:7]
+lines(Rv3[[7]])[3:7] vs lines(Rv4[[7]])[3:7]
   "geometry type:  POINT"
   "dimension:      XY"
   "bbox:           xmin: 732183.2 ymin: 4713265 xmax: 732183.2 ymax: 4713265"
@@ -2499,7 +2679,7 @@ lines(x[[7]])[3:7] vs lines(y[[7]])[3:7]
 - "projected CRS:  WGS 84 / UTM zone 18N"
   ""
 
-lines(x[[10]]) vs lines(y[[10]])
+lines(Rv3[[10]]) vs lines(Rv4[[10]])
   "Coordinate Reference System:"
 + "  User input: 32618 "
 - "  User input: WGS 84 / UTM zone 18N "
@@ -2522,7 +2702,7 @@ lines(x[[10]]) vs lines(y[[10]])
 - "        ID[\"EPSG\",4326]],"
 and 40 more ...
 
-lines(x[[12]]) vs lines(y[[12]])
+lines(Rv3[[12]]) vs lines(Rv4[[12]])
   "Coordinate Reference System:"
 + "  User input: 32618 "
 - "  User input: WGS 84 / UTM zone 18N "
@@ -2549,7 +2729,20 @@ and 40 more ...
 #### Episode: r-raster-vector-geospatial/07-vector-shapefile-attributes-in-r.md
 
 ``` diff
-lines(x[[1]])[2:8] vs lines(y[[1]])[2:8]
+     names(Rv3)    | names(Rv4)                  
+ [4] "108:1-142:3" | "108:1-142:3" [4]           
+ [5] "166:5-168:7" | "166:5-168:7" [5]           
+ [6] "180:5-182:7" | "180:5-182:7" [6]           
+ [7] "193:5-196:7" - "193:5-195:7" [7]           
+ [8] "208:5-212:7" - "207:5-211:7" [8]           
+ [9] "233:1-238:3" - "232:1-236:3" [9]           
+[10] "254:1-256:3" - "252:1-254:3" [10]          
+[11] "275:1-277:3" - "273:1-275:3" [11]          
+[12] "340:5-342:7" - "338:5-340:7" [12]          
+[13] "376:5-378:7" - "374:5-376:7" [13]          
+ ... ...             ...           and 6 more ...
+
+lines(Rv3[[1]])[2:8] vs lines(Rv4[[1]])[2:8]
   "geometry type:  POINT"
   "dimension:      XY"
   "bbox:           xmin: 732183.2 ymin: 4713265 xmax: 732183.2 ymax: 4713265"
@@ -2559,7 +2752,7 @@ lines(x[[1]])[2:8] vs lines(y[[1]])[2:8]
   "1     A      1  Northeast Harvard Forest Core Advanced Tower 42.5369 -72.17266"
   "  Zone  Easting Northing                Ownership    County annotation"
 
-lines(x[[4]])[2:8] vs lines(y[[4]])[2:8]
+lines(Rv3[[4]])[2:8] vs lines(Rv4[[4]])[2:8]
   "geometry type:  MULTILINESTRING"
   "dimension:      XY"
   "bbox:           xmin: 730741.2 ymin: 4712685 xmax: 732232.3 ymax: 4713726"
@@ -2569,12 +2762,12 @@ lines(x[[4]])[2:8] vs lines(y[[4]])[2:8]
   "1         14       48 woods road Locust Opening Rd      <NA>      5"
   "2         40       91   footpath              <NA>      <NA>      6"
 
-    lines(x[[7]])                      | lines(y[[7]])                         
+    lines(Rv3[[7]])                    | lines(Rv4[[7]])                       
 [1] "[1] Harvard University, LTER"     - "[1] \"Harvard University, LTER\"" [1]
 [2] "Levels: Harvard University, LTER" -                                       
 [3] ""                                 | ""                                 [2]
 
-lines(x[[9]]) vs lines(y[[9]])
+lines(Rv3[[9]]) vs lines(Rv4[[9]])
 + " [1] woods road footpath   footpath   stone wall stone wall stone wall"
 - " [1] \"woods road\" \"footpath\"   \"footpath\"   \"stone wall\" \"stone wall\""
 + " [7] stone wall stone wall stone wall boardwalk  woods road woods road"
@@ -2584,45 +2777,37 @@ lines(x[[9]]) vs lines(y[[9]])
 + "Levels: boardwalk footpath stone wall woods road"
   ""
 
-lines(x[[10]]) vs lines(y[[10]])
+lines(Rv3[[10]]) vs lines(Rv4[[10]])
 + "[1] \"boardwalk\"  \"footpath\"   \"stone wall\" \"woods road\""
 - "NULL"
   ""
 
-lines(x[[14]]) vs lines(y[[14]])
+lines(Rv3[[14]]) vs lines(Rv4[[14]])
 + "[1] \"boardwalk\"  \"footpath\"   \"stone wall\" \"woods road\""
 - "NULL"
   ""
 
-lines(x[[15]]) vs lines(y[[15]])
+lines(Rv3[[15]]) vs lines(Rv4[[15]])
 + "[1] \"boardwalk\"  \"footpath\"   \"stone wall\" \"woods road\""
 - "NULL"
   ""
 
-`lines(x[[16]])`: "[1] \"factor\""    ""
-`lines(y[[16]])`: "[1] \"character\"" ""
+`lines(Rv3[[16]])`: "[1] \"factor\""    ""
+`lines(Rv4[[16]])`: "[1] \"character\"" ""
 
-lines(x[[17]]) vs lines(y[[17]])
+lines(Rv3[[17]]) vs lines(Rv4[[17]])
 + "[1] \"Bicycles and Horses Allowed\"     \"Bicycles and Horses NOT ALLOWED\""
 - "NULL"
 + "[3] \"DO NOT SHOW ON REC MAP\"         "
   ""
 
-lines(x[[18]])[4:8] vs lines(y[[18]])[4:8]
-  "dimension:      XYZ"
-  "bbox:           xmin: -124.7258 ymin: 24.49813 xmax: -66.9499 ymax: 49.38436"
-  "z_range:        zmin: 0 zmax: 0"
-+ "CRS:            4326"
-- "geographic CRS: WGS 84"
-  ""
-
-And 1 more differences ...
+And 2 more differences ...
 ```
 
 #### Episode: r-raster-vector-geospatial/08-vector-plot-shapefiles-custom-legend.md
 
 ``` diff
-lines(x[[1]])[3:7] vs lines(y[[1]])[3:7]
+lines(Rv3[[1]])[3:7] vs lines(Rv4[[1]])[3:7]
   "geometry type:  POINT"
   "dimension:      XY"
   "bbox:           xmin: 731405.3 ymin: 4712845 xmax: 732275.3 ymax: 4713846"
@@ -2630,14 +2815,24 @@ lines(x[[1]])[3:7] vs lines(y[[1]])[3:7]
 - "projected CRS:  WGS 84 / UTM zone 18N"
   ""
 
-`lines(x[[2]])`: "[1] \"Histosols\"   \"Inceptisols\"" ""
-`lines(y[[2]])`: "NULL"                                ""
+`lines(Rv3[[2]])`: "[1] \"Histosols\"   \"Inceptisols\"" ""
+`lines(Rv4[[2]])`: "NULL"                                ""
 ```
 
 #### Episode: r-raster-vector-geospatial/09-vector-when-data-dont-line-up-crs.md
 
 ``` diff
-lines(x[[1]])[4:8] vs lines(y[[1]])[4:8]
+    names(Rv3)    | names(Rv4)       
+[1] "87:1-95:3"   | "87:1-95:3"   [1]
+[2] "125:1-133:3" | "125:1-133:3" [2]
+[3] "164:1-190:3" - "164:1-202:3" [3]
+[4] "219:1-233:3" - "231:1-249:3" [4]
+[5] "245:1-259:3" - "261:1-279:3" [5]
+[6] "299:1-302:3" - "319:1-322:3" [6]
+[7] "315:1-318:3" - "335:1-338:3" [7]
+[8] "377:5-385:7" - "397:5-405:7" [8]
+
+lines(Rv3[[1]])[4:8] vs lines(Rv4[[1]])[4:8]
   "dimension:      XYZ"
   "bbox:           xmin: -124.7258 ymin: 24.49813 xmax: -66.9499 ymax: 49.38436"
   "z_range:        zmin: 0 zmax: 0"
@@ -2645,7 +2840,7 @@ lines(x[[1]])[4:8] vs lines(y[[1]])[4:8]
 - "geographic CRS: WGS 84"
   ""
 
-lines(x[[2]])[4:8] vs lines(y[[2]])[4:8]
+lines(Rv3[[2]])[4:8] vs lines(Rv4[[2]])[4:8]
   "dimension:      XYZ"
   "bbox:           xmin: -124.7258 ymin: 24.49813 xmax: -66.9499 ymax: 49.38436"
   "z_range:        zmin: 0 zmax: 0"
@@ -2653,7 +2848,7 @@ lines(x[[2]])[4:8] vs lines(y[[2]])[4:8]
 - "geographic CRS: WGS 84"
   ""
 
-lines(x[[3]]) vs lines(y[[3]])
+lines(Rv3[[3]]) vs lines(Rv4[[3]])
   "Coordinate Reference System:"
 + "  User input: 32618 "
 - "  User input: WGS 84 / UTM zone 18N "
@@ -2676,7 +2871,7 @@ lines(x[[3]]) vs lines(y[[3]])
 - "        ID[\"EPSG\",4326]],"
 and 40 more ...
 
-lines(x[[4]]) vs lines(y[[4]])
+lines(Rv3[[4]]) vs lines(Rv4[[4]])
   "Coordinate Reference System:"
 + "  User input: 4326 "
 - "  User input: WGS 84 "
@@ -2699,7 +2894,7 @@ lines(x[[4]]) vs lines(y[[4]])
 - "        AXIS[\"latitude\",north,"
 and 8 more ...
 
-lines(x[[5]]) vs lines(y[[5]])
+lines(Rv3[[5]]) vs lines(Rv4[[5]])
   "Coordinate Reference System:"
 + "  User input: 4326 "
 - "  User input: WGS 84 "
@@ -2722,7 +2917,7 @@ lines(x[[5]]) vs lines(y[[5]])
 - "        AXIS[\"latitude\",north,"
 and 8 more ...
 
-lines(x[[8]])[4:8] vs lines(y[[8]])[4:8]
+lines(Rv3[[8]])[4:8] vs lines(Rv4[[8]])[4:8]
   "dimension:      XYZ"
   "bbox:           xmin: -80.51989 ymin: 37.91685 xmax: -66.9499 ymax: 47.45716"
   "z_range:        zmin: 0 zmax: 0"
@@ -2734,7 +2929,20 @@ lines(x[[8]])[4:8] vs lines(y[[8]])[4:8]
 #### Episode: r-raster-vector-geospatial/10-vector-csv-to-shapefile-in-r.md
 
 ``` diff
-lines(x[[1]]) vs lines(y[[1]])
+     names(Rv3)    | names(Rv4)                  
+ [2] "88:1-93:3"   | "88:1-93:3"   [2]           
+ [3] "110:1-112:3" | "110:1-112:3" [3]           
+ [4] "124:1-126:3" | "124:1-126:3" [4]           
+ [5] "152:1-155:3" - "152:1-154:3" [5]           
+ [6] "167:1-170:3" - "166:1-168:3" [6]           
+ [7] "201:1-227:3" - "199:1-237:3" [7]           
+ [8] "246:1-272:3" - "256:1-294:3" [8]           
+ [9] "284:1-286:3" - "306:1-308:3" [9]           
+[10] "314:1-340:3" - "336:1-374:3" [10]          
+[11] "410:5-425:7" - "444:5-459:7" [11]          
+ ... ...             ...           and 2 more ...
+
+lines(Rv3[[1]]) vs lines(Rv4[[1]])
   "'data.frame':\t21 obs. of  16 variables:"
   " $ easting   : num  731405 731934 731754 731724 732125 ..."
   " $ northing  : num  4713456 4713415 4713115 4713595 4713846 ..."
@@ -2757,19 +2965,19 @@ lines(x[[1]]) vs lines(y[[1]])
 + " $ plotType  : Factor w/ 2 levels \"distributed\",..: 1 2 2 2 2 2 2 2 2 2 ..."
 and 9 more ...
 
-lines(x[[5]]) vs lines(y[[5]])
+lines(Rv3[[5]]) vs lines(Rv4[[5]])
 + "[1] WGS84 WGS84 WGS84 WGS84 WGS84 WGS84"
 - "[1] \"WGS84\" \"WGS84\" \"WGS84\" \"WGS84\" \"WGS84\" \"WGS84\""
 + "Levels: WGS84"
   ""
 
-lines(x[[6]]) vs lines(y[[6]])
+lines(Rv3[[6]]) vs lines(Rv4[[6]])
 + "[1] 18N 18N 18N 18N 18N 18N"
 - "[1] \"18N\" \"18N\" \"18N\" \"18N\" \"18N\" \"18N\""
 + "Levels: 18N"
   ""
 
-lines(x[[7]]) vs lines(y[[7]])
+lines(Rv3[[7]]) vs lines(Rv4[[7]])
   "Coordinate Reference System:"
 + "  User input: 32618 "
 - "  User input: WGS 84 / UTM zone 18N "
@@ -2792,7 +3000,7 @@ lines(x[[7]]) vs lines(y[[7]])
 - "        ID[\"EPSG\",4326]],"
 and 40 more ...
 
-lines(x[[8]]) vs lines(y[[8]])
+lines(Rv3[[8]]) vs lines(Rv4[[8]])
   "Coordinate Reference System:"
 + "  User input: 32618 "
 - "  User input: WGS 84 / UTM zone 18N "
@@ -2815,7 +3023,7 @@ lines(x[[8]]) vs lines(y[[8]])
 - "        ID[\"EPSG\",4326]],"
 and 40 more ...
 
-lines(x[[10]]) vs lines(y[[10]])
+lines(Rv3[[10]]) vs lines(Rv4[[10]])
   "Coordinate Reference System:"
 + "  User input: 32618 "
 - "  User input: WGS 84 / UTM zone 18N "
@@ -2838,7 +3046,7 @@ lines(x[[10]]) vs lines(y[[10]])
 - "        ID[\"EPSG\",4326]],"
 and 40 more ...
 
-lines(x[[11]]) vs lines(y[[11]])
+lines(Rv3[[11]]) vs lines(Rv4[[11]])
   "'data.frame':\t2 obs. of  13 variables:"
   " $ decimalLat: num  42.5 42.5"
   " $ decimalLon: num  -72.2 -72.2"
@@ -2861,7 +3069,7 @@ lines(x[[11]]) vs lines(y[[11]])
   " $ plotSize  : int  40000 40000"
 and 4 more ...
 
-lines(x[[12]]) vs lines(y[[12]])
+lines(Rv3[[12]]) vs lines(Rv4[[12]])
   "Coordinate Reference System:"
 + "  User input: 4326 "
 - "  User input: WGS 84 "
@@ -2884,7 +3092,7 @@ lines(x[[12]]) vs lines(y[[12]])
 - "        AXIS[\"latitude\",north,"
 and 8 more ...
 
-lines(x[[13]]) vs lines(y[[13]])
+lines(Rv3[[13]]) vs lines(Rv4[[13]])
   "Coordinate Reference System:"
 + "  User input: 4326 "
 - "  User input: WGS 84 "
@@ -2911,13 +3119,32 @@ and 8 more ...
 #### Episode: r-raster-vector-geospatial/11-vector-raster-integration.md
 
 ``` diff
-✔ No differences
+     names(Rv3)    | names(Rv4)        
+ [3] "162:1-165:3" | "162:1-165:3" [3] 
+ [4] "177:1-180:3" | "177:1-180:3" [4] 
+ [5] "245:1-249:3" | "245:1-249:3" [5] 
+ [6] "321:1-325:3" - "335:1-339:3" [6] 
+ [7] "350:1-352:3" - "364:1-366:3" [7] 
+ [8] "370:1-373:3" - "384:1-387:3" [8] 
+ [9] "393:1-396:3" - "421:1-424:3" [9] 
+[10] "431:1-433:3" - "471:1-473:3" [10]
+[11] "464:5-487:7" - "516:5-539:7" [11]
 ```
 
 #### Episode: r-raster-vector-geospatial/12-time-series-raster.md
 
 ``` diff
-lines(x[[7]]) vs lines(y[[7]])
+    names(Rv3)    | names(Rv4)       
+[1] "89:1-103:3"  | "89:1-103:3"  [1]
+[2] "129:1-132:3" - "163:1-166:3" [2]
+[3] "166:5-172:7" - "200:5-206:7" [3]
+[4] "184:5-186:7" - "218:5-220:7" [4]
+[5] "198:5-200:7" - "232:5-234:7" [5]
+[6] "302:1-304:3" - "344:1-346:3" [6]
+[7] "336:1-384:3" - "378:1-426:3" [7]
+[8] "449:5-458:7" - "491:5-500:7" [8]
+
+lines(Rv3[[7]]) vs lines(Rv4[[7]])
   "'data.frame':\t5345 obs. of  46 variables:"
 + " $ date     : Factor w/ 5345 levels \"2001-02-11\",\"2001-02-12\",..: 1 2 3 4 5 6 7 8 9 10 ..."
 - " $ date     : chr  \"2001-02-11\" \"2001-02-12\" \"2001-02-13\" \"2001-02-14\" ..."
@@ -2940,7 +3167,7 @@ lines(x[[7]]) vs lines(y[[7]])
   " $ rhmin    : int  22 14 34 59 37 46 30 34 37 42 ..."
 and 51 more ...
 
-lines(x[[8]])[2:8] vs lines(y[[8]])[2:8]
+lines(Rv3[[8]])[2:8] vs lines(Rv4[[8]])[2:8]
   "dimensions : 652, 696, 453792, 3  (nrow, ncol, ncell, nlayers)"
   "resolution : 30, 30  (x, y)"
   "extent     : 230775, 251655, 4704825, 4724385  (xmin, xmax, ymin, ymax)"
@@ -2954,13 +3181,25 @@ lines(x[[8]])[2:8] vs lines(y[[8]])[2:8]
 #### Episode: r-raster-vector-geospatial/13-plot-time-series-rasters-in-r.md
 
 ``` diff
-✔ No differences
+`names(Rv3)`: "119:1-122:3" "191:1-197:3" "216:1-219:3" "234:1-237:3"
+`names(Rv4)`: "152:1-155:3" "224:1-230:3" "249:1-252:3" "267:1-270:3"
 ```
 
 #### Episode: r-raster-vector-geospatial/14-extract-ndvi-from-rasters-in-r.md
 
 ``` diff
-✔ No differences
+     names(Rv3)    | names(Rv4)                  
+ [1] "42:1-51:3"   - "75:1-84:3"   [1]           
+ [2] "67:1-75:3"   - "100:1-108:3" [2]           
+ [3] "94:1-102:3"  - "127:1-135:3" [3]           
+ [4] "129:1-137:3" - "162:1-170:3" [4]           
+ [5] "166:1-169:3" - "199:1-202:3" [5]           
+ [6] "191:1-193:3" - "224:1-226:3" [6]           
+ [7] "242:1-245:3" - "275:1-278:3" [7]           
+ [8] "259:1-261:3" - "292:1-294:3" [8]           
+ [9] "328:5-336:7" - "416:5-424:7" [9]           
+[10] "466:1-468:3" - "554:1-556:3" [10]          
+ ... ...             ...           and 3 more ...
 ```
 
 ## Lesson: r-socialsci
@@ -2986,7 +3225,20 @@ lines(x[[8]])[2:8] vs lines(y[[8]])[2:8]
 #### Episode: r-socialsci/03-dplyr-tidyr.md
 
 ``` diff
-lines(x[[7]]) vs lines(y[[7]])
+     names(Rv3)    | names(Rv4)                   
+ [4] "226:5-241:7" | "226:5-241:7" [4]            
+ [5] "264:1-281:3" | "264:1-281:3" [5]            
+ [6] "303:1-320:3" | "303:1-320:3" [6]            
+ [7] "376:1-383:3" - "376:1-378:3" [7]            
+ [8] "401:1-415:3" - "383:1-390:3" [8]            
+ [9] "431:1-444:3" - "408:1-410:3" [9]            
+[10] "463:1-474:3" - "415:1-429:3" [10]           
+[11] "494:1-505:3" - "445:1-447:3" [11]           
+[12] "524:1-535:3" - "452:1-465:3" [12]           
+[13] "553:1-564:3" - "484:1-486:3" [13]           
+ ... ...             ...           and 22 more ...
+
+lines(Rv3[[7]]) vs lines(Rv4[[7]])
 + "# A tibble: 3 x 2"
 - "`summarise()` ungrouping output (override with `.groups` argument)"
 + "  village  mean_no_membrs"
@@ -2996,7 +3248,7 @@ lines(x[[7]]) vs lines(y[[7]])
 + "3 Ruaca              7.57"
   ""
 
-lines(x[[8]]) vs lines(y[[8]])
+lines(Rv3[[8]]) vs lines(Rv4[[8]])
 + "# A tibble: 9 x 3"
 - "# A tibble: 3 x 2"
 + "# Groups:   village [3]"
@@ -3018,7 +3270,7 @@ lines(x[[8]]) vs lines(y[[8]])
 + "9 Ruaca    <NA>                 6.22"
   ""
 
-lines(x[[9]]) vs lines(y[[9]])
+lines(Rv3[[9]]) vs lines(Rv4[[9]])
 + "# A tibble: 9 x 3"
 - "`summarise()` regrouping output by 'village' (override with `.groups` argument)"
 + "  village  memb_assoc mean_no_membrs"
@@ -3034,7 +3286,7 @@ lines(x[[9]]) vs lines(y[[9]])
 + "9 Ruaca    <NA>                 6.22"
   ""
 
-lines(x[[10]]) vs lines(y[[10]])
+lines(Rv3[[10]]) vs lines(Rv4[[10]])
 + "# A tibble: 6 x 3"
 - "# A tibble: 9 x 3"
   "# Groups:   village [3]"
@@ -3055,7 +3307,7 @@ lines(x[[10]]) vs lines(y[[10]])
 - "9 Ruaca    <NA>                 6.22"
   ""
 
-lines(x[[11]]) vs lines(y[[11]])
+lines(Rv3[[11]]) vs lines(Rv4[[11]])
 + "# A tibble: 6 x 4"
 - "`summarise()` regrouping output by 'village' (override with `.groups` argument)"
 + "# Groups:   village [3]"
@@ -3069,7 +3321,7 @@ lines(x[[11]]) vs lines(y[[11]])
 + "6 Ruaca    yes                  9.5           5"
   ""
 
-lines(x[[12]]) vs lines(y[[12]])
+lines(Rv3[[12]]) vs lines(Rv4[[12]])
 + "# A tibble: 6 x 4"
 - "# A tibble: 9 x 3"
 + "# Groups:   village [3]"
@@ -3092,7 +3344,7 @@ lines(x[[12]]) vs lines(y[[12]])
 - "7 Ruaca    no                   7.18"
 and 3 more ...
 
-lines(x[[13]]) vs lines(y[[13]])
+lines(Rv3[[13]]) vs lines(Rv4[[13]])
 + "# A tibble: 6 x 4"
 - "`summarise()` regrouping output by 'village' (override with `.groups` argument)"
 + "# Groups:   village [3]"
@@ -3106,7 +3358,7 @@ lines(x[[13]]) vs lines(y[[13]])
 + "6 Ruaca    no                   7.18          2"
   ""
 
-    lines(x[[14]])      | lines(y[[14]])                                       
+    lines(Rv3[[14]])    | lines(Rv4[[14]])                                     
 [1] "# A tibble: 3 x 2" - "# A tibble: 6 x 3"                    [1]           
 [2] "  village      n"  - "# Groups:   village [3]"              [2]           
 [3] "  <chr>    <int>"  - "  village  memb_assoc mean_no_membrs" [3]           
@@ -3119,7 +3371,7 @@ lines(x[[13]]) vs lines(y[[13]])
                         - "6 Ruaca    yes                  9.5 " [10]          
 ... ...                   ...                                    and 1 more ...
 
-lines(x[[15]]) vs lines(y[[15]])
+lines(Rv3[[15]]) vs lines(Rv4[[15]])
 + "# A tibble: 3 x 2"
 - "`summarise()` regrouping output by 'village' (override with `.groups` argument)"
 + "  village      n"
@@ -3129,25 +3381,7 @@ lines(x[[15]]) vs lines(y[[15]])
 + "3 Chirodzo    39"
   ""
 
-lines(x[[16]]) vs lines(y[[16]])
-+ "# A tibble: 2 x 2"
-- "# A tibble: 6 x 4"
-+ "  no_meals     n"
-- "# Groups:   village [3]"
-+ "     <dbl> <int>"
-- "  village  memb_assoc mean_no_membrs min_membrs"
-+ "1        2    52"
-- "  <chr>    <chr>               <dbl>      <dbl>"
-+ "2        3    79"
-- "1 Chirodzo no                   8.06          4"
-- "2 Chirodzo yes                  7.82          2"
-- "3 God      no                   7.13          3"
-- "4 God      yes                  8             5"
-- "5 Ruaca    no                   7.18          2"
-- "6 Ruaca    yes                  9.5           5"
-  ""
-
-And 19 more differences ...
+And 20 more differences ...
 ```
 
 #### Episode: r-socialsci/04-ggplot2.md

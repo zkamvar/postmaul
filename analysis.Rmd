@@ -247,14 +247,14 @@ cmpr <- function(lesson, name) {
     return(invisible(NULL))
   }
 
-  o1 <- map(lesson[[1]]$episodes, ~.x$output %>% xml2::xml_text())
-  o2 <- map(lesson[[2]]$episodes, ~.x$output %>% xml2::xml_text())
+  o1 <- map(lesson[[1]]$episodes, ~setNames(xml2::xml_text(.x$output), xml2::xml_attr(.x$output, "sourcepos")))
+  o2 <- map(lesson[[2]]$episodes, ~setNames(xml2::xml_text(.x$output), xml2::xml_attr(.x$output, "sourcepos")))
 
   for (i in seq_along(lesson[[1]]$episodes)) {
 
     cat(glue::glue("\n#### Episode: {name}/{basename(lesson[[1]]$files[i])}\n"))
     cat("\n```diff\n")
-    print(waldo::compare(o1[[i]], o2[[i]]))
+    print(waldo::compare(o1[[i]], o2[[i]], x_arg = "Rv3", y_arg = "Rv4"))
     cat("\n```\n")
   }
 }
