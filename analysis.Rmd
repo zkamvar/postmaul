@@ -5,6 +5,8 @@ date: "3/30/2020"
 output: 
   md_document:
     variant: gfm
+params:
+  build_md: TRUE 
 ---
 
 ```{r setup, include=FALSE}
@@ -174,11 +176,13 @@ if (!dir_exists(rmdpath)) {
 }
 g <- function(u, r, path = rmdpath) {
   URL <- glue::glue("https://github.com/{u}/{r}.git")
-  path <- glue::glue("{path}/{u}--{r}")
-  if (fs::dir_exists(path)) {
-    git2r::pull(repo = path)
+  path <- glue::glue("{path}/{u}--{r}R{c(3, 4)}")
+  if (fs::dir_exists(path[[1]])) {
+    git2r::pull(repo = path[[1]])
+    git2r::pull(repo = path[[2]])
   } else {
-    git2r::clone(URL, local_path = path)
+    git2r::clone(URL, local_path = path[[1]])
+    git2r::clone(URL, local_path = path[[2]])
   }
 }
 purrr::walk2(has_rmd_all$user, has_rmd_all$repository, g, rmdpath) 
@@ -190,32 +194,30 @@ geospatial R container in order to get things to work properly.
 
 ```{r dokken, results = "hide", cache = TRUE}
 
+get_path <- function(u, r) {
+  fs::path_abs(fs::path("data", "rmd-repos", glue::glue("{u}--{r}")))
+}
+
 run_docker <- function(the_path, R_VERSION) {
+  make____it <- "install2.r checkpoint && make -B -j 4 -C /home/rstudio lesson-md"
   docker_run <- "docker run --rm -it -v {the_path}:/home/rstudio"
-  contai_ner <- "rocker/geospatial:{R_VERSION} /bin/bash -c 'install2.r checkpoint && make -C /home/rstudio lesson-md'"
-  system(glue::glue("cd {the_path}; git clean -fd .; git checkout -- ."))
-  system(glue::glue("rm -rf {the_path}/_episodes/*"))
+  contai_ner <- "rocker/geospatial:{R_VERSION} /bin/bash -c '{make____it}'"
   system(glue::glue("{glue::glue(docker_run)} {glue::glue(contai_ner)}"))
 }
 
 dockin <- function(u, r) {
 
-  pth <- glue::glue("{u}--{r}")
-  the_path <- fs::path_abs(fs::path("data", "rmd-repos", pth))
+  the_path <- get_path(u, r)
 
-  cat(glue::glue("LESSON: {pth} ==========================================="))
-  cat("    R 3.6.3 ------------------------")
   # Run with R 3.6.3 ---------------------------
-  run_docker(the_path, "3.6.3")
-  r3 <- try(Lesson$new(the_path, rmd = FALSE))
+  r3_path <- glue::glue("{the_path}R3")
+  if (params$build_md) run_docker(r3_path, "3.6.3")
+  r3 <- try(Lesson$new(r3_path, rmd = FALSE))
 
   # Run with R 4.0.0 ---------------------------
-  cat("    R 4.0.0 ------------------------")
-  run_docker(the_path, "4.0.0")
-  r4 <- try(Lesson$new(the_path, rmd = FALSE))
-
-  system(glue::glue("cd {the_path}; git clean -fd .; git checkout -- ."))
-
+  r4_path <- glue::glue("{the_path}R4")
+  if (params$build_md) run_docker(r4_path, "4.0.0")
+  r4 <- try(Lesson$new(r4_path, rmd = FALSE))
 
   list(r3, r4)
 
@@ -239,7 +241,7 @@ cmpr <- function(lesson, name) {
   o1 <- map(lesson[[1]]$episodes, ~.x$output %>% xml2::xml_text())
   o2 <- map(lesson[[2]]$episodes, ~.x$output %>% xml2::xml_text())
 
-  for (i in length(lesson[[1]]$episodes)) {
+  for (i in seq_along(lesson[[1]]$episodes)) {
     message(glue::glue("Episode:   {basename(lesson[[1]]$files[i])}"))
     print(waldo::compare(o1[[i]], o2[[i]]))
   }
