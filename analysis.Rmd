@@ -156,7 +156,10 @@ we can grab these lessons to see if we can build them with our docker container.
 The lessons we have are:
 
 ```{r, ouput = 'asis'}
-knitr::kable(has_rmd_all %>% select(URL, curriculum, life_cycle, language))
+has_rmd_all %>% 
+  mutate(results = glue::glue("[results](#lesson-{user})")) %>%
+  select(URL, curriculum, life_cycle, language, results) %>%
+  knitr::kable()
 ```
 
 

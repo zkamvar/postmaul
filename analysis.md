@@ -325,26 +325,29 @@ see if we can build them with our docker container.
 The lessons we have are:
 
 ``` r
-knitr::kable(has_rmd_all %>% select(URL, curriculum, life_cycle, language))
+has_rmd_all %>% 
+  mutate(results = glue::glue("[results](#lesson-{user})")) %>%
+  select(URL, curriculum, life_cycle, language, results) %>%
+  knitr::kable()
 ```
 
-| URL                                                           | curriculum           | life\_cycle | language |
-| :------------------------------------------------------------ | :------------------- | :---------- | :------- |
-| <https://github.com/LibraryCarpentry/lc-r>                    | lc                   | pre-alpha   | en       |
-| <https://github.com/datacarpentry/genomics-r-intro>           | dc-genomics          | alpha       | en       |
-| <https://github.com/swcarpentry/r-novice-inflammation>        | swc                  | stable      | en       |
-| <https://github.com/swcarpentry/r-novice-gapminder>           | swc                  | stable      | en       |
-| <https://github.com/datacarpentry/organization-geospatial>    | dc-geospatial        | stable      | en       |
-| <https://github.com/swcarpentry/r-novice-gapminder-es>        | swc-es               | stable      | es       |
-| <https://github.com/datacarpentry/r-intro-geospatial>         | dc-geospatial        | stable      | en       |
-| <https://github.com/datacarpentry/r-raster-vector-geospatial> | dc-geospatial        | stable      | en       |
-| <https://github.com/datacarpentry/r-socialsci>                | dc-socsci            | stable      | en       |
-| <https://github.com/datacarpentry/rr-automation>              | reproducible-science | on-hold     | en       |
-| <https://github.com/datacarpentry/rr-publication>             | reproducible-science | on-hold     | en       |
-| <https://github.com/datacarpentry/rr-intro>                   | reproducible-science | on-hold     | en       |
-| <https://github.com/datacarpentry/rr-version-control>         | reproducible-science | on-hold     | en       |
-| <https://github.com/datacarpentry/rr-organization1>           | reproducible-science | on-hold     | en       |
-| <https://github.com/datacarpentry/rr-literate-programming>    | reproducible-science | on-hold     | en       |
+| URL                                                           | curriculum           | life\_cycle | language | results                             |
+| :------------------------------------------------------------ | :------------------- | :---------- | :------- | :---------------------------------- |
+| <https://github.com/LibraryCarpentry/lc-r>                    | lc                   | pre-alpha   | en       | [results](#lesson-LibraryCarpentry) |
+| <https://github.com/datacarpentry/genomics-r-intro>           | dc-genomics          | alpha       | en       | [results](#lesson-datacarpentry)    |
+| <https://github.com/swcarpentry/r-novice-inflammation>        | swc                  | stable      | en       | [results](#lesson-swcarpentry)      |
+| <https://github.com/swcarpentry/r-novice-gapminder>           | swc                  | stable      | en       | [results](#lesson-swcarpentry)      |
+| <https://github.com/datacarpentry/organization-geospatial>    | dc-geospatial        | stable      | en       | [results](#lesson-datacarpentry)    |
+| <https://github.com/swcarpentry/r-novice-gapminder-es>        | swc-es               | stable      | es       | [results](#lesson-swcarpentry)      |
+| <https://github.com/datacarpentry/r-intro-geospatial>         | dc-geospatial        | stable      | en       | [results](#lesson-datacarpentry)    |
+| <https://github.com/datacarpentry/r-raster-vector-geospatial> | dc-geospatial        | stable      | en       | [results](#lesson-datacarpentry)    |
+| <https://github.com/datacarpentry/r-socialsci>                | dc-socsci            | stable      | en       | [results](#lesson-datacarpentry)    |
+| <https://github.com/datacarpentry/rr-automation>              | reproducible-science | on-hold     | en       | [results](#lesson-datacarpentry)    |
+| <https://github.com/datacarpentry/rr-publication>             | reproducible-science | on-hold     | en       | [results](#lesson-datacarpentry)    |
+| <https://github.com/datacarpentry/rr-intro>                   | reproducible-science | on-hold     | en       | [results](#lesson-datacarpentry)    |
+| <https://github.com/datacarpentry/rr-version-control>         | reproducible-science | on-hold     | en       | [results](#lesson-datacarpentry)    |
+| <https://github.com/datacarpentry/rr-organization1>           | reproducible-science | on-hold     | en       | [results](#lesson-datacarpentry)    |
+| <https://github.com/datacarpentry/rr-literate-programming>    | reproducible-science | on-hold     | en       | [results](#lesson-datacarpentry)    |
 
 The command to use is:
 
