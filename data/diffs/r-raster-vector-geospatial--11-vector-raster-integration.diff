@@ -1,0 +1,88 @@
+diff --git a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR3/_episodes/11-vector-raster-integration.md b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR4/_episodes/11-vector-raster-integration.md
+index 4987c9e..7a0632b 100644
+--- a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR3/_episodes/11-vector-raster-integration.md
++++ b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR4/_episodes/11-vector-raster-integration.md
+@@ -328,7 +328,21 @@ Forest field site.
+ 
+ ~~~
+ tree_height <- extract(x = CHM_HARV, y = aoi_boundary_HARV, df = TRUE)
++~~~
++{: .language-r}
++
+ 
++
++~~~
++Warning in proj4string(x): CRS object has comment, which is lost in output
++Warning in proj4string(x): CRS object has comment, which is lost in output
++Warning in proj4string(x): CRS object has comment, which is lost in output
++~~~
++{: .error}
++
++
++
++~~~
+ str(tree_height)
+ ~~~
+ {: .language-r}
+@@ -400,7 +414,21 @@ not use the `df = TRUE` argument.
+ 
+ ~~~
+ mean_tree_height_AOI <- extract(x = CHM_HARV, y = aoi_boundary_HARV, fun = mean)
++~~~
++{: .language-r}
++
++
++
++~~~
++Warning in proj4string(x): CRS object has comment, which is lost in output
++Warning in proj4string(x): CRS object has comment, which is lost in output
++Warning in proj4string(x): CRS object has comment, which is lost in output
++~~~
++{: .error}
++
++
+ 
++~~~
+ mean_tree_height_AOI
+ ~~~
+ {: .language-r}
+@@ -438,7 +466,19 @@ mean_tree_height_tower <- extract(x = CHM_HARV,
+                                   y = point_HARV,
+                                   buffer = 20,
+                                   fun = mean)
++~~~
++{: .language-r}
++
++
++
++~~~
++Warning in proj4string(x): CRS object has comment, which is lost in output
++~~~
++{: .error}
++
++
+ 
++~~~
+ mean_tree_height_tower
+ ~~~
+ {: .language-r}
+@@ -470,7 +510,19 @@ mean_tree_height_tower
+ > >                                        buffer = 20,
+ > >                                        fun = mean,
+ > >                                        df = TRUE)
++> > ~~~
++> > {: .language-r}
++> > 
++> > 
++> > 
++> > ~~~
++> > Warning in proj4string(x): CRS object has comment, which is lost in output
++> > ~~~
++> > {: .error}
++> > 
+ > > 
++> > 
++> > ~~~
+ > > # view data
+ > > mean_tree_height_plots_HARV
+ > > ~~~

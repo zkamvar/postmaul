@@ -1,0 +1,135 @@
+diff --git a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-intro-geospatialR3/_episodes/04-data-structures-part2.md b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-intro-geospatialR4/_episodes/04-data-structures-part2.md
+index e40d03c..e69c999 100644
+--- a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-intro-geospatialR3/_episodes/04-data-structures-part2.md
++++ b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-intro-geospatialR4/_episodes/04-data-structures-part2.md
+@@ -85,10 +85,10 @@ str(gapminder)
+ 
+ ~~~
+ 'data.frame':	1704 obs. of  6 variables:
+- $ country  : Factor w/ 142 levels "Afghanistan",..: 1 1 1 1 1 1 1 1 1 1 ...
++ $ country  : chr  "Afghanistan" "Afghanistan" "Afghanistan" "Afghanistan" ...
+  $ year     : int  1952 1957 1962 1967 1972 1977 1982 1987 1992 1997 ...
+  $ pop      : num  8425333 9240934 10267083 11537966 13079460 ...
+- $ continent: Factor w/ 5 levels "Africa","Americas",..: 3 3 3 3 3 3 3 3 3 3 ...
++ $ continent: chr  "Asia" "Asia" "Asia" "Asia" ...
+  $ lifeExp  : num  28.8 30.3 32 34 36.1 ...
+  $ gdpPercap: num  779 821 853 836 740 ...
+ ~~~
+@@ -119,7 +119,7 @@ class(gapminder$country)
+ 
+ 
+ ~~~
+-[1] "factor"
++[1] "character"
+ ~~~
+ {: .output}
+ 
+@@ -133,7 +133,7 @@ str(gapminder$country)
+ 
+ 
+ ~~~
+- Factor w/ 142 levels "Afghanistan",..: 1 1 1 1 1 1 1 1 1 1 ...
++ chr [1:1704] "Afghanistan" "Afghanistan" "Afghanistan" "Afghanistan" ...
+ ~~~
+ {: .output}
+ 
+@@ -466,20 +466,6 @@ Now how about adding rows? The rows of a data frame are lists:
+ ~~~
+ new_row <- list('Norway', 2016, 5000000, 'Nordic', 80.3, 49400.0, FALSE)
+ gapminder_norway <- rbind(gapminder, new_row)
+-~~~
+-{: .language-r}
+-
+-
+-
+-~~~
+-Warning in `[<-.factor`(`*tmp*`, ri, value = "Nordic"): invalid factor level, NA
+-generated
+-~~~
+-{: .warning}
+-
+-
+-
+-~~~
+ tail(gapminder_norway)
+ ~~~
+ {: .language-r}
+@@ -493,7 +479,7 @@ tail(gapminder_norway)
+ 1702 Zimbabwe 1997 11404948    Africa  46.809   792.4500          TRUE
+ 1703 Zimbabwe 2002 11926563    Africa  39.989   672.0386          TRUE
+ 1704 Zimbabwe 2007 12311143    Africa  43.487   469.7093          TRUE
+-1705   Norway 2016  5000000      <NA>  80.300 49400.0000         FALSE
++1705   Norway 2016  5000000    Nordic  80.300 49400.0000         FALSE
+ ~~~
+ {: .output}
+ 
+@@ -525,7 +511,7 @@ levels(gapminder$continent)
+ 
+ 
+ ~~~
+-[1] "Africa"   "Americas" "Asia"     "Europe"   "Oceania" 
++NULL
+ ~~~
+ {: .output}
+ 
+@@ -535,6 +521,20 @@ levels(gapminder$continent)
+ levels(gapminder$continent) <- c(levels(gapminder$continent), "Nordic")
+ gapminder_norway  <- rbind(gapminder,
+                            list('Norway', 2016, 5000000, 'Nordic', 80.3,49400.0, FALSE))
++~~~
++{: .language-r}
++
++
++
++~~~
++Warning in `[<-.factor`(`*tmp*`, ri, value = structure(c("Asia", "Asia", :
++invalid factor level, NA generated
++~~~
++{: .warning}
++
++
++
++~~~
+ tail(gapminder_norway)
+ ~~~
+ {: .language-r}
+@@ -543,11 +543,11 @@ tail(gapminder_norway)
+ 
+ ~~~
+       country year      pop continent lifeExp  gdpPercap below_average
+-1700 Zimbabwe 1987  9216418    Africa  62.351   706.1573          TRUE
+-1701 Zimbabwe 1992 10704340    Africa  60.377   693.4208          TRUE
+-1702 Zimbabwe 1997 11404948    Africa  46.809   792.4500          TRUE
+-1703 Zimbabwe 2002 11926563    Africa  39.989   672.0386          TRUE
+-1704 Zimbabwe 2007 12311143    Africa  43.487   469.7093          TRUE
++1700 Zimbabwe 1987  9216418      <NA>  62.351   706.1573          TRUE
++1701 Zimbabwe 1992 10704340      <NA>  60.377   693.4208          TRUE
++1702 Zimbabwe 1997 11404948      <NA>  46.809   792.4500          TRUE
++1703 Zimbabwe 2002 11926563      <NA>  39.989   672.0386          TRUE
++1704 Zimbabwe 2007 12311143      <NA>  43.487   469.7093          TRUE
+ 1705   Norway 2016  5000000    Nordic  80.300 49400.0000         FALSE
+ ~~~
+ {: .output}
+@@ -566,10 +566,11 @@ str(gapminder)
+ 
+ ~~~
+ 'data.frame':	1704 obs. of  7 variables:
+- $ country      : Factor w/ 142 levels "Afghanistan",..: 1 1 1 1 1 1 1 1 1 1 ...
++ $ country      : chr  "Afghanistan" "Afghanistan" "Afghanistan" "Afghanistan" ...
+  $ year         : int  1952 1957 1962 1967 1972 1977 1982 1987 1992 1997 ...
+  $ pop          : num  8425333 9240934 10267083 11537966 13079460 ...
+- $ continent    : Factor w/ 6 levels "Africa","Americas",..: 3 3 3 3 3 3 3 3 3 3 ...
++ $ continent    : chr  "Asia" "Asia" "Asia" "Asia" ...
++  ..- attr(*, "levels")= chr "Nordic"
+  $ lifeExp      : num  28.8 30.3 32 34 36.1 ...
+  $ gdpPercap    : num  779 821 853 836 740 ...
+  $ below_average: logi  TRUE TRUE TRUE TRUE TRUE TRUE ...
+@@ -588,7 +589,7 @@ str(gapminder)
+ 
+ ~~~
+ 'data.frame':	1704 obs. of  7 variables:
+- $ country      : Factor w/ 142 levels "Afghanistan",..: 1 1 1 1 1 1 1 1 1 1 ...
++ $ country      : chr  "Afghanistan" "Afghanistan" "Afghanistan" "Afghanistan" ...
+  $ year         : int  1952 1957 1962 1967 1972 1977 1982 1987 1992 1997 ...
+  $ pop          : num  8425333 9240934 10267083 11537966 13079460 ...
+  $ continent    : chr  "Asia" "Asia" "Asia" "Asia" ...

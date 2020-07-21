@@ -1,0 +1,174 @@
+diff --git a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-socialsciR3/_episodes/03-dplyr-tidyr.md b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-socialsciR4/_episodes/03-dplyr-tidyr.md
+index 5903152..97e355d 100644
+--- a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-socialsciR3/_episodes/03-dplyr-tidyr.md
++++ b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-socialsciR4/_episodes/03-dplyr-tidyr.md
+@@ -412,6 +412,13 @@ interviews %>%
+ 
+ 
+ 
++~~~
++`summarise()` ungrouping output (override with `.groups` argument)
++~~~
++{: .output}
++
++
++
+ ~~~
+ # A tibble: 3 x 2
+   village  mean_no_membrs
+@@ -437,6 +444,13 @@ interviews %>%
+ 
+ 
+ 
++~~~
++`summarise()` regrouping output by 'village' (override with `.groups` argument)
++~~~
++{: .output}
++
++
++
+ ~~~
+ # A tibble: 9 x 3
+ # Groups:   village [3]
+@@ -467,6 +481,13 @@ interviews %>%
+ 
+ 
+ 
++~~~
++`summarise()` regrouping output by 'village' (override with `.groups` argument)
++~~~
++{: .output}
++
++
++
+ ~~~
+ # A tibble: 9 x 3
+   village  memb_assoc mean_no_membrs
+@@ -499,6 +520,13 @@ interviews %>%
+ 
+ 
+ 
++~~~
++`summarise()` regrouping output by 'village' (override with `.groups` argument)
++~~~
++{: .output}
++
++
++
+ ~~~
+ # A tibble: 6 x 3
+ # Groups:   village [3]
+@@ -530,6 +558,13 @@ interviews %>%
+ 
+ 
+ 
++~~~
++`summarise()` regrouping output by 'village' (override with `.groups` argument)
++~~~
++{: .output}
++
++
++
+ ~~~
+ # A tibble: 6 x 4
+ # Groups:   village [3]
+@@ -560,6 +595,13 @@ interviews %>%
+ 
+ 
+ 
++~~~
++`summarise()` regrouping output by 'village' (override with `.groups` argument)
++~~~
++{: .output}
++
++
++
+ ~~~
+ # A tibble: 6 x 4
+ # Groups:   village [3]
+@@ -589,6 +631,13 @@ interviews %>%
+ 
+ 
+ 
++~~~
++`summarise()` regrouping output by 'village' (override with `.groups` argument)
++~~~
++{: .output}
++
++
++
+ ~~~
+ # A tibble: 6 x 4
+ # Groups:   village [3]
+@@ -699,6 +748,13 @@ interviews %>%
+ > > 
+ > > 
+ > > ~~~
++> > `summarise()` ungrouping output (override with `.groups` argument)
++> > ~~~
++> > {: .output}
++> > 
++> > 
++> > 
++> > ~~~
+ > > # A tibble: 3 x 5
+ > >   village  mean_no_membrs min_no_membrs max_no_membrs     n
+ > >   <chr>             <dbl>         <dbl>         <dbl> <int>
+@@ -731,15 +787,6 @@ interviews %>%
+ > > 
+ > > 
+ > > ~~~
+-> > The following objects are masked from 'package:dplyr':
+-> > 
+-> >     intersect, setdiff, union
+-> > ~~~
+-> > {: .output}
+-> > 
+-> > 
+-> > 
+-> > ~~~
+ > > The following objects are masked from 'package:base':
+ > > 
+ > >     date, intersect, setdiff, union
+@@ -761,6 +808,13 @@ interviews %>%
+ > > 
+ > > 
+ > > ~~~
++> > `summarise()` regrouping output by 'year' (override with `.groups` argument)
++> > ~~~
++> > {: .output}
++> > 
++> > 
++> > 
++> > ~~~
+ > > # A tibble: 5 x 3
+ > > # Groups:   year [2]
+ > >    year month max_no_membrs
+@@ -1046,6 +1100,13 @@ interviews_items_owned %>%
+ 
+ 
+ 
++~~~
++`summarise()` ungrouping output (override with `.groups` argument)
++~~~
++{: .output}
++
++
++
+ ~~~
+ # A tibble: 3 x 2
+   village  mean_items
+@@ -1093,6 +1154,13 @@ interviews_items_owned %>%
+ > > 
+ > > 
+ > > ~~~
++> > `summarise()` ungrouping output (override with `.groups` argument)
++> > ~~~
++> > {: .output}
++> > 
++> > 
++> > 
++> > ~~~
+ > > # A tibble: 3 x 2
+ > >   memb_assoc mean_months
+ > >   <chr>            <dbl>

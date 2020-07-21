@@ -1,0 +1,127 @@
+diff --git a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR3/_episodes/03-raster-reproject-in-r.md b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR4/_episodes/03-raster-reproject-in-r.md
+index 0f40a7b..6bbee46 100644
+--- a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR3/_episodes/03-raster-reproject-in-r.md
++++ b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR4/_episodes/03-raster-reproject-in-r.md
+@@ -144,8 +144,7 @@ the hillshade data to see how they differ.
+ > > 
+ > > ~~~
+ > > CRS arguments:
+-> >  +proj=utm +zone=18 +datum=WGS84 +units=m +no_defs +ellps=WGS84
+-> > +towgs84=0,0,0 
++> >  +proj=utm +zone=18 +datum=WGS84 +units=m +no_defs 
+ > > ~~~
+ > > {: .output}
+ > > 
+@@ -160,8 +159,7 @@ the hillshade data to see how they differ.
+ > > 
+ > > 
+ > > ~~~
+-> > CRS arguments:
+-> >  +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0 
++> > CRS arguments: +proj=longlat +datum=WGS84 +no_defs 
+ > > ~~~
+ > > {: .output}
+ > >
+@@ -209,6 +207,30 @@ DTM_hill_UTMZ18N_HARV <- projectRaster(DTM_hill_HARV,
+ ~~~
+ {: .language-r}
+ 
++
++
++~~~
++Warning in rgdal::rawTransform(projfrom, projto, nrow(xy), xy[, 1], xy[, : Using
++PROJ not WKT2 strings
++~~~
++{: .error}
++
++
++
++~~~
++Warning in rgdal::rawTransform(projection(obj), crs, nrow(xy), xy[, 1], : Using
++PROJ not WKT2 strings
++~~~
++{: .error}
++
++
++
++~~~
++Warning in rgdal::rawTransform(projto_int, projfrom, nrow(xy), xy[, 1], : Using
++PROJ not WKT2 strings
++~~~
++{: .error}
++
+ Now we can compare the CRS of our original DTM hillshade
+ and our new DTM hillshade, to see how they are different.
+ 
+@@ -222,8 +244,7 @@ crs(DTM_hill_UTMZ18N_HARV)
+ 
+ ~~~
+ CRS arguments:
+- +proj=utm +zone=18 +datum=WGS84 +units=m +no_defs +ellps=WGS84
+-+towgs84=0,0,0 
++ +proj=utm +zone=18 +datum=WGS84 +units=m +no_defs 
+ ~~~
+ {: .output}
+ 
+@@ -237,8 +258,7 @@ crs(DTM_hill_HARV)
+ 
+ 
+ ~~~
+-CRS arguments:
+- +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0 
++CRS arguments: +proj=longlat +datum=WGS84 +no_defs 
+ ~~~
+ {: .output}
+ 
+@@ -337,6 +357,22 @@ DTM_hill_UTMZ18N_HARV <- projectRaster(DTM_hill_HARV,
+ ~~~
+ {: .language-r}
+ 
++
++
++~~~
++Warning in rgdal::rawTransform(projfrom, projto, nrow(xy), xy[, 1], xy[, : Using
++PROJ not WKT2 strings
++~~~
++{: .error}
++
++
++
++~~~
++Warning in rgdal::rawTransform(projto_int, projfrom, nrow(xy), xy[, 1], : Using
++PROJ not WKT2 strings
++~~~
++{: .error}
++
+ Let's double-check our resolution to be sure
+ 
+ ~~~
+@@ -415,7 +451,28 @@ hillshade to produce a nice looking, textured map!
+ > > DTM_hill_UTMZ18N_SJER <- projectRaster(DSM_hill_SJER_WGS,
+ > >                                   crs = crs(DSM_SJER),
+ > >                                   res = 1)
++> > ~~~
++> > {: .language-r}
++> > 
+ > > 
++> > 
++> > ~~~
++> > Warning in rgdal::rawTransform(projfrom, projto, nrow(xy), xy[, 1], xy[, : Using
++> > PROJ not WKT2 strings
++> > ~~~
++> > {: .error}
++> > 
++> > 
++> > 
++> > ~~~
++> > Warning in rgdal::rawTransform(projto_int, projfrom, nrow(xy), xy[, 1], : Using
++> > PROJ not WKT2 strings
++> > ~~~
++> > {: .error}
++> > 
++> > 
++> > 
++> > ~~~
+ > > # convert to data.frames
+ > > DSM_SJER_df <- as.data.frame(DSM_SJER, xy = TRUE)
+ > > 

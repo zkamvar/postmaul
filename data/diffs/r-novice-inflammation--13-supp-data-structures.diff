@@ -1,0 +1,13 @@
+diff --git a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/swcarpentry--r-novice-inflammationR3/_episodes/13-supp-data-structures.md b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/swcarpentry--r-novice-inflammationR4/_episodes/13-supp-data-structures.md
+index df9fc8f..8a802f4 100644
+--- a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/swcarpentry--r-novice-inflammationR3/_episodes/13-supp-data-structures.md
++++ b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/swcarpentry--r-novice-inflammationR4/_episodes/13-supp-data-structures.md
+@@ -681,7 +681,7 @@ class(m)
+ 
+ 
+ ~~~
+-[1] "matrix"
++[1] "matrix" "array" 
+ ~~~
+ {: .output}
+ 

@@ -1,0 +1,110 @@
+diff --git a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR3/_episodes/14-extract-ndvi-from-rasters-in-r.md b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR4/_episodes/14-extract-ndvi-from-rasters-in-r.md
+index c2fd69c..b835da3 100644
+--- a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR3/_episodes/14-extract-ndvi-from-rasters-in-r.md
++++ b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR4/_episodes/14-extract-ndvi-from-rasters-in-r.md
+@@ -23,6 +23,39 @@ source: Rmd
+ 
+ 
+ 
++~~~
++Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++datum Unknown based on WGS84 ellipsoid in CRS definition
++Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++datum Unknown based on WGS84 ellipsoid in CRS definition
++Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++datum Unknown based on WGS84 ellipsoid in CRS definition
++Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++datum Unknown based on WGS84 ellipsoid in CRS definition
++Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++datum Unknown based on WGS84 ellipsoid in CRS definition
++Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++datum Unknown based on WGS84 ellipsoid in CRS definition
++Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++datum Unknown based on WGS84 ellipsoid in CRS definition
++Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++datum Unknown based on WGS84 ellipsoid in CRS definition
++Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++datum Unknown based on WGS84 ellipsoid in CRS definition
++Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++datum Unknown based on WGS84 ellipsoid in CRS definition
++Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++datum Unknown based on WGS84 ellipsoid in CRS definition
++Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++datum Unknown based on WGS84 ellipsoid in CRS definition
++Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++datum Unknown based on WGS84 ellipsoid in CRS definition
++Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++datum Unknown based on WGS84 ellipsoid in CRS definition
++Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++datum Unknown based on WGS84 ellipsoid in CRS definition
++~~~
++{: .error}
+ 
+ > ## Things You’ll Need To Complete This Episode
+ > See the [lesson homepage]({{ site.baseurl }}) for detailed information about the software,
+@@ -306,10 +339,65 @@ class(avg_NDVI_HARV$Date)
+ > >                             pattern = ".tif$")
+ > > 
+ > > NDVI_stack_SJER <- stack(all_NDVI_SJER)
++> > ~~~
++> > {: .language-r}
++> > 
++> > 
++> > 
++> > ~~~
++> > Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++> > datum Unknown based on WGS84 ellipsoid in CRS definition
++> > Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++> > datum Unknown based on WGS84 ellipsoid in CRS definition
++> > Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++> > datum Unknown based on WGS84 ellipsoid in CRS definition
++> > Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++> > datum Unknown based on WGS84 ellipsoid in CRS definition
++> > Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++> > datum Unknown based on WGS84 ellipsoid in CRS definition
++> > Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++> > datum Unknown based on WGS84 ellipsoid in CRS definition
++> > Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++> > datum Unknown based on WGS84 ellipsoid in CRS definition
++> > Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++> > datum Unknown based on WGS84 ellipsoid in CRS definition
++> > Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++> > datum Unknown based on WGS84 ellipsoid in CRS definition
++> > Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++> > datum Unknown based on WGS84 ellipsoid in CRS definition
++> > Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++> > datum Unknown based on WGS84 ellipsoid in CRS definition
++> > Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++> > datum Unknown based on WGS84 ellipsoid in CRS definition
++> > Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++> > datum Unknown based on WGS84 ellipsoid in CRS definition
++> > Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++> > datum Unknown based on WGS84 ellipsoid in CRS definition
++> > Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++> > datum Unknown based on WGS84 ellipsoid in CRS definition
++> > Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++> > datum Unknown based on WGS84 ellipsoid in CRS definition
++> > Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++> > datum Unknown based on WGS84 ellipsoid in CRS definition
++> > Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++> > datum Unknown based on WGS84 ellipsoid in CRS definition
++> > ~~~
++> > {: .error}
+ > > 
++> > 
++> > 
++> > ~~~
+ > > NDVI_stack_SJER <- NDVI_stack_SJER/10000
+ > > ~~~
+ > > {: .language-r}
++> > 
++> > 
++> > 
++> > ~~~
++> > Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++> > datum Unknown based on WGS84 ellipsoid in CRS definition
++> > ~~~
++> > {: .error}
+ > > Then we can calculate the mean values for each day and put that in a dataframe.
+ > >
+ > > 

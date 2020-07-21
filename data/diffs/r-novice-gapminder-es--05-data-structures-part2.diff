@@ -1,0 +1,234 @@
+diff --git a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/swcarpentry--r-novice-gapminder-esR3/_episodes/05-data-structures-part2.md b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/swcarpentry--r-novice-gapminder-esR4/_episodes/05-data-structures-part2.md
+index 351cb55..be2b152 100644
+--- a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/swcarpentry--r-novice-gapminder-esR3/_episodes/05-data-structures-part2.md
++++ b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/swcarpentry--r-novice-gapminder-esR4/_episodes/05-data-structures-part2.md
+@@ -148,31 +148,9 @@ Ahora, qué tal si agregamos filas, en este caso, la última vez vimos que las f
+ ~~~
+ nueva_fila <- list("tortoiseshell", 3.3, TRUE, 9)
+ gatos <- rbind(gatos, nueva_fila)
+-~~~
+-{: .language-r}
+-
+-
+-
+-~~~
+-Warning in `[<-.factor`(`*tmp*`, ri, value = "tortoiseshell"): invalid factor
+-level, NA generated
+-~~~
+-{: .error}
+-
+-
+-
+-~~~
+ gatos <- rbind(gatos, nueva_fila)
+ ~~~
+ {: .language-r}
+-
+-
+-
+-~~~
+-Warning in `[<-.factor`(`*tmp*`, ri, value = "tortoiseshell"): invalid factor
+-level, NA generated
+-~~~
+-{: .error}
+ Qué significa el error que nos da R? 'invalid factor level' nos dice algo acerca de factores (factors)... pero qué es un factor? Un factor es un tipo de datos en R. Un factor es una categoría (por ejemplo, color) con la que R puede hacer ciertas operaciones. Por ejemplo:
+ 
+ 
+@@ -252,7 +230,7 @@ levels(gatos$color)
+ 
+ 
+ ~~~
+-[1] "atigrado" "mixto"    "negro"   
++NULL
+ ~~~
+ {: .output}
+ 
+@@ -264,6 +242,14 @@ gatos <- rbind(gatos, list("tortoiseshell", 3.3, TRUE, 9))
+ ~~~
+ {: .language-r}
+ 
++
++
++~~~
++Warning in `[<-.factor`(`*tmp*`, ri, value = structure(c("mixto", "negro", :
++invalid factor level, NA generated
++~~~
++{: .error}
++
+ De manera alternativa, podemos cambiar la columna a tipo *character*. En este caso, perdemos las categorías, pero a partir de ahora podemos incorporar cualquier palabra a la columna, sin problemas con los niveles del factor. 
+ 
+ 
+@@ -276,7 +262,7 @@ str(gatos)
+ 
+ ~~~
+ 'data.frame':	6 obs. of  4 variables:
+- $ color            : Factor w/ 4 levels "atigrado","mixto",..: 2 3 1 NA NA 4
++ $ color            : Factor w/ 1 level "tortoiseshell": NA NA NA 1 1 1
+  $ peso             : num  2.1 5 3.2 3.3 3.3 3.3
+  $ legusta_la_cuerda: num  1 0 1 1 1 1
+  $ edad             : num  2 3 5 9 9 9
+@@ -295,7 +281,7 @@ str(gatos)
+ 
+ ~~~
+ 'data.frame':	6 obs. of  4 variables:
+- $ color            : chr  "mixto" "negro" "atigrado" NA ...
++ $ color            : chr  NA NA NA "tortoiseshell" ...
+  $ peso             : num  2.1 5 3.2 3.3 3.3 3.3
+  $ legusta_la_cuerda: num  1 0 1 1 1 1
+  $ edad             : num  2 3 5 9 9 9
+@@ -329,11 +315,11 @@ gatos
+ 
+ ~~~
+           color peso legusta_la_cuerda edad
+-1         mixto  2.1                 1    2
+-2         negro  5.0                 0    3
+-3      atigrado  3.2                 1    5
+-4          <NA>  3.3                 1    9
+-5          <NA>  3.3                 1    9
++1          <NA>  2.1                 1    2
++2          <NA>  5.0                 0    3
++3          <NA>  3.2                 1    5
++4 tortoiseshell  3.3                 1    9
++5 tortoiseshell  3.3                 1    9
+ 6 tortoiseshell  3.3                 1    9
+ ~~~
+ {: .output}
+@@ -350,10 +336,10 @@ gatos[-4,]
+ 
+ ~~~
+           color peso legusta_la_cuerda edad
+-1         mixto  2.1                 1    2
+-2         negro  5.0                 0    3
+-3      atigrado  3.2                 1    5
+-5          <NA>  3.3                 1    9
++1          <NA>  2.1                 1    2
++2          <NA>  5.0                 0    3
++3          <NA>  3.2                 1    5
++5 tortoiseshell  3.3                 1    9
+ 6 tortoiseshell  3.3                 1    9
+ ~~~
+ {: .output}
+@@ -372,9 +358,8 @@ na.omit(gatos)
+ 
+ ~~~
+           color peso legusta_la_cuerda edad
+-1         mixto  2.1                 1    2
+-2         negro  5.0                 0    3
+-3      atigrado  3.2                 1    5
++4 tortoiseshell  3.3                 1    9
++5 tortoiseshell  3.3                 1    9
+ 6 tortoiseshell  3.3                 1    9
+ ~~~
+ {: .output}
+@@ -401,9 +386,8 @@ gatos[,-4]
+ 
+ ~~~
+           color peso legusta_la_cuerda
+-1         mixto  2.1                 1
+-2         negro  5.0                 0
+-3      atigrado  3.2                 1
++4 tortoiseshell  3.3                 1
++5 tortoiseshell  3.3                 1
+ 6 tortoiseshell  3.3                 1
+ ~~~
+ {: .output}
+@@ -423,9 +407,8 @@ gatos[,!drop]
+ 
+ ~~~
+           color peso legusta_la_cuerda
+-1         mixto  2.1                 1
+-2         negro  5.0                 0
+-3      atigrado  3.2                 1
++4 tortoiseshell  3.3                 1
++5 tortoiseshell  3.3                 1
+ 6 tortoiseshell  3.3                 1
+ ~~~
+ {: .output}
+@@ -446,13 +429,11 @@ gatos
+ 
+ ~~~
+            color peso legusta_la_cuerda edad
+-1          mixto  2.1                 1    2
+-2          negro  5.0                 0    3
+-3       atigrado  3.2                 1    5
++4  tortoiseshell  3.3                 1    9
++5  tortoiseshell  3.3                 1    9
+ 6  tortoiseshell  3.3                 1    9
+-11         mixto  2.1                 1    2
+-21         negro  5.0                 0    3
+-31      atigrado  3.2                 1    5
++41 tortoiseshell  3.3                 1    9
++51 tortoiseshell  3.3                 1    9
+ 61 tortoiseshell  3.3                 1    9
+ ~~~
+ {: .output}
+@@ -470,14 +451,12 @@ gatos
+ 
+ ~~~
+           color peso legusta_la_cuerda edad
+-1         mixto  2.1                 1    2
+-2         negro  5.0                 0    3
+-3      atigrado  3.2                 1    5
++1 tortoiseshell  3.3                 1    9
++2 tortoiseshell  3.3                 1    9
++3 tortoiseshell  3.3                 1    9
+ 4 tortoiseshell  3.3                 1    9
+-5         mixto  2.1                 1    2
+-6         negro  5.0                 0    3
+-7      atigrado  3.2                 1    5
+-8 tortoiseshell  3.3                 1    9
++5 tortoiseshell  3.3                 1    9
++6 tortoiseshell  3.3                 1    9
+ ~~~
+ {: .output}
+ 
+@@ -571,10 +550,10 @@ str(gapminder)
+ 
+ ~~~
+ 'data.frame':	1704 obs. of  6 variables:
+- $ country  : Factor w/ 142 levels "Afghanistan",..: 1 1 1 1 1 1 1 1 1 1 ...
++ $ country  : chr  "Afghanistan" "Afghanistan" "Afghanistan" "Afghanistan" ...
+  $ year     : int  1952 1957 1962 1967 1972 1977 1982 1987 1992 1997 ...
+  $ pop      : num  8425333 9240934 10267083 11537966 13079460 ...
+- $ continent: Factor w/ 5 levels "Africa","Americas",..: 3 3 3 3 3 3 3 3 3 3 ...
++ $ continent: chr  "Asia" "Asia" "Asia" "Asia" ...
+  $ lifeExp  : num  28.8 30.3 32 34 36.1 ...
+  $ gdpPercap: num  779 821 853 836 740 ...
+ ~~~
+@@ -605,7 +584,7 @@ typeof(gapminder$country)
+ 
+ 
+ ~~~
+-[1] "integer"
++[1] "character"
+ ~~~
+ {: .output}
+ 
+@@ -619,7 +598,7 @@ str(gapminder$country)
+ 
+ 
+ ~~~
+- Factor w/ 142 levels "Afghanistan",..: 1 1 1 1 1 1 1 1 1 1 ...
++ chr [1:1704] "Afghanistan" "Afghanistan" "Afghanistan" "Afghanistan" ...
+ ~~~
+ {: .output}
+ 
+@@ -811,12 +790,12 @@ head(gapminder)
+ > > 
+ > > 
+ > > ~~~
+-> >      country year      pop continent lifeExp gdpPercap
+-> > 37    Angola 1952  4232095    Africa  30.015  3520.610
+-> > 904    Libya 1967  1759224    Africa  50.227 18772.752
+-> > 788  Jamaica 1987  2326606  Americas  71.770  6351.237
+-> > 1451   Sudan 2002 37090298    Africa  56.369  1993.398
+-> > 27   Algeria 1962 11000948    Africa  48.303  2550.817
++> >                  country year        pop continent lifeExp   gdpPercap
++> > 1190            Paraguay 1957    1770902  Americas  63.196   2046.1547
++> > 854               Kuwait 1957     212846      Asia  58.033 113523.1329
++> > 932               Malawi 1987    7824747    Africa  47.457    635.5174
++> > 297                China 1992 1164970000      Asia  68.690   1655.7842
++> > 1555 Trinidad and Tobago 1982    1116479  Americas  68.832   9119.5286
+ > > ~~~
+ > > {: .output}
+ > {: .solution}

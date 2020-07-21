@@ -1,0 +1,29 @@
+diff --git a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--rr-automationR3/_episodes/03-functions-for-data.md b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--rr-automationR4/_episodes/03-functions-for-data.md
+index 1af9287..8d0992b 100644
+--- a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--rr-automationR3/_episodes/03-functions-for-data.md
++++ b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--rr-automationR4/_episodes/03-functions-for-data.md
+@@ -116,7 +116,13 @@ mean_lifeExp_by_cont <- gdp %>%
+     group_by(continent, year) %>%
+     summarize(mean_lifeExp = mean(lifeExp)) %>%
+     as.data.frame
++```
++
++```
++## `summarise()` regrouping output by 'continent' (override with `.groups` argument)
++```
+ 
++```r
+ ## Turn this into a function called get_latest_lifeExp
+ latest_lifeExp <- gdp %>%
+     filter(year == max(gdp$year)) %>%
+@@ -125,6 +131,10 @@ latest_lifeExp <- gdp %>%
+     as.data.frame    
+ ```
+ 
++```
++## `summarise()` ungrouping output (override with `.groups` argument)
++```
++
+ ## Long computations
+ [aside: talk about it if time permits]
+ 

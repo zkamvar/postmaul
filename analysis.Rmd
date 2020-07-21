@@ -239,6 +239,9 @@ names(res) <- has_rmd_all$repository
 We can iterate and compare:
 
 ```{r compare, results = 'asis'}
+if (!dir_exists(path("data", "diffs"))) {
+  dir_create(path("data", "diffs"))
+}
 cmpr <- function(lesson, name) {
 
   cat(glue::glue("\n## Lesson: {name}\n\n"))
@@ -251,8 +254,12 @@ cmpr <- function(lesson, name) {
   o2 <- map(lesson[[2]]$episodes, ~setNames(xml2::xml_text(.x$output), xml2::xml_attr(.x$output, "sourcepos")))
 
   for (i in seq_along(lesson[[1]]$episodes)) {
-
-    cat(glue::glue("\n#### Episode: {name}/{basename(lesson[[1]]$files[i])}\n"))
+    episode <- glue::glue("{name}--{basename(lesson[[1]]$files[i])}")
+    dpath <- path("data", "diffs", sub("md$", "diff", episode))
+    diffcmd <- "git diff --no-index -- {lesson[[1]]$files[[i]]} {lesson[[2]]$files[[i]]} > {dpath}"
+    system(glue::glue(diffcmd))
+    cat(glue::glue("\n#### Episode: {episode}\n"))
+    cat(glue::glue("\n[Link to full diff]({dpath})\n"))
     cat("\n```diff\n")
     print(waldo::compare(o2[[i]], o1[[i]], x_arg = "Rv4", y_arg = "Rv3"))
     cat("\n```\n")

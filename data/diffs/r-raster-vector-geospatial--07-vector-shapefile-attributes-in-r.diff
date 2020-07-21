@@ -1,0 +1,110 @@
+diff --git a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR3/_episodes/07-vector-shapefile-attributes-in-r.md b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR4/_episodes/07-vector-shapefile-attributes-in-r.md
+index 2309a88..269c2dc 100644
+--- a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR3/_episodes/07-vector-shapefile-attributes-in-r.md
++++ b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR4/_episodes/07-vector-shapefile-attributes-in-r.md
+@@ -67,7 +67,7 @@ Simple feature collection with 1 feature and 14 fields
+ geometry type:  POINT
+ dimension:      XY
+ bbox:           xmin: 732183.2 ymin: 4713265 xmax: 732183.2 ymax: 4713265
+-CRS:            32618
++projected CRS:  WGS 84 / UTM zone 18N
+   Un_ID Domain DomainName       SiteName Type       Sub_Type     Lat      Long
+ 1     A      1  Northeast Harvard Forest Core Advanced Tower 42.5369 -72.17266
+   Zone  Easting Northing                Ownership    County annotation
+@@ -127,7 +127,7 @@ Simple feature collection with 6 features and 15 fields
+ geometry type:  MULTILINESTRING
+ dimension:      XY
+ bbox:           xmin: 730741.2 ymin: 4712685 xmax: 732232.3 ymax: 4713726
+-CRS:            32618
++projected CRS:  WGS 84 / UTM zone 18N
+   OBJECTID_1 OBJECTID       TYPE             NOTES MISCNOTES RULEID
+ 1         14       48 woods road Locust Opening Rd      <NA>      5
+ 2         40       91   footpath              <NA>      <NA>      6
+@@ -208,8 +208,7 @@ CRS:            32618
+ > > 
+ > > 
+ > > ~~~
+-> > [1] Harvard University, LTER
+-> > Levels: Harvard University, LTER
++> > [1] "Harvard University, LTER"
+ > > ~~~
+ > > {: .output}
+ > > 3) To see a list of all of the attributes, we can use the
+@@ -248,10 +247,9 @@ lines_HARV$TYPE
+ 
+ 
+ ~~~
+- [1] woods road footpath   footpath   stone wall stone wall stone wall
+- [7] stone wall stone wall stone wall boardwalk  woods road woods road
+-[13] woods road
+-Levels: boardwalk footpath stone wall woods road
++ [1] "woods road" "footpath"   "footpath"   "stone wall" "stone wall"
++ [6] "stone wall" "stone wall" "stone wall" "stone wall" "boardwalk" 
++[11] "woods road" "woods road" "woods road"
+ ~~~
+ {: .output}
+ 
+@@ -269,7 +267,7 @@ levels(lines_HARV$TYPE)
+ 
+ 
+ ~~~
+-[1] "boardwalk"  "footpath"   "stone wall" "woods road"
++NULL
+ ~~~
+ {: .output}
+ 
+@@ -434,7 +432,7 @@ levels(lines_HARV$TYPE)
+ 
+ 
+ ~~~
+-[1] "boardwalk"  "footpath"   "stone wall" "woods road"
++NULL
+ ~~~
+ {: .output}
+ 
+@@ -521,7 +519,7 @@ Note that we could also use `aes(size = TYPE)` to tie the line thickness to the
+ > > 
+ > > 
+ > > ~~~
+-> > [1] "boardwalk"  "footpath"   "stone wall" "woods road"
++> > NULL
+ > > ~~~
+ > > {: .output}
+ > >
+@@ -654,7 +652,7 @@ ggplot() +
+ > > 
+ > > 
+ > > ~~~
+-> > [1] "factor"
++> > [1] "character"
+ > > ~~~
+ > > {: .output}
+ > > 
+@@ -668,8 +666,7 @@ ggplot() +
+ > > 
+ > > 
+ > > ~~~
+-> > [1] "Bicycles and Horses Allowed"     "Bicycles and Horses NOT ALLOWED"
+-> > [3] "DO NOT SHOW ON REC MAP"         
++> > NULL
+ > > ~~~
+ > > {: .output}
+ > >
+@@ -729,7 +726,7 @@ ggplot() +
+ > > dimension:      XYZ
+ > > bbox:           xmin: -124.7258 ymin: 24.49813 xmax: -66.9499 ymax: 49.38436
+ > > z_range:        zmin: 0 zmax: 0
+-> > CRS:            4326
++> > geographic CRS: WGS 84
+ > > ~~~
+ > > {: .output}
+ > > 
+@@ -743,7 +740,7 @@ ggplot() +
+ > > 
+ > > 
+ > > ~~~
+-> > [1] "Midwest"   "Northeast" "Southeast" "Southwest" "West"     
++> > NULL
+ > > ~~~
+ > > {: .output}
+ > > Next we set a color vector with that many items: 

@@ -1,0 +1,53 @@
+diff --git a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/LibraryCarpentry--lc-rR3/_episodes/03-data-cleaning-and-transformation.md b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/LibraryCarpentry--lc-rR4/_episodes/03-data-cleaning-and-transformation.md
+index 538fc10..619eb30 100644
+--- a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/LibraryCarpentry--lc-rR3/_episodes/03-data-cleaning-and-transformation.md
++++ b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/LibraryCarpentry--lc-rR4/_episodes/03-data-cleaning-and-transformation.md
+@@ -81,9 +81,9 @@ library(tidyverse)
+ 
+ 
+ ~~~
+-✔ ggplot2 3.3.0     ✔ dplyr   0.8.5
++✔ ggplot2 3.3.1     ✔ dplyr   1.0.0
+ ✔ tibble  3.0.1     ✔ stringr 1.4.0
+-✔ tidyr   1.0.2     ✔ forcats 0.5.0
++✔ tidyr   1.1.0     ✔ forcats 0.5.0
+ ✔ purrr   0.3.4     
+ ~~~
+ {: .output}
+@@ -551,7 +551,7 @@ books <- books %>%
+ 
+ 
+ ~~~
+-Warning: NAs introduced by coercion
++Warning in mask$eval_all_mutate(dots[[i]]): NAs introduced by coercion
+ ~~~
+ {: .error}
+ 
+@@ -653,6 +653,13 @@ books %>%
+ 
+ 
+ 
++~~~
++`summarise()` ungrouping output (override with `.groups` argument)
++~~~
++{: .output}
++
++
++
+ ~~~
+ # A tibble: 10 x 2
+    format       mean_checkouts
+@@ -687,6 +694,13 @@ books %>%
+ 
+ 
+ 
++~~~
++`summarise()` ungrouping output (override with `.groups` argument)
++~~~
++{: .output}
++
++
++
+ ~~~
+ # A tibble: 34 x 3
+    call_class count sum_tot_chkout

@@ -1,0 +1,342 @@
+diff --git a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR3/_episodes/10-vector-csv-to-shapefile-in-r.md b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR4/_episodes/10-vector-csv-to-shapefile-in-r.md
+index 470b1a4..2318e75 100644
+--- a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR3/_episodes/10-vector-csv-to-shapefile-in-r.md
++++ b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR4/_episodes/10-vector-csv-to-shapefile-in-r.md
+@@ -70,19 +70,19 @@ str(plot_locations_HARV)
+ 'data.frame':	21 obs. of  16 variables:
+  $ easting   : num  731405 731934 731754 731724 732125 ...
+  $ northing  : num  4713456 4713415 4713115 4713595 4713846 ...
+- $ geodeticDa: Factor w/ 1 level "WGS84": 1 1 1 1 1 1 1 1 1 1 ...
+- $ utmZone   : Factor w/ 1 level "18N": 1 1 1 1 1 1 1 1 1 1 ...
+- $ plotID    : Factor w/ 21 levels "HARV_015","HARV_033",..: 1 2 3 4 5 6 7 8 9 10 ...
+- $ stateProvi: Factor w/ 1 level "MA": 1 1 1 1 1 1 1 1 1 1 ...
+- $ county    : Factor w/ 1 level "Worcester": 1 1 1 1 1 1 1 1 1 1 ...
+- $ domainName: Factor w/ 1 level "Northeast": 1 1 1 1 1 1 1 1 1 1 ...
+- $ domainID  : Factor w/ 1 level "D01": 1 1 1 1 1 1 1 1 1 1 ...
+- $ siteID    : Factor w/ 1 level "HARV": 1 1 1 1 1 1 1 1 1 1 ...
+- $ plotType  : Factor w/ 2 levels "distributed",..: 1 2 2 2 2 2 2 2 2 2 ...
+- $ subtype   : Factor w/ 1 level "basePlot": 1 1 1 1 1 1 1 1 1 1 ...
++ $ geodeticDa: chr  "WGS84" "WGS84" "WGS84" "WGS84" ...
++ $ utmZone   : chr  "18N" "18N" "18N" "18N" ...
++ $ plotID    : chr  "HARV_015" "HARV_033" "HARV_034" "HARV_035" ...
++ $ stateProvi: chr  "MA" "MA" "MA" "MA" ...
++ $ county    : chr  "Worcester" "Worcester" "Worcester" "Worcester" ...
++ $ domainName: chr  "Northeast" "Northeast" "Northeast" "Northeast" ...
++ $ domainID  : chr  "D01" "D01" "D01" "D01" ...
++ $ siteID    : chr  "HARV" "HARV" "HARV" "HARV" ...
++ $ plotType  : chr  "distributed" "tower" "tower" "tower" ...
++ $ subtype   : chr  "basePlot" "basePlot" "basePlot" "basePlot" ...
+  $ plotSize  : int  1600 1600 1600 1600 1600 1600 1600 1600 1600 1600 ...
+  $ elevation : num  332 342 348 334 353 ...
+- $ soilTypeOr: Factor w/ 2 levels "Histosols","Inceptisols": 2 2 2 1 2 1 1 2 2 1 ...
++ $ soilTypeOr: chr  "Inceptisols" "Inceptisols" "Inceptisols" "Histosols" ...
+  $ plotdim_m : int  40 40 40 40 40 40 40 40 40 40 ...
+ ~~~
+ {: .output}
+@@ -168,8 +168,7 @@ head(plot_locations_HARV$geodeticDa)
+ 
+ 
+ ~~~
+-[1] WGS84 WGS84 WGS84 WGS84 WGS84 WGS84
+-Levels: WGS84
++[1] "WGS84" "WGS84" "WGS84" "WGS84" "WGS84" "WGS84"
+ ~~~
+ {: .output}
+ 
+@@ -183,8 +182,7 @@ head(plot_locations_HARV$utmZone)
+ 
+ 
+ ~~~
+-[1] 18N 18N 18N 18N 18N 18N
+-Levels: 18N
++[1] "18N" "18N" "18N" "18N" "18N" "18N"
+ ~~~
+ {: .output}
+ 
+@@ -218,30 +216,42 @@ st_crs(point_HARV)
+ 
+ ~~~
+ Coordinate Reference System:
+-  User input: 32618 
++  User input: WGS 84 / UTM zone 18N 
+   wkt:
+-PROJCS["WGS 84 / UTM zone 18N",
+-    GEOGCS["WGS 84",
+-        DATUM["WGS_1984",
+-            SPHEROID["WGS 84",6378137,298.257223563,
+-                AUTHORITY["EPSG","7030"]],
+-            AUTHORITY["EPSG","6326"]],
++PROJCRS["WGS 84 / UTM zone 18N",
++    BASEGEOGCRS["WGS 84",
++        DATUM["World Geodetic System 1984",
++            ELLIPSOID["WGS 84",6378137,298.257223563,
++                LENGTHUNIT["metre",1]]],
+         PRIMEM["Greenwich",0,
+-            AUTHORITY["EPSG","8901"]],
+-        UNIT["degree",0.0174532925199433,
+-            AUTHORITY["EPSG","9122"]],
+-        AUTHORITY["EPSG","4326"]],
+-    PROJECTION["Transverse_Mercator"],
+-    PARAMETER["latitude_of_origin",0],
+-    PARAMETER["central_meridian",-75],
+-    PARAMETER["scale_factor",0.9996],
+-    PARAMETER["false_easting",500000],
+-    PARAMETER["false_northing",0],
+-    UNIT["metre",1,
+-        AUTHORITY["EPSG","9001"]],
+-    AXIS["Easting",EAST],
+-    AXIS["Northing",NORTH],
+-    AUTHORITY["EPSG","32618"]]
++            ANGLEUNIT["degree",0.0174532925199433]],
++        ID["EPSG",4326]],
++    CONVERSION["UTM zone 18N",
++        METHOD["Transverse Mercator",
++            ID["EPSG",9807]],
++        PARAMETER["Latitude of natural origin",0,
++            ANGLEUNIT["Degree",0.0174532925199433],
++            ID["EPSG",8801]],
++        PARAMETER["Longitude of natural origin",-75,
++            ANGLEUNIT["Degree",0.0174532925199433],
++            ID["EPSG",8802]],
++        PARAMETER["Scale factor at natural origin",0.9996,
++            SCALEUNIT["unity",1],
++            ID["EPSG",8805]],
++        PARAMETER["False easting",500000,
++            LENGTHUNIT["metre",1],
++            ID["EPSG",8806]],
++        PARAMETER["False northing",0,
++            LENGTHUNIT["metre",1],
++            ID["EPSG",8807]]],
++    CS[Cartesian,2],
++        AXIS["(E)",east,
++            ORDER[1],
++            LENGTHUNIT["metre",1]],
++        AXIS["(N)",north,
++            ORDER[2],
++            LENGTHUNIT["metre",1]],
++    ID["EPSG",32618]]
+ ~~~
+ {: .output}
+ 
+@@ -263,30 +273,42 @@ utm18nCRS
+ 
+ ~~~
+ Coordinate Reference System:
+-  User input: 32618 
++  User input: WGS 84 / UTM zone 18N 
+   wkt:
+-PROJCS["WGS 84 / UTM zone 18N",
+-    GEOGCS["WGS 84",
+-        DATUM["WGS_1984",
+-            SPHEROID["WGS 84",6378137,298.257223563,
+-                AUTHORITY["EPSG","7030"]],
+-            AUTHORITY["EPSG","6326"]],
++PROJCRS["WGS 84 / UTM zone 18N",
++    BASEGEOGCRS["WGS 84",
++        DATUM["World Geodetic System 1984",
++            ELLIPSOID["WGS 84",6378137,298.257223563,
++                LENGTHUNIT["metre",1]]],
+         PRIMEM["Greenwich",0,
+-            AUTHORITY["EPSG","8901"]],
+-        UNIT["degree",0.0174532925199433,
+-            AUTHORITY["EPSG","9122"]],
+-        AUTHORITY["EPSG","4326"]],
+-    PROJECTION["Transverse_Mercator"],
+-    PARAMETER["latitude_of_origin",0],
+-    PARAMETER["central_meridian",-75],
+-    PARAMETER["scale_factor",0.9996],
+-    PARAMETER["false_easting",500000],
+-    PARAMETER["false_northing",0],
+-    UNIT["metre",1,
+-        AUTHORITY["EPSG","9001"]],
+-    AXIS["Easting",EAST],
+-    AXIS["Northing",NORTH],
+-    AUTHORITY["EPSG","32618"]]
++            ANGLEUNIT["degree",0.0174532925199433]],
++        ID["EPSG",4326]],
++    CONVERSION["UTM zone 18N",
++        METHOD["Transverse Mercator",
++            ID["EPSG",9807]],
++        PARAMETER["Latitude of natural origin",0,
++            ANGLEUNIT["Degree",0.0174532925199433],
++            ID["EPSG",8801]],
++        PARAMETER["Longitude of natural origin",-75,
++            ANGLEUNIT["Degree",0.0174532925199433],
++            ID["EPSG",8802]],
++        PARAMETER["Scale factor at natural origin",0.9996,
++            SCALEUNIT["unity",1],
++            ID["EPSG",8805]],
++        PARAMETER["False easting",500000,
++            LENGTHUNIT["metre",1],
++            ID["EPSG",8806]],
++        PARAMETER["False northing",0,
++            LENGTHUNIT["metre",1],
++            ID["EPSG",8807]]],
++    CS[Cartesian,2],
++        AXIS["(E)",east,
++            ORDER[1],
++            LENGTHUNIT["metre",1]],
++        AXIS["(N)",north,
++            ORDER[2],
++            LENGTHUNIT["metre",1]],
++    ID["EPSG",32618]]
+ ~~~
+ {: .output}
+ 
+@@ -331,30 +353,42 @@ st_crs(plot_locations_sp_HARV)
+ 
+ ~~~
+ Coordinate Reference System:
+-  User input: 32618 
++  User input: WGS 84 / UTM zone 18N 
+   wkt:
+-PROJCS["WGS 84 / UTM zone 18N",
+-    GEOGCS["WGS 84",
+-        DATUM["WGS_1984",
+-            SPHEROID["WGS 84",6378137,298.257223563,
+-                AUTHORITY["EPSG","7030"]],
+-            AUTHORITY["EPSG","6326"]],
++PROJCRS["WGS 84 / UTM zone 18N",
++    BASEGEOGCRS["WGS 84",
++        DATUM["World Geodetic System 1984",
++            ELLIPSOID["WGS 84",6378137,298.257223563,
++                LENGTHUNIT["metre",1]]],
+         PRIMEM["Greenwich",0,
+-            AUTHORITY["EPSG","8901"]],
+-        UNIT["degree",0.0174532925199433,
+-            AUTHORITY["EPSG","9122"]],
+-        AUTHORITY["EPSG","4326"]],
+-    PROJECTION["Transverse_Mercator"],
+-    PARAMETER["latitude_of_origin",0],
+-    PARAMETER["central_meridian",-75],
+-    PARAMETER["scale_factor",0.9996],
+-    PARAMETER["false_easting",500000],
+-    PARAMETER["false_northing",0],
+-    UNIT["metre",1,
+-        AUTHORITY["EPSG","9001"]],
+-    AXIS["Easting",EAST],
+-    AXIS["Northing",NORTH],
+-    AUTHORITY["EPSG","32618"]]
++            ANGLEUNIT["degree",0.0174532925199433]],
++        ID["EPSG",4326]],
++    CONVERSION["UTM zone 18N",
++        METHOD["Transverse Mercator",
++            ID["EPSG",9807]],
++        PARAMETER["Latitude of natural origin",0,
++            ANGLEUNIT["Degree",0.0174532925199433],
++            ID["EPSG",8801]],
++        PARAMETER["Longitude of natural origin",-75,
++            ANGLEUNIT["Degree",0.0174532925199433],
++            ID["EPSG",8802]],
++        PARAMETER["Scale factor at natural origin",0.9996,
++            SCALEUNIT["unity",1],
++            ID["EPSG",8805]],
++        PARAMETER["False easting",500000,
++            LENGTHUNIT["metre",1],
++            ID["EPSG",8806]],
++        PARAMETER["False northing",0,
++            LENGTHUNIT["metre",1],
++            ID["EPSG",8807]]],
++    CS[Cartesian,2],
++        AXIS["(E)",east,
++            ORDER[1],
++            LENGTHUNIT["metre",1]],
++        AXIS["(N)",north,
++            ORDER[2],
++            LENGTHUNIT["metre",1]],
++    ID["EPSG",32618]]
+ ~~~
+ {: .output}
+ 
+@@ -429,16 +463,16 @@ That's really handy!
+ > > 'data.frame':	2 obs. of  13 variables:
+ > >  $ decimalLat: num  42.5 42.5
+ > >  $ decimalLon: num  -72.2 -72.2
+-> >  $ country   : Factor w/ 1 level "unitedStates": 1 1
+-> >  $ stateProvi: Factor w/ 1 level "MA": 1 1
+-> >  $ county    : Factor w/ 1 level "Worcester": 1 1
+-> >  $ domainName: Factor w/ 1 level "Northeast": 1 1
+-> >  $ domainID  : Factor w/ 1 level "D01": 1 1
+-> >  $ siteID    : Factor w/ 1 level "HARV": 1 1
+-> >  $ plotType  : Factor w/ 1 level "tower": 1 1
+-> >  $ subtype   : Factor w/ 1 level "phenology": 1 1
++> >  $ country   : chr  "unitedStates" "unitedStates"
++> >  $ stateProvi: chr  "MA" "MA"
++> >  $ county    : chr  "Worcester" "Worcester"
++> >  $ domainName: chr  "Northeast" "Northeast"
++> >  $ domainID  : chr  "D01" "D01"
++> >  $ siteID    : chr  "HARV" "HARV"
++> >  $ plotType  : chr  "tower" "tower"
++> >  $ subtype   : chr  "phenology" "phenology"
+ > >  $ plotSize  : int  40000 40000
+-> >  $ plotDimens: Factor w/ 1 level "200m x 200m": 1 1
++> >  $ plotDimens: chr  "200m x 200m" "200m x 200m"
+ > >  $ elevation : num  358 346
+ > > ~~~
+ > > {: .output}
+@@ -460,18 +494,22 @@ That's really handy!
+ > > 
+ > > ~~~
+ > > Coordinate Reference System:
+-> >   User input: 4326 
++> >   User input: WGS 84 
+ > >   wkt:
+-> > GEOGCS["WGS 84",
+-> >     DATUM["WGS_1984",
+-> >         SPHEROID["WGS 84",6378137,298.257223563,
+-> >             AUTHORITY["EPSG","7030"]],
+-> >         AUTHORITY["EPSG","6326"]],
++> > GEOGCRS["WGS 84",
++> >     DATUM["World Geodetic System 1984",
++> >         ELLIPSOID["WGS 84",6378137,298.257223563,
++> >             LENGTHUNIT["metre",1]]],
+ > >     PRIMEM["Greenwich",0,
+-> >         AUTHORITY["EPSG","8901"]],
+-> >     UNIT["degree",0.0174532925199433,
+-> >         AUTHORITY["EPSG","9122"]],
+-> >     AUTHORITY["EPSG","4326"]]
++> >         ANGLEUNIT["degree",0.0174532925199433]],
++> >     CS[ellipsoidal,2],
++> >         AXIS["latitude",north,
++> >             ORDER[1],
++> >             ANGLEUNIT["degree",0.0174532925199433]],
++> >         AXIS["longitude",east,
++> >             ORDER[2],
++> >             ANGLEUNIT["degree",0.0174532925199433]],
++> >     ID["EPSG",4326]]
+ > > ~~~
+ > > {: .output}
+ > >
+@@ -496,18 +534,22 @@ That's really handy!
+ > > 
+ > > ~~~
+ > > Coordinate Reference System:
+-> >   User input: 4326 
++> >   User input: WGS 84 
+ > >   wkt:
+-> > GEOGCS["WGS 84",
+-> >     DATUM["WGS_1984",
+-> >         SPHEROID["WGS 84",6378137,298.257223563,
+-> >             AUTHORITY["EPSG","7030"]],
+-> >         AUTHORITY["EPSG","6326"]],
++> > GEOGCRS["WGS 84",
++> >     DATUM["World Geodetic System 1984",
++> >         ELLIPSOID["WGS 84",6378137,298.257223563,
++> >             LENGTHUNIT["metre",1]]],
+ > >     PRIMEM["Greenwich",0,
+-> >         AUTHORITY["EPSG","8901"]],
+-> >     UNIT["degree",0.0174532925199433,
+-> >         AUTHORITY["EPSG","9122"]],
+-> >     AUTHORITY["EPSG","4326"]]
++> >         ANGLEUNIT["degree",0.0174532925199433]],
++> >     CS[ellipsoidal,2],
++> >         AXIS["latitude",north,
++> >             ORDER[1],
++> >             ANGLEUNIT["degree",0.0174532925199433]],
++> >         AXIS["longitude",east,
++> >             ORDER[2],
++> >             ANGLEUNIT["degree",0.0174532925199433]],
++> >     ID["EPSG",4326]]
+ > > ~~~
+ > > {: .output}
+ > >

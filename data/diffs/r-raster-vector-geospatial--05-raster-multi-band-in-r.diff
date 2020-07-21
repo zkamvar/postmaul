@@ -1,0 +1,104 @@
+diff --git a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR3/_episodes/05-raster-multi-band-in-r.md b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR4/_episodes/05-raster-multi-band-in-r.md
+index 8364ba6..a50c7dc 100644
+--- a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR3/_episodes/05-raster-multi-band-in-r.md
++++ b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR4/_episodes/05-raster-multi-band-in-r.md
+@@ -90,7 +90,7 @@ ggplot() +
+ > > dimensions : 2317, 3073, 7120141  (nrow, ncol, ncell)
+ > > resolution : 0.25, 0.25  (x, y)
+ > > extent     : 731998.5, 732766.8, 4712956, 4713536  (xmin, xmax, ymin, ymax)
+-> > crs        : +proj=utm +zone=18 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0 
++> > crs        : +proj=utm +zone=18 +datum=WGS84 +units=m +no_defs 
+ > > source     : /home/rstudio/_episodes_rmd/data/NEON-DS-Airborne-Remote-Sensing/HARV/RGB_Imagery/HARV_RGB_Ortho.tif 
+ > > names      : HARV_RGB_Ortho 
+ > > values     : 0, 255  (min, max)
+@@ -194,7 +194,7 @@ class      : RasterStack
+ dimensions : 2317, 3073, 7120141, 3  (nrow, ncol, ncell, nlayers)
+ resolution : 0.25, 0.25  (x, y)
+ extent     : 731998.5, 732766.8, 4712956, 4713536  (xmin, xmax, ymin, ymax)
+-crs        : +proj=utm +zone=18 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0 
++crs        : +proj=utm +zone=18 +datum=WGS84 +units=m +no_defs 
+ names      : HARV_RGB_Ortho.1, HARV_RGB_Ortho.2, HARV_RGB_Ortho.3 
+ min values :                0,                0,                0 
+ max values :              255,              255,              255 
+@@ -218,7 +218,7 @@ band       : 1  (of  3  bands)
+ dimensions : 2317, 3073, 7120141  (nrow, ncol, ncell)
+ resolution : 0.25, 0.25  (x, y)
+ extent     : 731998.5, 732766.8, 4712956, 4713536  (xmin, xmax, ymin, ymax)
+-crs        : +proj=utm +zone=18 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0 
++crs        : +proj=utm +zone=18 +datum=WGS84 +units=m +no_defs 
+ source     : /home/rstudio/_episodes_rmd/data/NEON-DS-Airborne-Remote-Sensing/HARV/RGB_Imagery/HARV_RGB_Ortho.tif 
+ names      : HARV_RGB_Ortho.1 
+ values     : 0, 255  (min, max)
+@@ -230,7 +230,7 @@ band       : 2  (of  3  bands)
+ dimensions : 2317, 3073, 7120141  (nrow, ncol, ncell)
+ resolution : 0.25, 0.25  (x, y)
+ extent     : 731998.5, 732766.8, 4712956, 4713536  (xmin, xmax, ymin, ymax)
+-crs        : +proj=utm +zone=18 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0 
++crs        : +proj=utm +zone=18 +datum=WGS84 +units=m +no_defs 
+ source     : /home/rstudio/_episodes_rmd/data/NEON-DS-Airborne-Remote-Sensing/HARV/RGB_Imagery/HARV_RGB_Ortho.tif 
+ names      : HARV_RGB_Ortho.2 
+ values     : 0, 255  (min, max)
+@@ -242,7 +242,7 @@ band       : 3  (of  3  bands)
+ dimensions : 2317, 3073, 7120141  (nrow, ncol, ncell)
+ resolution : 0.25, 0.25  (x, y)
+ extent     : 731998.5, 732766.8, 4712956, 4713536  (xmin, xmax, ymin, ymax)
+-crs        : +proj=utm +zone=18 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0 
++crs        : +proj=utm +zone=18 +datum=WGS84 +units=m +no_defs 
+ source     : /home/rstudio/_episodes_rmd/data/NEON-DS-Airborne-Remote-Sensing/HARV/RGB_Imagery/HARV_RGB_Ortho.tif 
+ names      : HARV_RGB_Ortho.3 
+ values     : 0, 255  (min, max)
+@@ -266,7 +266,7 @@ band       : 2  (of  3  bands)
+ dimensions : 2317, 3073, 7120141  (nrow, ncol, ncell)
+ resolution : 0.25, 0.25  (x, y)
+ extent     : 731998.5, 732766.8, 4712956, 4713536  (xmin, xmax, ymin, ymax)
+-crs        : +proj=utm +zone=18 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0 
++crs        : +proj=utm +zone=18 +datum=WGS84 +units=m +no_defs 
+ source     : /home/rstudio/_episodes_rmd/data/NEON-DS-Airborne-Remote-Sensing/HARV/RGB_Imagery/HARV_RGB_Ortho.tif 
+ names      : HARV_RGB_Ortho.2 
+ values     : 0, 255  (min, max)
+@@ -566,7 +566,7 @@ object.size(RGB_stack_HARV)
+ 
+ 
+ ~~~
+-44248 bytes
++50104 bytes
+ ~~~
+ {: .output}
+ 
+@@ -583,7 +583,7 @@ object.size(RGB_brick_HARV)
+ 
+ 
+ ~~~
+-170897168 bytes
++15256 bytes
+ ~~~
+ {: .output}
+ 
+@@ -695,13 +695,21 @@ plotRGB(RGB_brick_HARV)
+ > > 
+ > > 
+ > > ~~~
++> > Warning in .S3methods(generic.function, class, envir): 'class' is of length > 1;
++> > only the first element will be used
++> > ~~~
++> > {: .error}
++> > 
++> > 
++> > 
++> > ~~~
+ > >  [1] [             [<-           anyDuplicated as_tibble     as.data.frame
+-> >  [6] as.raster     as.tbl_cube   bind          boxplot       brick        
+-> > [11] coerce        coordinates   determinant   duplicated    edit         
+-> > [16] extent        extract       head          initialize    isSymmetric  
+-> > [21] Math          Math2         Ops           raster        rasterize    
+-> > [26] relist        subset        summary       surfaceArea   tail         
+-> > [31] trim          unique        weighted.mean writeValues  
++> >  [6] as.raster     bind          boxplot       brick         coerce       
++> > [11] coordinates   determinant   duplicated    edit          extent       
++> > [16] extract       head          initialize    isSymmetric   Math         
++> > [21] Math2         Ops           raster        rasterize     relist       
++> > [26] subset        summary       surfaceArea   tail          trim         
++> > [31] unique        weighted.mean writeValues  
+ > > see '?methods' for accessing help and source code
+ > > ~~~
+ > > {: .output}

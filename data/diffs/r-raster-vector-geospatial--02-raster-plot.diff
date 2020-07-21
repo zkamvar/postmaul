@@ -1,0 +1,22 @@
+diff --git a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR3/_episodes/02-raster-plot.md b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR4/_episodes/02-raster-plot.md
+index c4d23cb..25e9e98 100644
+--- a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR3/_episodes/02-raster-plot.md
++++ b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR4/_episodes/02-raster-plot.md
+@@ -186,7 +186,7 @@ terrain.colors(3)
+ 
+ 
+ ~~~
+-[1] "#00A600FF" "#ECB176FF" "#F2F2F2FF"
++[1] "#00A600" "#ECB176" "#F2F2F2"
+ ~~~
+ {: .output}
+ 
+@@ -305,7 +305,7 @@ class      : RasterLayer
+ dimensions : 1367, 1697, 2319799  (nrow, ncol, ncell)
+ resolution : 1, 1  (x, y)
+ extent     : 731453, 733150, 4712471, 4713838  (xmin, xmax, ymin, ymax)
+-crs        : +proj=utm +zone=18 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0 
++crs        : +proj=utm +zone=18 +datum=WGS84 +units=m +no_defs 
+ source     : /home/rstudio/_episodes_rmd/data/NEON-DS-Airborne-Remote-Sensing/HARV/DSM/HARV_DSMhill.tif 
+ names      : HARV_DSMhill 
+ values     : -0.7136298, 0.9999997  (min, max)

@@ -1,0 +1,43 @@
+diff --git a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/swcarpentry--r-novice-gapminderR3/_episodes/14-tidyr.md b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/swcarpentry--r-novice-gapminderR4/_episodes/14-tidyr.md
+index 3706b92..14092d3 100644
+--- a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/swcarpentry--r-novice-gapminderR3/_episodes/14-tidyr.md
++++ b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/swcarpentry--r-novice-gapminderR4/_episodes/14-tidyr.md
+@@ -284,6 +284,13 @@ gap_long$year <- as.integer(gap_long$year)
+ > >
+ > >
+ > >~~~
++> >`summarise()` regrouping output by 'continent' (override with `.groups` argument)
++> >~~~
++> >{: .output}
++> >
++> >
++> >
++> >~~~
+ > ># A tibble: 15 x 3
+ > ># Groups:   continent [5]
+ > >   continent obs_type       means
+@@ -389,7 +396,13 @@ all.equal(gap_normal, gapminder)
+ 
+ 
+ ~~~
+-[1] TRUE
++[1] "Attributes: < Component \"class\": Lengths (3, 1) differ (string compare on first 1) >"
++[2] "Attributes: < Component \"class\": 1 string mismatch >"                                
++[3] "Component \"country\": 1704 string mismatches"                                         
++[4] "Component \"pop\": Mean relative difference: 1.634504"                                 
++[5] "Component \"continent\": 1212 string mismatches"                                       
++[6] "Component \"lifeExp\": Mean relative difference: 0.203822"                             
++[7] "Component \"gdpPercap\": Mean relative difference: 1.162302"                           
+ ~~~
+ {: .output}
+ 
+@@ -448,7 +461,8 @@ all.equal(gap_normal, gapminder)
+ 
+ 
+ ~~~
+-[1] TRUE
++[1] "Attributes: < Component \"class\": Lengths (3, 1) differ (string compare on first 1) >"
++[2] "Attributes: < Component \"class\": 1 string mismatch >"                                
+ ~~~
+ {: .output}
+ 

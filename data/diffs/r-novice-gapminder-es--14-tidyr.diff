@@ -1,0 +1,18 @@
+diff --git a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/swcarpentry--r-novice-gapminder-esR3/_episodes/14-tidyr.md b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/swcarpentry--r-novice-gapminder-esR4/_episodes/14-tidyr.md
+index e4472b1..239baab 100644
+--- a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/swcarpentry--r-novice-gapminder-esR3/_episodes/14-tidyr.md
++++ b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/swcarpentry--r-novice-gapminder-esR4/_episodes/14-tidyr.md
+@@ -261,6 +261,13 @@ gap_long$year <- as.integer(gap_long$year)
+ > > 
+ > > 
+ > > ~~~
++> > `summarise()` regrouping output by 'continent' (override with `.groups` argument)
++> > ~~~
++> > {: .output}
++> > 
++> > 
++> > 
++> > ~~~
+ > > # A tibble: 15 x 3
+ > > # Groups:   continent [5]
+ > >    continent obs_type       means

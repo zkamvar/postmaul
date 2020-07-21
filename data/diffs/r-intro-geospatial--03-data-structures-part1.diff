@@ -1,0 +1,176 @@
+diff --git a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-intro-geospatialR3/_episodes/03-data-structures-part1.md b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-intro-geospatialR4/_episodes/03-data-structures-part1.md
+index 776d4e5..6c0c449 100644
+--- a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-intro-geospatialR3/_episodes/03-data-structures-part1.md
++++ b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-intro-geospatialR4/_episodes/03-data-structures-part1.md
+@@ -54,8 +54,7 @@ nordic$country
+ 
+ 
+ ~~~
+-[1] Denmark Sweden  Norway 
+-Levels: Denmark Norway Sweden
++[1] "Denmark" "Sweden"  "Norway" 
+ ~~~
+ {: .output}
+ 
+@@ -99,17 +98,9 @@ nordic$lifeExp + nordic$country
+ 
+ 
+ ~~~
+-Warning in Ops.factor(nordic$lifeExp, nordic$country): '+' not meaningful for
+-factors
++Error in nordic$lifeExp + nordic$country: non-numeric argument to binary operator
+ ~~~
+-{: .warning}
+-
+-
+-
+-~~~
+-[1] NA NA NA
+-~~~
+-{: .output}
++{: .error}
+ 
+ Understanding what happened here is key to successfully analyzing data in R.
+ 
+@@ -238,7 +229,7 @@ class(nordic_2$lifeExp)
+ 
+ 
+ ~~~
+-[1] "factor"
++[1] "character"
+ ~~~
+ {: .output}
+ 
+@@ -254,16 +245,9 @@ nordic_2$lifeExp + 2
+ 
+ 
+ ~~~
+-Warning in Ops.factor(nordic_2$lifeExp, 2): '+' not meaningful for factors
++Error in nordic_2$lifeExp + 2: non-numeric argument to binary operator
+ ~~~
+-{: .warning}
+-
+-
+-
+-~~~
+-[1] NA NA NA
+-~~~
+-{: .output}
++{: .error}
+ 
+ What happened? When R reads a csv file into one of these tables, it insists that
+ everything in a column be the same class; if it can't understand
+@@ -511,7 +495,7 @@ your columns of data frames, or you will get nasty surprises!
+ > > 
+ > > 
+ > > ~~~
+-> >  Factor w/ 3 levels "77.2","79.0 or 83",..: 1 3 2
++> >  chr [1:3] "77.2" "80" "79.0 or 83"
+ > > ~~~
+ > > {: .output}
+ > > 
+@@ -767,7 +751,7 @@ str(nordic$country)
+ 
+ 
+ ~~~
+- Factor w/ 3 levels "Denmark","Norway",..: 1 3 2
++ chr [1:3] "Denmark" "Sweden" "Norway"
+ ~~~
+ {: .output}
+ 
+@@ -998,7 +982,7 @@ str(nordic)
+ 
+ ~~~
+ 'data.frame':	3 obs. of  3 variables:
+- $ country: Factor w/ 3 levels "Denmark","Norway",..: 1 3 2
++ $ country: chr  "Denmark" "Sweden" "Norway"
+  $ year   : int  2002 2002 2002
+  $ lifeExp: num  77.2 80 79
+ ~~~
+@@ -1036,8 +1020,7 @@ nordic$country
+ 
+ 
+ ~~~
+-[1] Denmark Sweden  Norway 
+-Levels: Denmark Norway Sweden
++[1] "Denmark" "Sweden"  "Norway" 
+ ~~~
+ {: .output}
+ 
+@@ -1051,8 +1034,7 @@ nordic[, 1]
+ 
+ 
+ ~~~
+-[1] Denmark Sweden  Norway 
+-Levels: Denmark Norway Sweden
++[1] "Denmark" "Sweden"  "Norway" 
+ ~~~
+ {: .output}
+ 
+@@ -1066,7 +1048,7 @@ class(nordic[, 1])
+ 
+ 
+ ~~~
+-[1] "factor"
++[1] "character"
+ ~~~
+ {: .output}
+ 
+@@ -1080,7 +1062,7 @@ str(nordic[, 1])
+ 
+ 
+ ~~~
+- Factor w/ 3 levels "Denmark","Norway",..: 1 3 2
++ chr [1:3] "Denmark" "Sweden" "Norway"
+ ~~~
+ {: .output}
+ 
+@@ -1126,7 +1108,7 @@ str(nordic[1, ])
+ 
+ ~~~
+ 'data.frame':	1 obs. of  3 variables:
+- $ country: Factor w/ 3 levels "Denmark","Norway",..: 1
++ $ country: chr "Denmark"
+  $ year   : int 2002
+  $ lifeExp: num 77.2
+ ~~~
+@@ -1180,8 +1162,7 @@ str(nordic[1, ])
+ > > 
+ > > 
+ > > ~~~
+-> > [1] Denmark Sweden  Norway 
+-> > Levels: Denmark Norway Sweden
++> > [1] "Denmark" "Sweden"  "Norway" 
+ > > ~~~
+ > > {: .output}
+ > >
+@@ -1197,8 +1178,7 @@ str(nordic[1, ])
+ > > 
+ > > 
+ > > ~~~
+-> > [1] Denmark Sweden  Norway 
+-> > Levels: Denmark Norway Sweden
++> > [1] "Denmark" "Sweden"  "Norway" 
+ > > ~~~
+ > > {: .output}
+ > >
+@@ -1232,8 +1212,7 @@ str(nordic[1, ])
+ > > 
+ > > 
+ > > ~~~
+-> > [1] Denmark
+-> > Levels: Denmark Norway Sweden
++> > [1] "Denmark"
+ > > ~~~
+ > > {: .output}
+ > >
+@@ -1251,8 +1230,7 @@ str(nordic[1, ])
+ > > 
+ > > 
+ > > ~~~
+-> > [1] Denmark Sweden  Norway 
+-> > Levels: Denmark Norway Sweden
++> > [1] "Denmark" "Sweden"  "Norway" 
+ > > ~~~
+ > > {: .output}
+ > >

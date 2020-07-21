@@ -1,0 +1,458 @@
+diff --git a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--genomics-r-introR3/_episodes/03-basics-factors-dataframes.md b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--genomics-r-introR4/_episodes/03-basics-factors-dataframes.md
+index dd6f576..3f6103e 100644
+--- a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--genomics-r-introR3/_episodes/03-basics-factors-dataframes.md
++++ b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--genomics-r-introR4/_episodes/03-basics-factors-dataframes.md
+@@ -181,70 +181,62 @@ summary(variants)
+ 
+ 
+ ~~~
+-      sample_id          CHROM          POS             ID         
+- SRR2584863: 25   CP000819.1:801   Min.   :   1521   Mode:logical  
+- SRR2584866:766                    1st Qu.:1115970   NA's:801      
+- SRR2589044: 10                    Median :2290361                 
+-                                   Mean   :2243682                 
+-                                   3rd Qu.:3317082                 
+-                                   Max.   :4629225                 
+-                                                                   
+-      REF            ALT           QUAL          FILTER          INDEL        
+- G      :214   A       :211   Min.   :  4.385   Mode:logical   Mode :logical  
+- C      :198   T       :203   1st Qu.:139.000   NA's:801       FALSE:700      
+- A      :164   G       :154   Median :195.000                  TRUE :101      
+- T      :126   C       :139   Mean   :172.276                                 
+- GCCCCCC:  7   GCCCCCC :  6   3rd Qu.:225.000                                 
+- TCCCCCC:  5   GCCCCCCC:  6   Max.   :228.000                                 
+- (Other): 87   (Other) : 82                                                   
+-      IDV              IMF               DP             VDB           
+- Min.   : 2.000   Min.   :0.5714   Min.   : 2.00   Min.   :0.0005387  
+- 1st Qu.: 7.000   1st Qu.:0.8824   1st Qu.: 7.00   1st Qu.:0.2180410  
+- Median : 9.000   Median :1.0000   Median :10.00   Median :0.4827410  
+- Mean   : 9.396   Mean   :0.9219   Mean   :10.57   Mean   :0.4926291  
+- 3rd Qu.:11.000   3rd Qu.:1.0000   3rd Qu.:13.00   3rd Qu.:0.7598940  
+- Max.   :20.000   Max.   :1.0000   Max.   :79.00   Max.   :0.9997130  
+- NA's   :700      NA's   :700                                         
+-      RPB              MQB              BQB              MQSB        
+- Min.   :0.0000   Min.   :0.0000   Min.   :0.1153   Min.   :0.01348  
+- 1st Qu.:0.3776   1st Qu.:0.1070   1st Qu.:0.6963   1st Qu.:0.95494  
+- Median :0.8663   Median :0.2872   Median :0.8615   Median :1.00000  
+- Mean   :0.6970   Mean   :0.5330   Mean   :0.7784   Mean   :0.96428  
+- 3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:1.00000  
+- Max.   :1.0000   Max.   :1.0000   Max.   :1.0000   Max.   :1.01283  
+- NA's   :773      NA's   :773      NA's   :773      NA's   :48       
+-      SGB               MQ0F           ICB            HOB                AC   
+- Min.   :-0.6931   Min.   :0.00000   Mode:logical   Mode:logical   Min.   :1  
+- 1st Qu.:-0.6762   1st Qu.:0.00000   NA's:801       NA's:801       1st Qu.:1  
+- Median :-0.6620   Median :0.00000                                 Median :1  
+- Mean   :-0.6444   Mean   :0.01127                                 Mean   :1  
+- 3rd Qu.:-0.6364   3rd Qu.:0.00000                                 3rd Qu.:1  
+- Max.   :-0.4536   Max.   :0.66667                                 Max.   :1  
+-                                                                              
+-       AN         DP4            MQ       
+- Min.   :1   0,0,5,4: 25   Min.   :10.00  
+- 1st Qu.:1   0,0,4,5: 22   1st Qu.:60.00  
+- Median :1   0,0,3,3: 21   Median :60.00  
+- Mean   :1   0,0,4,3: 21   Mean   :58.19  
+- 3rd Qu.:1   0,0,5,3: 21   3rd Qu.:60.00  
+- Max.   :1   0,0,6,2: 20   Max.   :60.00  
+-             (Other):671                  
+-                                                                Indiv    
+- /home/dcuser/dc_workshop/results/bam/SRR2584863.aligned.sorted.bam: 25  
+- /home/dcuser/dc_workshop/results/bam/SRR2584866.aligned.sorted.bam:766  
+- /home/dcuser/dc_workshop/results/bam/SRR2589044.aligned.sorted.bam: 10  
+-                                                                         
+-                                                                         
+-                                                                         
+-                                                                         
+-     gt_PL         gt_GT    gt_GT_alleles
+- 255,0  :280   Min.   :1   A       :211  
+- 223,0  :  8   1st Qu.:1   T       :203  
+- 237,0  :  8   Median :1   G       :154  
+- 179,0  :  7   Mean   :1   C       :139  
+- 211,0  :  7   3rd Qu.:1   GCCCCCC :  6  
+- 225,0  :  7   Max.   :1   GCCCCCCC:  6  
+- (Other):484               (Other) : 82  
++  sample_id            CHROM                POS             ID         
++ Length:801         Length:801         Min.   :   1521   Mode:logical  
++ Class :character   Class :character   1st Qu.:1115970   NA's:801      
++ Mode  :character   Mode  :character   Median :2290361                 
++                                       Mean   :2243682                 
++                                       3rd Qu.:3317082                 
++                                       Max.   :4629225                 
++                                                                       
++     REF                ALT                 QUAL          FILTER       
++ Length:801         Length:801         Min.   :  4.385   Mode:logical  
++ Class :character   Class :character   1st Qu.:139.000   NA's:801      
++ Mode  :character   Mode  :character   Median :195.000                 
++                                       Mean   :172.276                 
++                                       3rd Qu.:225.000                 
++                                       Max.   :228.000                 
++                                                                       
++   INDEL              IDV              IMF               DP       
++ Mode :logical   Min.   : 2.000   Min.   :0.5714   Min.   : 2.00  
++ FALSE:700       1st Qu.: 7.000   1st Qu.:0.8824   1st Qu.: 7.00  
++ TRUE :101       Median : 9.000   Median :1.0000   Median :10.00  
++                 Mean   : 9.396   Mean   :0.9219   Mean   :10.57  
++                 3rd Qu.:11.000   3rd Qu.:1.0000   3rd Qu.:13.00  
++                 Max.   :20.000   Max.   :1.0000   Max.   :79.00  
++                 NA's   :700      NA's   :700                     
++      VDB                 RPB              MQB              BQB        
++ Min.   :0.0005387   Min.   :0.0000   Min.   :0.0000   Min.   :0.1153  
++ 1st Qu.:0.2180410   1st Qu.:0.3776   1st Qu.:0.1070   1st Qu.:0.6963  
++ Median :0.4827410   Median :0.8663   Median :0.2872   Median :0.8615  
++ Mean   :0.4926291   Mean   :0.6970   Mean   :0.5330   Mean   :0.7784  
++ 3rd Qu.:0.7598940   3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:1.0000  
++ Max.   :0.9997130   Max.   :1.0000   Max.   :1.0000   Max.   :1.0000  
++                     NA's   :773      NA's   :773      NA's   :773     
++      MQSB              SGB               MQ0F           ICB         
++ Min.   :0.01348   Min.   :-0.6931   Min.   :0.00000   Mode:logical  
++ 1st Qu.:0.95494   1st Qu.:-0.6762   1st Qu.:0.00000   NA's:801      
++ Median :1.00000   Median :-0.6620   Median :0.00000                 
++ Mean   :0.96428   Mean   :-0.6444   Mean   :0.01127                 
++ 3rd Qu.:1.00000   3rd Qu.:-0.6364   3rd Qu.:0.00000                 
++ Max.   :1.01283   Max.   :-0.4536   Max.   :0.66667                 
++ NA's   :48                                                          
++   HOB                AC          AN        DP4                  MQ       
++ Mode:logical   Min.   :1   Min.   :1   Length:801         Min.   :10.00  
++ NA's:801       1st Qu.:1   1st Qu.:1   Class :character   1st Qu.:60.00  
++                Median :1   Median :1   Mode  :character   Median :60.00  
++                Mean   :1   Mean   :1                      Mean   :58.19  
++                3rd Qu.:1   3rd Qu.:1                      3rd Qu.:60.00  
++                Max.   :1   Max.   :1                      Max.   :60.00  
++                                                                          
++    Indiv              gt_PL               gt_GT   gt_GT_alleles     
++ Length:801         Length:801         Min.   :1   Length:801        
++ Class :character   Class :character   1st Qu.:1   Class :character  
++ Mode  :character   Mode  :character   Median :1   Mode  :character  
++                                       Mean   :1                     
++                                       3rd Qu.:1                     
++                                       Max.   :1                     
++                                                                     
+ ~~~
+ {: .output}
+ 
+@@ -273,12 +265,12 @@ str(variants)
+ 
+ ~~~
+ 'data.frame':	801 obs. of  29 variables:
+- $ sample_id    : Factor w/ 3 levels "SRR2584863","SRR2584866",..: 1 1 1 1 1 1 1 1 1 1 ...
+- $ CHROM        : Factor w/ 1 level "CP000819.1": 1 1 1 1 1 1 1 1 1 1 ...
++ $ sample_id    : chr  "SRR2584863" "SRR2584863" "SRR2584863" "SRR2584863" ...
++ $ CHROM        : chr  "CP000819.1" "CP000819.1" "CP000819.1" "CP000819.1" ...
+  $ POS          : int  9972 263235 281923 433359 473901 648692 1331794 1733343 2103887 2333538 ...
+  $ ID           : logi  NA NA NA NA NA NA ...
+- $ REF          : Factor w/ 59 levels "A","ACAGCCAGCCAGCCAGCCAGCCAGCCAGCCAG",..: 49 33 33 30 24 16 16 33 2 12 ...
+- $ ALT          : Factor w/ 57 levels "A","AC","ACAGCCAGCCAGCCAGCCAGCCAGCCAGCCAGCCAG",..: 31 46 46 29 25 46 1 1 4 15 ...
++ $ REF          : chr  "T" "G" "G" "CTTTTTTT" ...
++ $ ALT          : chr  "G" "T" "T" "CTTTTTTTT" ...
+  $ QUAL         : num  91 85 217 64 228 210 178 225 56 167 ...
+  $ FILTER       : logi  NA NA NA NA NA NA ...
+  $ INDEL        : logi  FALSE FALSE FALSE TRUE TRUE FALSE ...
+@@ -296,12 +288,12 @@ str(variants)
+  $ HOB          : logi  NA NA NA NA NA NA ...
+  $ AC           : int  1 1 1 1 1 1 1 1 1 1 ...
+  $ AN           : int  1 1 1 1 1 1 1 1 1 1 ...
+- $ DP4          : Factor w/ 217 levels "0,0,0,2","0,0,0,3",..: 3 132 73 141 176 104 61 74 133 137 ...
++ $ DP4          : chr  "0,0,0,4" "0,1,0,5" "0,0,4,5" "0,1,3,8" ...
+  $ MQ           : int  60 33 60 60 60 60 60 60 60 60 ...
+- $ Indiv        : Factor w/ 3 levels "/home/dcuser/dc_workshop/results/bam/SRR2584863.aligned.sorted.bam",..: 1 1 1 1 1 1 1 1 1 1 ...
+- $ gt_PL        : Factor w/ 206 levels "100,0","103,0",..: 16 10 134 198 142 127 93 142 9 80 ...
++ $ Indiv        : chr  "/home/dcuser/dc_workshop/results/bam/SRR2584863.aligned.sorted.bam" "/home/dcuser/dc_workshop/results/bam/SRR2584863.aligned.sorted.bam" "/home/dcuser/dc_workshop/results/bam/SRR2584863.aligned.sorted.bam" "/home/dcuser/dc_workshop/results/bam/SRR2584863.aligned.sorted.bam" ...
++ $ gt_PL        : chr  "121,0" "112,0" "247,0" "91,0" ...
+  $ gt_GT        : int  1 1 1 1 1 1 1 1 1 1 ...
+- $ gt_GT_alleles: Factor w/ 57 levels "A","AC","ACAGCCAGCCAGCCAGCCAGCCAGCCAGCCAGCCAG",..: 31 46 46 29 25 46 1 1 4 15 ...
++ $ gt_GT_alleles: chr  "G" "T" "T" "CTTTTTTTT" ...
+ ~~~
+ {: .output}
+ 
+@@ -345,8 +337,7 @@ head(REF)
+ 
+ 
+ ~~~
+-[1] T        G        G        CTTTTTTT CCGC     C       
+-59 Levels: A ACAGCCAGCCAGCCAGCCAGCCAGCCAGCCAG ACCCC ACCCCCCC ... TGGGGGGG
++[1] "T"        "G"        "G"        "CTTTTTTT" "CCGC"     "C"       
+ ~~~
+ {: .output}
+ 
+@@ -366,7 +357,7 @@ str(REF)
+ 
+ 
+ ~~~
+- Factor w/ 59 levels "A","ACAGCCAGCCAGCCAGCCAGCCAGCCAGCCAG",..: 49 33 33 30 24 16 16 33 2 12 ...
++ chr [1:801] "T" "G" "G" "CTTTTTTT" "CCGC" "C" "C" "G" ...
+ ~~~
+ {: .output}
+ 
+@@ -388,6 +379,34 @@ plot(REF)
+ ~~~
+ {: .language-r}
+ 
++
++
++~~~
++Warning in xy.coords(x, y, xlabel, ylabel, log): NAs introduced by coercion
++~~~
++{: .error}
++
++
++
++~~~
++Warning in min(x): no non-missing arguments to min; returning Inf
++~~~
++{: .error}
++
++
++
++~~~
++Warning in max(x): no non-missing arguments to max; returning -Inf
++~~~
++{: .error}
++
++
++
++~~~
++Error in plot.window(...): need finite 'ylim' values
++~~~
++{: .error}
++
+ <img src="../fig/rmd-03-unnamed-chunk-9-1.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" width="612" style="display: block; margin: auto;" />
+ 
+ This isn't a particularly pretty example of a plot. We'll be learning much more about creating nice, publication-quality graphics later in this lesson. 
+@@ -463,8 +482,7 @@ where we are taking a range).
+ >> 
+ >> 
+ >> ~~~
+->> [1] SRR2584863
+->> Levels: SRR2584863 SRR2584866 SRR2589044
++>> [1] "SRR2584863"
+ >> ~~~
+ >> {: .output}
+ >> 
+@@ -492,8 +510,7 @@ where we are taking a range).
+ >> 
+ >> 
+ >> ~~~
+->> [1] T
+->> 57 Levels: A AC ... TGGGGGGGGG
++>> [1] "T"
+ >> ~~~
+ >> {: .output}
+ >> 
+@@ -568,8 +585,7 @@ where we are taking a range).
+ >> 
+ >> 
+ >> ~~~
+->> [1] SRR2584863 SRR2584863 SRR2584863 SRR2584863
+->> Levels: SRR2584863 SRR2584866 SRR2589044
++>> [1] "SRR2584863" "SRR2584863" "SRR2584863" "SRR2584863"
+ >> ~~~
+ >> {: .output}
+ >> 
+@@ -617,8 +633,8 @@ where we are taking a range).
+ >> 
+ >> 
+ >> ~~~
+->> [1] SRR2584863 SRR2584863 SRR2584863 SRR2584863 SRR2584863 SRR2584863
+->> Levels: SRR2584863 SRR2584866 SRR2589044
++>> [1] "SRR2584863" "SRR2584863" "SRR2584863" "SRR2584863" "SRR2584863"
++>> [6] "SRR2584863"
+ >> ~~~
+ >> {: .output}
+ >>
+@@ -713,8 +729,8 @@ where we are taking a range).
+ >>
+ >> 
+ >> ~~~
+->> [1] SRR2584863 SRR2584863 SRR2584863 SRR2584863 SRR2584863 SRR2584863
+->> Levels: SRR2584863 SRR2584866 SRR2589044
++>> [1] "SRR2584863" "SRR2584863" "SRR2584863" "SRR2584863" "SRR2584863"
++>> [6] "SRR2584863"
+ >> ~~~
+ >> {: .output}
+ >> 
+@@ -811,38 +827,30 @@ summary(SRR2584863_variants)
+ 
+ 
+ ~~~
+-      sample_id         CHROM         POS             ID         
+- SRR2584863:25   CP000819.1:25   Min.   :   9972   Mode:logical  
+- SRR2584866: 0                   1st Qu.:1331794   NA's:25       
+- SRR2589044: 0                   Median :2618472                 
+-                                 Mean   :2464989                 
+-                                 3rd Qu.:3488669                 
+-                                 Max.   :4616538                 
+-                                                                 
+-                               REF    
+- A                               :10  
+- G                               : 6  
+- C                               : 3  
+- ACAGCCAGCCAGCCAGCCAGCCAGCCAGCCAG: 1  
+- AT                              : 1  
+- CCGC                            : 1  
+- (Other)                         : 3  
+-                                                       ALT         QUAL       
+- T                                                       :7   Min.   : 31.89  
+- C                                                       :6   1st Qu.:104.00  
+- A                                                       :4   Median :211.00  
+- G                                                       :3   Mean   :172.97  
+- AC                                                      :1   3rd Qu.:225.00  
+- ACAGCCAGCCAGCCAGCCAGCCAGCCAGCCAGCCAGCCAGCCAGCCAGCCAGCCAG:1   Max.   :228.00  
+- (Other)                                                 :3                   
+-  FILTER          INDEL              IDV             IMF               DP      
+- Mode:logical   Mode :logical   Min.   : 2.00   Min.   :0.6667   Min.   : 2.0  
+- NA's:25        FALSE:19        1st Qu.: 3.25   1st Qu.:0.9250   1st Qu.: 9.0  
+-                TRUE :6         Median : 8.00   Median :1.0000   Median :10.0  
+-                                Mean   : 7.00   Mean   :0.9278   Mean   :10.4  
+-                                3rd Qu.: 9.75   3rd Qu.:1.0000   3rd Qu.:12.0  
+-                                Max.   :12.00   Max.   :1.0000   Max.   :20.0  
+-                                NA's   :19      NA's   :19                     
++  sample_id            CHROM                POS             ID         
++ Length:25          Length:25          Min.   :   9972   Mode:logical  
++ Class :character   Class :character   1st Qu.:1331794   NA's:25       
++ Mode  :character   Mode  :character   Median :2618472                 
++                                       Mean   :2464989                 
++                                       3rd Qu.:3488669                 
++                                       Max.   :4616538                 
++                                                                       
++     REF                ALT                 QUAL         FILTER       
++ Length:25          Length:25          Min.   : 31.89   Mode:logical  
++ Class :character   Class :character   1st Qu.:104.00   NA's:25       
++ Mode  :character   Mode  :character   Median :211.00                 
++                                       Mean   :172.97                 
++                                       3rd Qu.:225.00                 
++                                       Max.   :228.00                 
++                                                                      
++   INDEL              IDV             IMF               DP      
++ Mode :logical   Min.   : 2.00   Min.   :0.6667   Min.   : 2.0  
++ FALSE:19        1st Qu.: 3.25   1st Qu.:0.9250   1st Qu.: 9.0  
++ TRUE :6         Median : 8.00   Median :1.0000   Median :10.0  
++                 Mean   : 7.00   Mean   :0.9278   Mean   :10.4  
++                 3rd Qu.: 9.75   3rd Qu.:1.0000   3rd Qu.:12.0  
++                 Max.   :12.00   Max.   :1.0000   Max.   :20.0  
++                 NA's   :19      NA's   :19                     
+       VDB               RPB              MQB               BQB        
+  Min.   :0.01627   Min.   :0.9008   Min.   :0.04979   Min.   :0.7507  
+  1st Qu.:0.07140   1st Qu.:0.9275   1st Qu.:0.09996   1st Qu.:0.7627  
+@@ -859,38 +867,22 @@ summary(SRR2584863_variants)
+  3rd Qu.:1.0000   3rd Qu.:-0.6168   3rd Qu.:0.00000                 
+  Max.   :1.0128   Max.   :-0.4536   Max.   :0.66667                 
+  NA's   :3                                                          
+-   HOB                AC          AN          DP4           MQ       
+- Mode:logical   Min.   :1   Min.   :1   0,0,4,5 : 3   Min.   :10.00  
+- NA's:25        1st Qu.:1   1st Qu.:1   0,0,4,6 : 2   1st Qu.:60.00  
+-                Median :1   Median :1   0,0,0,4 : 1   Median :60.00  
+-                Mean   :1   Mean   :1   0,0,10,6: 1   Mean   :55.52  
+-                3rd Qu.:1   3rd Qu.:1   0,0,12,4: 1   3rd Qu.:60.00  
+-                Max.   :1   Max.   :1   0,0,12,5: 1   Max.   :60.00  
+-                                        (Other) :16                  
+-                                                                Indiv   
+- /home/dcuser/dc_workshop/results/bam/SRR2584863.aligned.sorted.bam:25  
+- /home/dcuser/dc_workshop/results/bam/SRR2584866.aligned.sorted.bam: 0  
+- /home/dcuser/dc_workshop/results/bam/SRR2589044.aligned.sorted.bam: 0  
+-                                                                        
+-                                                                        
+-                                                                        
+-                                                                        
+-     gt_PL        gt_GT  
+- 255,0  :11   Min.   :1  
+- 111,28 : 1   1st Qu.:1  
+- 112,0  : 1   Median :1  
+- 121,0  : 1   Mean   :1  
+- 131,0  : 1   3rd Qu.:1  
+- 194,0  : 1   Max.   :1  
+- (Other): 9              
+-                                                  gt_GT_alleles
+- T                                                       :7    
+- C                                                       :6    
+- A                                                       :4    
+- G                                                       :3    
+- AC                                                      :1    
+- ACAGCCAGCCAGCCAGCCAGCCAGCCAGCCAGCCAGCCAGCCAGCCAGCCAGCCAG:1    
+- (Other)                                                 :3    
++   HOB                AC          AN        DP4                  MQ       
++ Mode:logical   Min.   :1   Min.   :1   Length:25          Min.   :10.00  
++ NA's:25        1st Qu.:1   1st Qu.:1   Class :character   1st Qu.:60.00  
++                Median :1   Median :1   Mode  :character   Median :60.00  
++                Mean   :1   Mean   :1                      Mean   :55.52  
++                3rd Qu.:1   3rd Qu.:1                      3rd Qu.:60.00  
++                Max.   :1   Max.   :1                      Max.   :60.00  
++                                                                          
++    Indiv              gt_PL               gt_GT   gt_GT_alleles     
++ Length:25          Length:25          Min.   :1   Length:25         
++ Class :character   Class :character   1st Qu.:1   Class :character  
++ Mode  :character   Mode  :character   Median :1   Mode  :character  
++                                       Mean   :1                     
++                                       3rd Qu.:1                     
++                                       Max.   :1                     
++                                                                     
+ ~~~
+ {: .output}
+ 
+@@ -1069,28 +1061,46 @@ as.numeric(variants$sample_id)
+ 
+ 
+ ~~~
+-  [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2
+- [38] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+- [75] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+-[112] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+-[149] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+-[186] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+-[223] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+-[260] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+-[297] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+-[334] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+-[371] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+-[408] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+-[445] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+-[482] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+-[519] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+-[556] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+-[593] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+-[630] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+-[667] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+-[704] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+-[741] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+-[778] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 3 3
++Warning: NAs introduced by coercion
++~~~
++{: .error}
++
++
++
++~~~
++  [1] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
++ [26] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
++ [51] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
++ [76] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
++[101] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
++[126] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
++[151] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
++[176] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
++[201] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
++[226] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
++[251] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
++[276] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
++[301] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
++[326] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
++[351] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
++[376] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
++[401] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
++[426] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
++[451] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
++[476] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
++[501] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
++[526] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
++[551] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
++[576] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
++[601] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
++[626] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
++[651] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
++[676] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
++[701] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
++[726] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
++[751] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
++[776] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
++[801] NA
+ ~~~
+ {: .output}
+ 

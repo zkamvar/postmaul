@@ -1,0 +1,52 @@
+diff --git a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/LibraryCarpentry--lc-rR3/_episodes/04-data-viz-ggplot.md b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/LibraryCarpentry--lc-rR4/_episodes/04-data-viz-ggplot.md
+index 5fb954a..21eb10a 100644
+--- a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/LibraryCarpentry--lc-rR3/_episodes/04-data-viz-ggplot.md
++++ b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/LibraryCarpentry--lc-rR4/_episodes/04-data-viz-ggplot.md
+@@ -82,9 +82,9 @@ library(tidyverse)  # load the core tidyverse
+ 
+ 
+ ~~~
+-✔ ggplot2 3.3.0     ✔ dplyr   0.8.5
++✔ ggplot2 3.3.1     ✔ dplyr   1.0.0
+ ✔ tibble  3.0.1     ✔ stringr 1.4.0
+-✔ tidyr   1.0.2     ✔ forcats 0.5.0
++✔ tidyr   1.1.0     ✔ forcats 0.5.0
+ ✔ purrr   0.3.4     
+ ~~~
+ {: .output}
+@@ -115,15 +115,6 @@ Attaching package: 'lubridate'
+ 
+ 
+ 
+-~~~
+-The following objects are masked from 'package:dplyr':
+-
+-    intersect, setdiff, union
+-~~~
+-{: .output}
+-
+-
+-
+ ~~~
+ The following objects are masked from 'package:base':
+ 
+@@ -907,7 +898,19 @@ publication. Add one of the themes listed above.
+ > >         pubyear_ymd > "1989-01-01" & pubyear_ymd < "2002-01-01") %>%
+ > >  group_by(pubyear_ymd) %>%
+ > >  summarize(checkouts_sum = sum(tot_chkout))
++> > ~~~
++> > {: .language-r}
+ > > 
++> > 
++> > 
++> > ~~~
++> > `summarise()` ungrouping output (override with `.groups` argument)
++> > ~~~
++> > {: .output}
++> > 
++> > 
++> > 
++> > ~~~
+ > > ggplot(data = yearly_checkouts, mapping = aes(x = pubyear_ymd, y = checkouts_sum)) +
+ > >  geom_line() +
+ > >  theme_bw()

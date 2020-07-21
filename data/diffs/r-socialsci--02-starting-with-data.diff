@@ -1,0 +1,13 @@
+diff --git a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-socialsciR3/_episodes/02-starting-with-data.md b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-socialsciR4/_episodes/02-starting-with-data.md
+index 986e002..e2e41e1 100644
+--- a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-socialsciR3/_episodes/02-starting-with-data.md
++++ b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-socialsciR4/_episodes/02-starting-with-data.md
+@@ -468,7 +468,7 @@ In RStudio, you can use the autocompletion feature to get the full and correct n
+ > > 
+ > > ~~~
+ > > Error: Must subset rows with a valid subscript vector.
+-> > [31m✖[39m Lossy cast from `(n_rows/2)` <double> to <integer>.
++> > [31m✖[39m Can't convert from `(n_rows/2)` <double> to <integer> due to loss of precision.
+ > > ~~~
+ > > {: .error}
+ > > 

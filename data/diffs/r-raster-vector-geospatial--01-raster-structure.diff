@@ -1,0 +1,40 @@
+diff --git a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR3/_episodes/01-raster-structure.md b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR4/_episodes/01-raster-structure.md
+index ba65397..d2ebb65 100644
+--- a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR3/_episodes/01-raster-structure.md
++++ b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR4/_episodes/01-raster-structure.md
+@@ -148,7 +148,7 @@ class      : RasterLayer
+ dimensions : 1367, 1697, 2319799  (nrow, ncol, ncell)
+ resolution : 1, 1  (x, y)
+ extent     : 731453, 733150, 4712471, 4713838  (xmin, xmax, ymin, ymax)
+-crs        : +proj=utm +zone=18 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0 
++crs        : +proj=utm +zone=18 +datum=WGS84 +units=m +no_defs 
+ source     : /home/rstudio/_episodes_rmd/data/NEON-DS-Airborne-Remote-Sensing/HARV/DSM/HARV_dsmCrop.tif 
+ names      : HARV_dsmCrop 
+ values     : 305.07, 416.07  (min, max)
+@@ -176,11 +176,11 @@ Warning in .local(object, ...): summary is an estimate based on a sample of 1e+0
+ 
+ ~~~
+         HARV_dsmCrop
+-Min.          305.55
+-1st Qu.       345.66
+-Median        359.76
+-3rd Qu.       374.24
+-Max.          414.54
++Min.          305.33
++1st Qu.       345.50
++Median        359.57
++3rd Qu.       374.21
++Max.          416.07
+ NA's            0.00
+ ~~~
+ {: .output}
+@@ -300,8 +300,7 @@ crs(DSM_HARV)
+ 
+ ~~~
+ CRS arguments:
+- +proj=utm +zone=18 +datum=WGS84 +units=m +no_defs +ellps=WGS84
+-+towgs84=0,0,0 
++ +proj=utm +zone=18 +datum=WGS84 +units=m +no_defs 
+ ~~~
+ {: .output}
+ 

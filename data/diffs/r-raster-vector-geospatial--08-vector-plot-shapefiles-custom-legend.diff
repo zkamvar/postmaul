@@ -1,0 +1,22 @@
+diff --git a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR3/_episodes/08-vector-plot-shapefiles-custom-legend.md b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR4/_episodes/08-vector-plot-shapefiles-custom-legend.md
+index b42f588..5c7e8b1 100644
+--- a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR3/_episodes/08-vector-plot-shapefiles-custom-legend.md
++++ b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR4/_episodes/08-vector-plot-shapefiles-custom-legend.md
+@@ -163,7 +163,7 @@ symbol of `shape` value.
+ > > geometry type:  POINT
+ > > dimension:      XY
+ > > bbox:           xmin: 731405.3 ymin: 4712845 xmax: 732275.3 ymax: 4713846
+-> > CRS:            32618
++> > projected CRS:  WGS 84 / UTM zone 18N
+ > > ~~~
+ > > {: .output}
+ > > 
+@@ -177,7 +177,7 @@ symbol of `shape` value.
+ > > 
+ > > 
+ > > ~~~
+-> > [1] "Histosols"   "Inceptisols"
++> > NULL
+ > > ~~~
+ > > {: .output}
+ > >

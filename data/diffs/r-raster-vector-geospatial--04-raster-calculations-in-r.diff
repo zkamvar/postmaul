@@ -1,0 +1,18 @@
+diff --git a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR3/_episodes/04-raster-calculations-in-r.md b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR4/_episodes/04-raster-calculations-in-r.md
+index 68ec1a5..4e63751 100644
+--- a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR3/_episodes/04-raster-calculations-in-r.md
++++ b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR4/_episodes/04-raster-calculations-in-r.md
+@@ -538,6 +538,13 @@ are what you expect.
+ > >             NAflag = -9999)
+ > > ~~~
+ > > {: .language-r}
++> > 
++> > 
++> > 
++> > ~~~
++> > Warning in .gd_SetProject(object, ...): NOT UPDATED FOR PROJ >= 6
++> > ~~~
++> > {: .error}
+ > >
+ > > 4) Compare the SJER and HARV CHMs. 
+ > > Tree heights are much shorter in SJER. You can confirm this by 

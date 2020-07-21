@@ -1,0 +1,22 @@
+diff --git a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/swcarpentry--r-novice-inflammationR3/_episodes/15-supp-loops-in-depth.md b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/swcarpentry--r-novice-inflammationR4/_episodes/15-supp-loops-in-depth.md
+index a8a5ffc..ad9e072 100644
+--- a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/swcarpentry--r-novice-inflammationR3/_episodes/15-supp-loops-in-depth.md
++++ b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/swcarpentry--r-novice-inflammationR4/_episodes/15-supp-loops-in-depth.md
+@@ -222,7 +222,7 @@ system.time(avg2 <- analyze2(filenames))
+ 
+ ~~~
+    user  system elapsed 
+-  0.017   0.001   0.017 
++  0.019   0.000   0.019 
+ ~~~
+ {: .output}
+ 
+@@ -252,7 +252,7 @@ system.time(avg3 <- analyze3(filenames))
+ 
+ ~~~
+    user  system elapsed 
+-  0.018   0.000   0.018 
++  0.016   0.000   0.016 
+ ~~~
+ {: .output}
+ 

@@ -1,0 +1,44 @@
+diff --git a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR3/_episodes/13-plot-time-series-rasters-in-r.md b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR4/_episodes/13-plot-time-series-rasters-in-r.md
+index 4b5293f..8778c7b 100644
+--- a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR3/_episodes/13-plot-time-series-rasters-in-r.md
++++ b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--r-raster-vector-geospatialR4/_episodes/13-plot-time-series-rasters-in-r.md
+@@ -22,6 +22,39 @@ source: Rmd
+ 
+ 
+ 
++~~~
++Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++datum Unknown based on WGS84 ellipsoid in CRS definition
++Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++datum Unknown based on WGS84 ellipsoid in CRS definition
++Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++datum Unknown based on WGS84 ellipsoid in CRS definition
++Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++datum Unknown based on WGS84 ellipsoid in CRS definition
++Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++datum Unknown based on WGS84 ellipsoid in CRS definition
++Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++datum Unknown based on WGS84 ellipsoid in CRS definition
++Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++datum Unknown based on WGS84 ellipsoid in CRS definition
++Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++datum Unknown based on WGS84 ellipsoid in CRS definition
++Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++datum Unknown based on WGS84 ellipsoid in CRS definition
++Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++datum Unknown based on WGS84 ellipsoid in CRS definition
++Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++datum Unknown based on WGS84 ellipsoid in CRS definition
++Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++datum Unknown based on WGS84 ellipsoid in CRS definition
++Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++datum Unknown based on WGS84 ellipsoid in CRS definition
++Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++datum Unknown based on WGS84 ellipsoid in CRS definition
++Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
++datum Unknown based on WGS84 ellipsoid in CRS definition
++~~~
++{: .error}
+ 
+ 
+ > ## Things You’ll Need To Complete This Episode

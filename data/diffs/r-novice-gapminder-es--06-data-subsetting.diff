@@ -1,0 +1,13 @@
+diff --git a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/swcarpentry--r-novice-gapminder-esR3/_episodes/06-data-subsetting.md b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/swcarpentry--r-novice-gapminder-esR4/_episodes/06-data-subsetting.md
+index 8989078..6da6391 100644
+--- a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/swcarpentry--r-novice-gapminder-esR3/_episodes/06-data-subsetting.md
++++ b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/swcarpentry--r-novice-gapminder-esR4/_episodes/06-data-subsetting.md
+@@ -1232,7 +1232,7 @@ xlist[[-1]]
+ 
+ 
+ ~~~
+-Error in xlist[[-1]]: attempt to select more than one element in get1index <real>
++Error in xlist[[-1]]: invalid negative subscript in get1index <real>
+ ~~~
+ {: .error}
+ 
