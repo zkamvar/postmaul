@@ -192,7 +192,7 @@ Now all the repos have been downloaded, we can render the episodes under
 different versions of R and see how they go. Note that I have to use the
 geospatial R container in order to get things to work properly.
 
-```{r dokken, results = "hide", cache = TRUE}
+```{r dokken, results = "hide"}
 
 get_path <- function(u, r) {
   fs::path_abs(fs::path("data", "rmd-repos", glue::glue("{u}--{r}")))
@@ -229,12 +229,12 @@ names(res) <- has_rmd_all$repository
 
 We can iterate and compare:
 
-```{r}
+```{r compare, results = 'asis'}
 cmpr <- function(lesson, name) {
 
-  message(glue::glue("\nLesson: {name}"))
+  cat(glue::glue("\n## Lesson: {name}\n\n"))
   if (!inherits(lesson[[1]], "Lesson")) {
-    message("----ERRORED----")
+    cat("\n\n----ERRORED----\n\n")
     return(invisible(NULL))
   }
 
@@ -242,8 +242,11 @@ cmpr <- function(lesson, name) {
   o2 <- map(lesson[[2]]$episodes, ~.x$output %>% xml2::xml_text())
 
   for (i in seq_along(lesson[[1]]$episodes)) {
-    message(glue::glue("Episode:   {basename(lesson[[1]]$files[i])}"))
+
+    cat(glue::glue("\n#### Episode: {name}/{basename(lesson[[1]]$files[i])}\n"))
+    cat("\n```diff\n")
     print(waldo::compare(o1[[i]], o2[[i]]))
+    cat("\n```\n")
   }
 }
 
