@@ -449,7 +449,7 @@ cmpr <- function(lesson, name) {
     diffcmd <- "git diff --no-index -- {lesson[[1]]$files[[i]]} {lesson[[2]]$files[[i]]} > {dpath}"
     system(glue::glue(diffcmd))
     cat(glue::glue("\n#### Episode: {episode}\n"))
-    cat(glue::glue("\n[Link to full diff]({dpath})\n"))
+    cat(glue::glue("\n\n[Link to full diff]({dpath})\n"))
     cat("\n```diff\n")
     print(waldo::compare(o2[[i]], o1[[i]], x_arg = "Rv4", y_arg = "Rv3"))
     cat("\n```\n")
@@ -461,19 +461,25 @@ purrr::walk2(res, names(res), cmpr)
 
 ## Lesson: lc-r
 
-#### Episode: lc-r–00-before-we-start.md[Link to full diff](data/diffs/lc-r--00-before-we-start.diff)
+#### Episode: lc-r–00-before-we-start.md
+
+[Link to full diff](data/diffs/lc-r--00-before-we-start.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: lc-r–01-intro-to-r.md[Link to full diff](data/diffs/lc-r--01-intro-to-r.diff)
+#### Episode: lc-r–01-intro-to-r.md
+
+[Link to full diff](data/diffs/lc-r--01-intro-to-r.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: lc-r–02-starting-with-data.md[Link to full diff](data/diffs/lc-r--02-starting-with-data.diff)
+#### Episode: lc-r–02-starting-with-data.md
+
+[Link to full diff](data/diffs/lc-r--02-starting-with-data.diff)
 
 ``` diff
 lines(Rv4[[2]]) vs lines(Rv3[[2]])
@@ -486,7 +492,10 @@ lines(Rv4[[2]]) vs lines(Rv3[[2]])
   ""
 ```
 
-#### Episode: lc-r–03-data-cleaning-and-transformation.md[Link to full diff](data/diffs/lc-r--03-data-cleaning-and-transformation.diff)
+#### Episode: lc-r–03-data-cleaning-and-transformation.md
+
+[Link to full
+diff](data/diffs/lc-r--03-data-cleaning-and-transformation.diff)
 
 ``` diff
      names(Rv4)    | names(Rv3)        
@@ -554,7 +563,9 @@ and 8 more ...
 `lines(Rv3[[17]])` is absent
 ```
 
-#### Episode: lc-r–04-data-viz-ggplot.md[Link to full diff](data/diffs/lc-r--04-data-viz-ggplot.diff)
+#### Episode: lc-r–04-data-viz-ggplot.md
+
+[Link to full diff](data/diffs/lc-r--04-data-viz-ggplot.diff)
 
 ``` diff
      names(Rv4)    | names(Rv3)        
@@ -628,19 +639,26 @@ lines(Rv4[[10]]) vs lines(Rv3[[10]])
 
 ## Lesson: genomics-r-intro
 
-#### Episode: genomics-r-intro–01-introduction.md[Link to full diff](data/diffs/genomics-r-intro--01-introduction.diff)
+#### Episode: genomics-r-intro–01-introduction.md
+
+[Link to full diff](data/diffs/genomics-r-intro--01-introduction.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: genomics-r-intro–02-r-basics.md[Link to full diff](data/diffs/genomics-r-intro--02-r-basics.diff)
+#### Episode: genomics-r-intro–02-r-basics.md
+
+[Link to full diff](data/diffs/genomics-r-intro--02-r-basics.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: genomics-r-intro–03-basics-factors-dataframes.md[Link to full diff](data/diffs/genomics-r-intro--03-basics-factors-dataframes.diff)
+#### Episode: genomics-r-intro–03-basics-factors-dataframes.md
+
+[Link to full
+diff](data/diffs/genomics-r-intro--03-basics-factors-dataframes.diff)
 
 ``` diff
 ```
@@ -765,7 +783,9 @@ lines(Rv4[[12]]) vs lines(Rv3[[12]])
 And 3 more differences ...
 ```
 
-#### Episode: genomics-r-intro–04-dplyr.md[Link to full diff](data/diffs/genomics-r-intro--04-dplyr.diff)
+#### Episode: genomics-r-intro–04-dplyr.md
+
+[Link to full diff](data/diffs/genomics-r-intro--04-dplyr.diff)
 
 ``` diff
      names(Rv4)      | names(Rv3)          
@@ -881,13 +901,18 @@ lines(Rv4[[10]]) vs lines(Rv3[[10]])
 `lines(Rv3[[13]])` is absent
 ```
 
-#### Episode: genomics-r-intro–05-data-visualization.md[Link to full diff](data/diffs/genomics-r-intro--05-data-visualization.diff)
+#### Episode: genomics-r-intro–05-data-visualization.md
+
+[Link to full
+diff](data/diffs/genomics-r-intro--05-data-visualization.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: genomics-r-intro–XX-knitr-markdown.md[Link to full diff](data/diffs/genomics-r-intro--XX-knitr-markdown.diff)
+#### Episode: genomics-r-intro–XX-knitr-markdown.md
+
+[Link to full diff](data/diffs/genomics-r-intro--XX-knitr-markdown.diff)
 
 ``` diff
 ✔ No differences
@@ -895,31 +920,42 @@ lines(Rv4[[10]]) vs lines(Rv3[[10]])
 
 ## Lesson: r-novice-inflammation
 
-#### Episode: r-novice-inflammation–01-starting-with-data.md[Link to full diff](data/diffs/r-novice-inflammation--01-starting-with-data.diff)
+#### Episode: r-novice-inflammation–01-starting-with-data.md
+
+[Link to full
+diff](data/diffs/r-novice-inflammation--01-starting-with-data.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: r-novice-inflammation–02-func-R.md[Link to full diff](data/diffs/r-novice-inflammation--02-func-R.diff)
+#### Episode: r-novice-inflammation–02-func-R.md
+
+[Link to full diff](data/diffs/r-novice-inflammation--02-func-R.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: r-novice-inflammation–03-loops-R.md[Link to full diff](data/diffs/r-novice-inflammation--03-loops-R.diff)
+#### Episode: r-novice-inflammation–03-loops-R.md
+
+[Link to full diff](data/diffs/r-novice-inflammation--03-loops-R.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: r-novice-inflammation–04-cond.md[Link to full diff](data/diffs/r-novice-inflammation--04-cond.diff)
+#### Episode: r-novice-inflammation–04-cond.md
+
+[Link to full diff](data/diffs/r-novice-inflammation--04-cond.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: r-novice-inflammation–05-cmdline.md[Link to full diff](data/diffs/r-novice-inflammation--05-cmdline.diff)
+#### Episode: r-novice-inflammation–05-cmdline.md
+
+[Link to full diff](data/diffs/r-novice-inflammation--05-cmdline.diff)
 
 ``` diff
 lines(Rv4[[2]])[1:9] vs lines(Rv3[[2]])[1:9]
@@ -963,37 +999,54 @@ lines(Rv4[[2]])[17:21] vs lines(Rv3[[2]])[17:21]
 [7] "--args"                      | "--args"                      [7]
 ```
 
-#### Episode: r-novice-inflammation–06-best-practices-R.md[Link to full diff](data/diffs/r-novice-inflammation--06-best-practices-R.diff)
+#### Episode: r-novice-inflammation–06-best-practices-R.md
+
+[Link to full
+diff](data/diffs/r-novice-inflammation--06-best-practices-R.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: r-novice-inflammation–07-knitr-R.md[Link to full diff](data/diffs/r-novice-inflammation--07-knitr-R.diff)
+#### Episode: r-novice-inflammation–07-knitr-R.md
+
+[Link to full diff](data/diffs/r-novice-inflammation--07-knitr-R.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: r-novice-inflammation–08-making-packages-R.md[Link to full diff](data/diffs/r-novice-inflammation--08-making-packages-R.diff)
+#### Episode: r-novice-inflammation–08-making-packages-R.md
+
+[Link to full
+diff](data/diffs/r-novice-inflammation--08-making-packages-R.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: r-novice-inflammation–09-supp-intro-rstudio.md[Link to full diff](data/diffs/r-novice-inflammation--09-supp-intro-rstudio.diff)
+#### Episode: r-novice-inflammation–09-supp-intro-rstudio.md
+
+[Link to full
+diff](data/diffs/r-novice-inflammation--09-supp-intro-rstudio.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: r-novice-inflammation–10-supp-addressing-data.md[Link to full diff](data/diffs/r-novice-inflammation--10-supp-addressing-data.diff)
+#### Episode: r-novice-inflammation–10-supp-addressing-data.md
+
+[Link to full
+diff](data/diffs/r-novice-inflammation--10-supp-addressing-data.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: r-novice-inflammation–11-supp-read-write-csv.md[Link to full diff](data/diffs/r-novice-inflammation--11-supp-read-write-csv.diff)
+#### Episode: r-novice-inflammation–11-supp-read-write-csv.md
+
+[Link to full
+diff](data/diffs/r-novice-inflammation--11-supp-read-write-csv.diff)
 
 ``` diff
 lines(Rv4[[4]]) vs lines(Rv3[[4]])
@@ -1029,26 +1082,38 @@ lines(Rv4[[5]]) vs lines(Rv3[[5]])
   ""
 ```
 
-#### Episode: r-novice-inflammation–12-supp-factors.md[Link to full diff](data/diffs/r-novice-inflammation--12-supp-factors.diff)
+#### Episode: r-novice-inflammation–12-supp-factors.md
+
+[Link to full
+diff](data/diffs/r-novice-inflammation--12-supp-factors.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: r-novice-inflammation–13-supp-data-structures.md[Link to full diff](data/diffs/r-novice-inflammation--13-supp-data-structures.diff)
+#### Episode: r-novice-inflammation–13-supp-data-structures.md
+
+[Link to full
+diff](data/diffs/r-novice-inflammation--13-supp-data-structures.diff)
 
 ``` diff
 `lines(Rv4[[33]])`: "[1] \"matrix\" \"array\" " ""
 `lines(Rv3[[33]])`: "[1] \"matrix\""            ""
 ```
 
-#### Episode: r-novice-inflammation–14-supp-call-stack.md[Link to full diff](data/diffs/r-novice-inflammation--14-supp-call-stack.diff)
+#### Episode: r-novice-inflammation–14-supp-call-stack.md
+
+[Link to full
+diff](data/diffs/r-novice-inflammation--14-supp-call-stack.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: r-novice-inflammation–15-supp-loops-in-depth.md[Link to full diff](data/diffs/r-novice-inflammation--15-supp-loops-in-depth.diff)
+#### Episode: r-novice-inflammation–15-supp-loops-in-depth.md
+
+[Link to full
+diff](data/diffs/r-novice-inflammation--15-supp-loops-in-depth.diff)
 
 ``` diff
 `lines(Rv4[[6]])`: "   user  system elapsed " "  0.019   0.000   0.019 " ""
@@ -1060,7 +1125,10 @@ lines(Rv4[[5]]) vs lines(Rv3[[5]])
 
 ## Lesson: r-novice-gapminder
 
-#### Episode: r-novice-gapminder–01-rstudio-intro.md[Link to full diff](data/diffs/r-novice-gapminder--01-rstudio-intro.diff)
+#### Episode: r-novice-gapminder–01-rstudio-intro.md
+
+[Link to full
+diff](data/diffs/r-novice-gapminder--01-rstudio-intro.diff)
 
 ``` diff
      lines(Rv4[[23]])                | lines(Rv3[[23]])                    
@@ -1072,13 +1140,18 @@ lines(Rv4[[5]]) vs lines(Rv3[[5]])
 [34] ""                              | ""                              [34]
 ```
 
-#### Episode: r-novice-gapminder–02-project-intro.md[Link to full diff](data/diffs/r-novice-gapminder--02-project-intro.diff)
+#### Episode: r-novice-gapminder–02-project-intro.md
+
+[Link to full
+diff](data/diffs/r-novice-gapminder--02-project-intro.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: r-novice-gapminder–03-seeking-help.md[Link to full diff](data/diffs/r-novice-gapminder--03-seeking-help.diff)
+#### Episode: r-novice-gapminder–03-seeking-help.md
+
+[Link to full diff](data/diffs/r-novice-gapminder--03-seeking-help.diff)
 
 ``` diff
 lines(Rv4[[1]])[1:9] vs lines(Rv3[[1]])[1:9]
@@ -1109,7 +1182,10 @@ lines(Rv4[[1]])[20:27] vs lines(Rv3[[1]])[20:27]
   ""
 ```
 
-#### Episode: r-novice-gapminder–04-data-structures-part1.md[Link to full diff](data/diffs/r-novice-gapminder--04-data-structures-part1.diff)
+#### Episode: r-novice-gapminder–04-data-structures-part1.md
+
+[Link to full
+diff](data/diffs/r-novice-gapminder--04-data-structures-part1.diff)
 
 ``` diff
 ```
@@ -1167,7 +1243,10 @@ lines(Rv4[[1]])[20:27] vs lines(Rv3[[1]])[20:27]
 And 61 more differences ...
 ```
 
-#### Episode: r-novice-gapminder–05-data-structures-part2.md[Link to full diff](data/diffs/r-novice-gapminder--05-data-structures-part2.diff)
+#### Episode: r-novice-gapminder–05-data-structures-part2.md
+
+[Link to full
+diff](data/diffs/r-novice-gapminder--05-data-structures-part2.diff)
 
 ``` diff
      names(Rv4)    | names(Rv3)                   
@@ -1269,49 +1348,67 @@ lines(Rv4[[13]]) vs lines(Rv3[[13]])
 And 6 more differences ...
 ```
 
-#### Episode: r-novice-gapminder–06-data-subsetting.md[Link to full diff](data/diffs/r-novice-gapminder--06-data-subsetting.diff)
+#### Episode: r-novice-gapminder–06-data-subsetting.md
+
+[Link to full
+diff](data/diffs/r-novice-gapminder--06-data-subsetting.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: r-novice-gapminder–07-control-flow.md[Link to full diff](data/diffs/r-novice-gapminder--07-control-flow.diff)
+#### Episode: r-novice-gapminder–07-control-flow.md
+
+[Link to full diff](data/diffs/r-novice-gapminder--07-control-flow.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: r-novice-gapminder–08-plot-ggplot2.md[Link to full diff](data/diffs/r-novice-gapminder--08-plot-ggplot2.diff)
+#### Episode: r-novice-gapminder–08-plot-ggplot2.md
+
+[Link to full diff](data/diffs/r-novice-gapminder--08-plot-ggplot2.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: r-novice-gapminder–09-vectorization.md[Link to full diff](data/diffs/r-novice-gapminder--09-vectorization.diff)
+#### Episode: r-novice-gapminder–09-vectorization.md
+
+[Link to full
+diff](data/diffs/r-novice-gapminder--09-vectorization.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: r-novice-gapminder–10-functions.md[Link to full diff](data/diffs/r-novice-gapminder--10-functions.diff)
+#### Episode: r-novice-gapminder–10-functions.md
+
+[Link to full diff](data/diffs/r-novice-gapminder--10-functions.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: r-novice-gapminder–11-writing-data.md[Link to full diff](data/diffs/r-novice-gapminder--11-writing-data.diff)
+#### Episode: r-novice-gapminder–11-writing-data.md
+
+[Link to full diff](data/diffs/r-novice-gapminder--11-writing-data.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: r-novice-gapminder–12-plyr.md[Link to full diff](data/diffs/r-novice-gapminder--12-plyr.diff)
+#### Episode: r-novice-gapminder–12-plyr.md
+
+[Link to full diff](data/diffs/r-novice-gapminder--12-plyr.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: r-novice-gapminder–13-dplyr.md[Link to full diff](data/diffs/r-novice-gapminder--13-dplyr.diff)
+#### Episode: r-novice-gapminder–13-dplyr.md
+
+[Link to full diff](data/diffs/r-novice-gapminder--13-dplyr.diff)
 
 ``` diff
      names(Rv4)    | names(Rv3)                   
@@ -1427,7 +1524,9 @@ lines(Rv4[[11]]) vs lines(Rv3[[11]])
 And 9 more differences ...
 ```
 
-#### Episode: r-novice-gapminder–14-tidyr.md[Link to full diff](data/diffs/r-novice-gapminder--14-tidyr.diff)
+#### Episode: r-novice-gapminder–14-tidyr.md
+
+[Link to full diff](data/diffs/r-novice-gapminder--14-tidyr.diff)
 
 ``` diff
      names(Rv4)    | names(Rv3)                  
@@ -1556,13 +1655,18 @@ lines(Rv4[[14]]) vs lines(Rv3[[14]])
 And 5 more differences ...
 ```
 
-#### Episode: r-novice-gapminder–15-knitr-markdown.md[Link to full diff](data/diffs/r-novice-gapminder--15-knitr-markdown.diff)
+#### Episode: r-novice-gapminder–15-knitr-markdown.md
+
+[Link to full
+diff](data/diffs/r-novice-gapminder--15-knitr-markdown.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: r-novice-gapminder–16-wrap-up.md[Link to full diff](data/diffs/r-novice-gapminder--16-wrap-up.diff)
+#### Episode: r-novice-gapminder–16-wrap-up.md
+
+[Link to full diff](data/diffs/r-novice-gapminder--16-wrap-up.diff)
 
 ``` diff
 ✔ No differences
@@ -1570,25 +1674,36 @@ And 5 more differences ...
 
 ## Lesson: organization-geospatial
 
-#### Episode: organization-geospatial–01-intro-raster-data.md[Link to full diff](data/diffs/organization-geospatial--01-intro-raster-data.diff)
+#### Episode: organization-geospatial–01-intro-raster-data.md
+
+[Link to full
+diff](data/diffs/organization-geospatial--01-intro-raster-data.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: organization-geospatial–02-intro-vector-data.md[Link to full diff](data/diffs/organization-geospatial--02-intro-vector-data.diff)
+#### Episode: organization-geospatial–02-intro-vector-data.md
+
+[Link to full
+diff](data/diffs/organization-geospatial--02-intro-vector-data.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: organization-geospatial–03-crs.md[Link to full diff](data/diffs/organization-geospatial--03-crs.diff)
+#### Episode: organization-geospatial–03-crs.md
+
+[Link to full diff](data/diffs/organization-geospatial--03-crs.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: organization-geospatial–04-geo-landscape.md[Link to full diff](data/diffs/organization-geospatial--04-geo-landscape.diff)
+#### Episode: organization-geospatial–04-geo-landscape.md
+
+[Link to full
+diff](data/diffs/organization-geospatial--04-geo-landscape.diff)
 
 ``` diff
 ✔ No differences
@@ -1596,7 +1711,10 @@ And 5 more differences ...
 
 ## Lesson: r-novice-gapminder-es
 
-#### Episode: r-novice-gapminder-es–01-rstudio-intro.md[Link to full diff](data/diffs/r-novice-gapminder-es--01-rstudio-intro.diff)
+#### Episode: r-novice-gapminder-es–01-rstudio-intro.md
+
+[Link to full
+diff](data/diffs/r-novice-gapminder-es--01-rstudio-intro.diff)
 
 ``` diff
      lines(Rv4[[23]])                | lines(Rv3[[23]])                    
@@ -1608,13 +1726,19 @@ And 5 more differences ...
 [34] ""                              | ""                              [34]
 ```
 
-#### Episode: r-novice-gapminder-es–02-project-intro.md[Link to full diff](data/diffs/r-novice-gapminder-es--02-project-intro.diff)
+#### Episode: r-novice-gapminder-es–02-project-intro.md
+
+[Link to full
+diff](data/diffs/r-novice-gapminder-es--02-project-intro.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: r-novice-gapminder-es–03-seeking-help.md[Link to full diff](data/diffs/r-novice-gapminder-es--03-seeking-help.diff)
+#### Episode: r-novice-gapminder-es–03-seeking-help.md
+
+[Link to full
+diff](data/diffs/r-novice-gapminder-es--03-seeking-help.diff)
 
 ``` diff
 lines(Rv4[[1]])[1:9] vs lines(Rv3[[1]])[1:9]
@@ -1641,7 +1765,10 @@ lines(Rv4[[1]])[20:25] vs lines(Rv3[[1]])[20:25]
   ""
 ```
 
-#### Episode: r-novice-gapminder-es–04-data-structures-part1.md[Link to full diff](data/diffs/r-novice-gapminder-es--04-data-structures-part1.diff)
+#### Episode: r-novice-gapminder-es–04-data-structures-part1.md
+
+[Link to full
+diff](data/diffs/r-novice-gapminder-es--04-data-structures-part1.diff)
 
 ``` diff
 ```
@@ -1700,7 +1827,10 @@ lines(Rv4[[3]]) vs lines(Rv3[[3]])
 And 51 more differences ...
 ```
 
-#### Episode: r-novice-gapminder-es–05-data-structures-part2.md[Link to full diff](data/diffs/r-novice-gapminder-es--05-data-structures-part2.diff)
+#### Episode: r-novice-gapminder-es–05-data-structures-part2.md
+
+[Link to full
+diff](data/diffs/r-novice-gapminder-es--05-data-structures-part2.diff)
 
 ``` diff
      names(Rv4)    | names(Rv3)                   
@@ -1812,49 +1942,70 @@ lines(Rv4[[16]]) vs lines(Rv3[[16]])
 And 5 more differences ...
 ```
 
-#### Episode: r-novice-gapminder-es–06-data-subsetting.md[Link to full diff](data/diffs/r-novice-gapminder-es--06-data-subsetting.diff)
+#### Episode: r-novice-gapminder-es–06-data-subsetting.md
+
+[Link to full
+diff](data/diffs/r-novice-gapminder-es--06-data-subsetting.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: r-novice-gapminder-es–07-control-flow.md[Link to full diff](data/diffs/r-novice-gapminder-es--07-control-flow.diff)
+#### Episode: r-novice-gapminder-es–07-control-flow.md
+
+[Link to full
+diff](data/diffs/r-novice-gapminder-es--07-control-flow.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: r-novice-gapminder-es–08-plot-ggplot2.md[Link to full diff](data/diffs/r-novice-gapminder-es--08-plot-ggplot2.diff)
+#### Episode: r-novice-gapminder-es–08-plot-ggplot2.md
+
+[Link to full
+diff](data/diffs/r-novice-gapminder-es--08-plot-ggplot2.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: r-novice-gapminder-es–09-vectorization.md[Link to full diff](data/diffs/r-novice-gapminder-es--09-vectorization.diff)
+#### Episode: r-novice-gapminder-es–09-vectorization.md
+
+[Link to full
+diff](data/diffs/r-novice-gapminder-es--09-vectorization.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: r-novice-gapminder-es–10-functions.md[Link to full diff](data/diffs/r-novice-gapminder-es--10-functions.diff)
+#### Episode: r-novice-gapminder-es–10-functions.md
+
+[Link to full diff](data/diffs/r-novice-gapminder-es--10-functions.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: r-novice-gapminder-es–11-writing-data.md[Link to full diff](data/diffs/r-novice-gapminder-es--11-writing-data.diff)
+#### Episode: r-novice-gapminder-es–11-writing-data.md
+
+[Link to full
+diff](data/diffs/r-novice-gapminder-es--11-writing-data.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: r-novice-gapminder-es–12-plyr.md[Link to full diff](data/diffs/r-novice-gapminder-es--12-plyr.diff)
+#### Episode: r-novice-gapminder-es–12-plyr.md
+
+[Link to full diff](data/diffs/r-novice-gapminder-es--12-plyr.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: r-novice-gapminder-es–13-dplyr.md[Link to full diff](data/diffs/r-novice-gapminder-es--13-dplyr.diff)
+#### Episode: r-novice-gapminder-es–13-dplyr.md
+
+[Link to full diff](data/diffs/r-novice-gapminder-es--13-dplyr.diff)
 
 ``` diff
      names(Rv4)    | names(Rv3)                   
@@ -1970,7 +2121,9 @@ lines(Rv4[[11]]) vs lines(Rv3[[11]])
 And 9 more differences ...
 ```
 
-#### Episode: r-novice-gapminder-es–14-tidyr.md[Link to full diff](data/diffs/r-novice-gapminder-es--14-tidyr.diff)
+#### Episode: r-novice-gapminder-es–14-tidyr.md
+
+[Link to full diff](data/diffs/r-novice-gapminder-es--14-tidyr.diff)
 
 ``` diff
      names(Rv4)    | names(Rv3)                  
@@ -2096,13 +2249,18 @@ lines(Rv4[[14]]) vs lines(Rv3[[14]])
 And 4 more differences ...
 ```
 
-#### Episode: r-novice-gapminder-es–15-knitr-markdown.md[Link to full diff](data/diffs/r-novice-gapminder-es--15-knitr-markdown.diff)
+#### Episode: r-novice-gapminder-es–15-knitr-markdown.md
+
+[Link to full
+diff](data/diffs/r-novice-gapminder-es--15-knitr-markdown.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: r-novice-gapminder-es–16-wrap-up.md[Link to full diff](data/diffs/r-novice-gapminder-es--16-wrap-up.diff)
+#### Episode: r-novice-gapminder-es–16-wrap-up.md
+
+[Link to full diff](data/diffs/r-novice-gapminder-es--16-wrap-up.diff)
 
 ``` diff
 ✔ No differences
@@ -2110,19 +2268,28 @@ And 4 more differences ...
 
 ## Lesson: r-intro-geospatial
 
-#### Episode: r-intro-geospatial–01-rstudio-intro.md[Link to full diff](data/diffs/r-intro-geospatial--01-rstudio-intro.diff)
+#### Episode: r-intro-geospatial–01-rstudio-intro.md
+
+[Link to full
+diff](data/diffs/r-intro-geospatial--01-rstudio-intro.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: r-intro-geospatial–02-project-intro.md[Link to full diff](data/diffs/r-intro-geospatial--02-project-intro.diff)
+#### Episode: r-intro-geospatial–02-project-intro.md
+
+[Link to full
+diff](data/diffs/r-intro-geospatial--02-project-intro.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: r-intro-geospatial–03-data-structures-part1.md[Link to full diff](data/diffs/r-intro-geospatial--03-data-structures-part1.diff)
+#### Episode: r-intro-geospatial–03-data-structures-part1.md
+
+[Link to full
+diff](data/diffs/r-intro-geospatial--03-data-structures-part1.diff)
 
 ``` diff
 ```
@@ -2181,7 +2348,10 @@ lines(Rv4[[1]]) vs lines(Rv3[[1]])
 And 53 more differences ...
 ```
 
-#### Episode: r-intro-geospatial–04-data-structures-part2.md[Link to full diff](data/diffs/r-intro-geospatial--04-data-structures-part2.diff)
+#### Episode: r-intro-geospatial–04-data-structures-part2.md
+
+[Link to full
+diff](data/diffs/r-intro-geospatial--04-data-structures-part2.diff)
 
 ``` diff
      names(Rv4)    | names(Rv3)        
@@ -2266,13 +2436,18 @@ lines(Rv4[[21]])[1:5] vs lines(Rv3[[21]])[1:5]
   " $ continent    : chr  \"Asia\" \"Asia\" \"Asia\" \"Asia\" ..."
 ```
 
-#### Episode: r-intro-geospatial–05-data-subsetting.md[Link to full diff](data/diffs/r-intro-geospatial--05-data-subsetting.diff)
+#### Episode: r-intro-geospatial–05-data-subsetting.md
+
+[Link to full
+diff](data/diffs/r-intro-geospatial--05-data-subsetting.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: r-intro-geospatial–06-dplyr.md[Link to full diff](data/diffs/r-intro-geospatial--06-dplyr.diff)
+#### Episode: r-intro-geospatial–06-dplyr.md
+
+[Link to full diff](data/diffs/r-intro-geospatial--06-dplyr.diff)
 
 ``` diff
      names(Rv4)    | names(Rv3)                  
@@ -2399,13 +2574,17 @@ lines(Rv4[[12]]) vs lines(Rv3[[12]])
 And 7 more differences ...
 ```
 
-#### Episode: r-intro-geospatial–07-plot-ggplot2.md[Link to full diff](data/diffs/r-intro-geospatial--07-plot-ggplot2.diff)
+#### Episode: r-intro-geospatial–07-plot-ggplot2.md
+
+[Link to full diff](data/diffs/r-intro-geospatial--07-plot-ggplot2.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: r-intro-geospatial–08-writing-data.md[Link to full diff](data/diffs/r-intro-geospatial--08-writing-data.diff)
+#### Episode: r-intro-geospatial–08-writing-data.md
+
+[Link to full diff](data/diffs/r-intro-geospatial--08-writing-data.diff)
 
 ``` diff
 ✔ No differences
@@ -2413,7 +2592,10 @@ And 7 more differences ...
 
 ## Lesson: r-raster-vector-geospatial
 
-#### Episode: r-raster-vector-geospatial–01-raster-structure.md[Link to full diff](data/diffs/r-raster-vector-geospatial--01-raster-structure.diff)
+#### Episode: r-raster-vector-geospatial–01-raster-structure.md
+
+[Link to full
+diff](data/diffs/r-raster-vector-geospatial--01-raster-structure.diff)
 
 ``` diff
      names(Rv4)    | names(Rv3)        
@@ -2456,7 +2638,10 @@ lines(Rv4[[6]]) vs lines(Rv3[[6]])
   ""
 ```
 
-#### Episode: r-raster-vector-geospatial–02-raster-plot.md[Link to full diff](data/diffs/r-raster-vector-geospatial--02-raster-plot.diff)
+#### Episode: r-raster-vector-geospatial–02-raster-plot.md
+
+[Link to full
+diff](data/diffs/r-raster-vector-geospatial--02-raster-plot.diff)
 
 ``` diff
 `lines(Rv4[[5]])`: "[1] \"#00A600\" \"#ECB176\" \"#F2F2F2\""       ""
@@ -2473,7 +2658,10 @@ lines(Rv4[[6]])[2:8] vs lines(Rv3[[6]])[2:8]
   "values     : -0.7136298, 0.9999997  (min, max)"
 ```
 
-#### Episode: r-raster-vector-geospatial–03-raster-reproject-in-r.md[Link to full diff](data/diffs/r-raster-vector-geospatial--03-raster-reproject-in-r.diff)
+#### Episode: r-raster-vector-geospatial–03-raster-reproject-in-r.md
+
+[Link to full
+diff](data/diffs/r-raster-vector-geospatial--03-raster-reproject-in-r.diff)
 
 ``` diff
      names(Rv4)    | names(Rv3)        
@@ -2515,7 +2703,10 @@ lines(Rv4[[4]]) vs lines(Rv3[[4]])
   ""
 ```
 
-#### Episode: r-raster-vector-geospatial–04-raster-calculations-in-r.md[Link to full diff](data/diffs/r-raster-vector-geospatial--04-raster-calculations-in-r.diff)
+#### Episode: r-raster-vector-geospatial–04-raster-calculations-in-r.md
+
+[Link to full
+diff](data/diffs/r-raster-vector-geospatial--04-raster-calculations-in-r.diff)
 
 ``` diff
     names(Rv4)    | names(Rv3)       
@@ -2526,7 +2717,10 @@ lines(Rv4[[4]]) vs lines(Rv3[[4]])
 [9] "566:5-568:7" - "559:5-561:7" [9]
 ```
 
-#### Episode: r-raster-vector-geospatial–05-raster-multi-band-in-r.md[Link to full diff](data/diffs/r-raster-vector-geospatial--05-raster-multi-band-in-r.diff)
+#### Episode: r-raster-vector-geospatial–05-raster-multi-band-in-r.md
+
+[Link to full
+diff](data/diffs/r-raster-vector-geospatial--05-raster-multi-band-in-r.diff)
 
 ``` diff
 `names(Rv4)[9:12]`: "550:1-552:3" "567:1-569:3" "607:5-668:7" "687:5-696:7"
@@ -2616,7 +2810,10 @@ lines(Rv4[[12]]) vs lines(Rv3[[12]])
   ""
 ```
 
-#### Episode: r-raster-vector-geospatial–06-vector-open-shapefile-in-r.md[Link to full diff](data/diffs/r-raster-vector-geospatial--06-vector-open-shapefile-in-r.diff)
+#### Episode: r-raster-vector-geospatial–06-vector-open-shapefile-in-r.md
+
+[Link to full
+diff](data/diffs/r-raster-vector-geospatial--06-vector-open-shapefile-in-r.diff)
 
 ``` diff
      names(Rv4)    | names(Rv3)                  
@@ -2736,7 +2933,10 @@ lines(Rv4[[12]]) vs lines(Rv3[[12]])
 and 40 more ...
 ```
 
-#### Episode: r-raster-vector-geospatial–07-vector-shapefile-attributes-in-r.md[Link to full diff](data/diffs/r-raster-vector-geospatial--07-vector-shapefile-attributes-in-r.diff)
+#### Episode: r-raster-vector-geospatial–07-vector-shapefile-attributes-in-r.md
+
+[Link to full
+diff](data/diffs/r-raster-vector-geospatial--07-vector-shapefile-attributes-in-r.diff)
 
 ``` diff
      names(Rv4)    | names(Rv3)                  
@@ -2814,7 +3014,10 @@ lines(Rv4[[17]]) vs lines(Rv3[[17]])
 And 2 more differences ...
 ```
 
-#### Episode: r-raster-vector-geospatial–08-vector-plot-shapefiles-custom-legend.md[Link to full diff](data/diffs/r-raster-vector-geospatial--08-vector-plot-shapefiles-custom-legend.diff)
+#### Episode: r-raster-vector-geospatial–08-vector-plot-shapefiles-custom-legend.md
+
+[Link to full
+diff](data/diffs/r-raster-vector-geospatial--08-vector-plot-shapefiles-custom-legend.diff)
 
 ``` diff
 lines(Rv4[[1]])[3:7] vs lines(Rv3[[1]])[3:7]
@@ -2829,7 +3032,10 @@ lines(Rv4[[1]])[3:7] vs lines(Rv3[[1]])[3:7]
 `lines(Rv3[[2]])`: "[1] \"Histosols\"   \"Inceptisols\"" ""
 ```
 
-#### Episode: r-raster-vector-geospatial–09-vector-when-data-dont-line-up-crs.md[Link to full diff](data/diffs/r-raster-vector-geospatial--09-vector-when-data-dont-line-up-crs.diff)
+#### Episode: r-raster-vector-geospatial–09-vector-when-data-dont-line-up-crs.md
+
+[Link to full
+diff](data/diffs/r-raster-vector-geospatial--09-vector-when-data-dont-line-up-crs.diff)
 
 ``` diff
     names(Rv4)    | names(Rv3)       
@@ -2936,7 +3142,10 @@ lines(Rv4[[8]])[4:8] vs lines(Rv3[[8]])[4:8]
   ""
 ```
 
-#### Episode: r-raster-vector-geospatial–10-vector-csv-to-shapefile-in-r.md[Link to full diff](data/diffs/r-raster-vector-geospatial--10-vector-csv-to-shapefile-in-r.diff)
+#### Episode: r-raster-vector-geospatial–10-vector-csv-to-shapefile-in-r.md
+
+[Link to full
+diff](data/diffs/r-raster-vector-geospatial--10-vector-csv-to-shapefile-in-r.diff)
 
 ``` diff
      names(Rv4)    | names(Rv3)                  
@@ -3126,7 +3335,10 @@ lines(Rv4[[13]]) vs lines(Rv3[[13]])
 and 8 more ...
 ```
 
-#### Episode: r-raster-vector-geospatial–11-vector-raster-integration.md[Link to full diff](data/diffs/r-raster-vector-geospatial--11-vector-raster-integration.diff)
+#### Episode: r-raster-vector-geospatial–11-vector-raster-integration.md
+
+[Link to full
+diff](data/diffs/r-raster-vector-geospatial--11-vector-raster-integration.diff)
 
 ``` diff
      names(Rv4)    | names(Rv3)        
@@ -3141,7 +3353,10 @@ and 8 more ...
 [11] "516:5-539:7" - "464:5-487:7" [11]
 ```
 
-#### Episode: r-raster-vector-geospatial–12-time-series-raster.md[Link to full diff](data/diffs/r-raster-vector-geospatial--12-time-series-raster.diff)
+#### Episode: r-raster-vector-geospatial–12-time-series-raster.md
+
+[Link to full
+diff](data/diffs/r-raster-vector-geospatial--12-time-series-raster.diff)
 
 ``` diff
     names(Rv4)    | names(Rv3)       
@@ -3188,14 +3403,20 @@ lines(Rv4[[8]])[2:8] vs lines(Rv3[[8]])[2:8]
   "max values :                 255,                 255,                 255 "
 ```
 
-#### Episode: r-raster-vector-geospatial–13-plot-time-series-rasters-in-r.md[Link to full diff](data/diffs/r-raster-vector-geospatial--13-plot-time-series-rasters-in-r.diff)
+#### Episode: r-raster-vector-geospatial–13-plot-time-series-rasters-in-r.md
+
+[Link to full
+diff](data/diffs/r-raster-vector-geospatial--13-plot-time-series-rasters-in-r.diff)
 
 ``` diff
 `names(Rv4)`: "152:1-155:3" "224:1-230:3" "249:1-252:3" "267:1-270:3"
 `names(Rv3)`: "119:1-122:3" "191:1-197:3" "216:1-219:3" "234:1-237:3"
 ```
 
-#### Episode: r-raster-vector-geospatial–14-extract-ndvi-from-rasters-in-r.md[Link to full diff](data/diffs/r-raster-vector-geospatial--14-extract-ndvi-from-rasters-in-r.diff)
+#### Episode: r-raster-vector-geospatial–14-extract-ndvi-from-rasters-in-r.md
+
+[Link to full
+diff](data/diffs/r-raster-vector-geospatial--14-extract-ndvi-from-rasters-in-r.diff)
 
 ``` diff
      names(Rv4)    | names(Rv3)                  
@@ -3214,25 +3435,33 @@ lines(Rv4[[8]])[2:8] vs lines(Rv3[[8]])[2:8]
 
 ## Lesson: r-socialsci
 
-#### Episode: r-socialsci–00-intro.md[Link to full diff](data/diffs/r-socialsci--00-intro.diff)
+#### Episode: r-socialsci–00-intro.md
+
+[Link to full diff](data/diffs/r-socialsci--00-intro.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: r-socialsci–01-intro-to-r.md[Link to full diff](data/diffs/r-socialsci--01-intro-to-r.diff)
+#### Episode: r-socialsci–01-intro-to-r.md
+
+[Link to full diff](data/diffs/r-socialsci--01-intro-to-r.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: r-socialsci–02-starting-with-data.md[Link to full diff](data/diffs/r-socialsci--02-starting-with-data.diff)
+#### Episode: r-socialsci–02-starting-with-data.md
+
+[Link to full diff](data/diffs/r-socialsci--02-starting-with-data.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: r-socialsci–03-dplyr-tidyr.md[Link to full diff](data/diffs/r-socialsci--03-dplyr-tidyr.diff)
+#### Episode: r-socialsci–03-dplyr-tidyr.md
+
+[Link to full diff](data/diffs/r-socialsci--03-dplyr-tidyr.diff)
 
 ``` diff
      names(Rv4)    | names(Rv3)                   
@@ -3394,13 +3623,17 @@ lines(Rv4[[15]]) vs lines(Rv3[[15]])
 And 20 more differences ...
 ```
 
-#### Episode: r-socialsci–04-ggplot2.md[Link to full diff](data/diffs/r-socialsci--04-ggplot2.diff)
+#### Episode: r-socialsci–04-ggplot2.md
+
+[Link to full diff](data/diffs/r-socialsci--04-ggplot2.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: r-socialsci–0x-json.md[Link to full diff](data/diffs/r-socialsci--0x-json.diff)
+#### Episode: r-socialsci–0x-json.md
+
+[Link to full diff](data/diffs/r-socialsci--0x-json.diff)
 
 ``` diff
 ✔ No differences
@@ -3408,37 +3641,51 @@ And 20 more differences ...
 
 ## Lesson: rr-automation
 
-#### Episode: rr-automation–01-automation.md[Link to full diff](data/diffs/rr-automation--01-automation.diff)
+#### Episode: rr-automation–01-automation.md
+
+[Link to full diff](data/diffs/rr-automation--01-automation.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: rr-automation–02-functions.md[Link to full diff](data/diffs/rr-automation--02-functions.diff)
+#### Episode: rr-automation–02-functions.md
+
+[Link to full diff](data/diffs/rr-automation--02-functions.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: rr-automation–03-functions-for-data.md[Link to full diff](data/diffs/rr-automation--03-functions-for-data.diff)
+#### Episode: rr-automation–03-functions-for-data.md
+
+[Link to full
+diff](data/diffs/rr-automation--03-functions-for-data.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: rr-automation–04-functions-for-figures.md[Link to full diff](data/diffs/rr-automation--04-functions-for-figures.diff)
+#### Episode: rr-automation–04-functions-for-figures.md
+
+[Link to full
+diff](data/diffs/rr-automation--04-functions-for-figures.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: rr-automation–05-testing.md[Link to full diff](data/diffs/rr-automation--05-testing.diff)
+#### Episode: rr-automation–05-testing.md
+
+[Link to full diff](data/diffs/rr-automation--05-testing.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: rr-automation–06-automating.md[Link to full diff](data/diffs/rr-automation--06-automating.diff)
+#### Episode: rr-automation–06-automating.md
+
+[Link to full diff](data/diffs/rr-automation--06-automating.diff)
 
 ``` diff
 ✔ No differences
@@ -3446,7 +3693,9 @@ And 20 more differences ...
 
 ## Lesson: rr-publication
 
-#### Episode: rr-publication–01-publication.md[Link to full diff](data/diffs/rr-publication--01-publication.diff)
+#### Episode: rr-publication–01-publication.md
+
+[Link to full diff](data/diffs/rr-publication--01-publication.diff)
 
 ``` diff
 ✔ No differences
@@ -3458,19 +3707,27 @@ And 20 more differences ...
 
 ## Lesson: rr-version-control
 
-#### Episode: rr-version-control–01-git-github.md[Link to full diff](data/diffs/rr-version-control--01-git-github.diff)
+#### Episode: rr-version-control–01-git-github.md
+
+[Link to full diff](data/diffs/rr-version-control--01-git-github.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: rr-version-control–02-git-in-github.md[Link to full diff](data/diffs/rr-version-control--02-git-in-github.diff)
+#### Episode: rr-version-control–02-git-in-github.md
+
+[Link to full
+diff](data/diffs/rr-version-control--02-git-in-github.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: rr-version-control–03-git-in-rstudio.md[Link to full diff](data/diffs/rr-version-control--03-git-in-rstudio.diff)
+#### Episode: rr-version-control–03-git-in-rstudio.md
+
+[Link to full
+diff](data/diffs/rr-version-control--03-git-in-rstudio.diff)
 
 ``` diff
 ✔ No differences
@@ -3478,13 +3735,18 @@ And 20 more differences ...
 
 ## Lesson: rr-organization1
 
-#### Episode: rr-organization1–01-file-naming.md[Link to full diff](data/diffs/rr-organization1--01-file-naming.diff)
+#### Episode: rr-organization1–01-file-naming.md
+
+[Link to full diff](data/diffs/rr-organization1--01-file-naming.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: rr-organization1–02-file-organization.md[Link to full diff](data/diffs/rr-organization1--02-file-organization.diff)
+#### Episode: rr-organization1–02-file-organization.md
+
+[Link to full
+diff](data/diffs/rr-organization1--02-file-organization.diff)
 
 ``` diff
 ✔ No differences
@@ -3492,25 +3754,37 @@ And 20 more differences ...
 
 ## Lesson: rr-literate-programming
 
-#### Episode: rr-literate-programming–01-data-manipulation.md[Link to full diff](data/diffs/rr-literate-programming--01-data-manipulation.diff)
+#### Episode: rr-literate-programming–01-data-manipulation.md
+
+[Link to full
+diff](data/diffs/rr-literate-programming--01-data-manipulation.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: rr-literate-programming–02-literate-programming.md[Link to full diff](data/diffs/rr-literate-programming--02-literate-programming.diff)
+#### Episode: rr-literate-programming–02-literate-programming.md
+
+[Link to full
+diff](data/diffs/rr-literate-programming--02-literate-programming.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: rr-literate-programming–03-explore-knitr.md[Link to full diff](data/diffs/rr-literate-programming--03-explore-knitr.diff)
+#### Episode: rr-literate-programming–03-explore-knitr.md
+
+[Link to full
+diff](data/diffs/rr-literate-programming--03-explore-knitr.diff)
 
 ``` diff
 ✔ No differences
 ```
 
-#### Episode: rr-literate-programming–rmd\_example.md[Link to full diff](data/diffs/rr-literate-programming--rmd_example.diff)
+#### Episode: rr-literate-programming–rmd\_example.md
+
+[Link to full
+diff](data/diffs/rr-literate-programming--rmd_example.diff)
 
 ``` diff
 ✔ No differences

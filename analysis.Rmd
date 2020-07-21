@@ -259,7 +259,7 @@ cmpr <- function(lesson, name) {
     diffcmd <- "git diff --no-index -- {lesson[[1]]$files[[i]]} {lesson[[2]]$files[[i]]} > {dpath}"
     system(glue::glue(diffcmd))
     cat(glue::glue("\n#### Episode: {episode}\n"))
-    cat(glue::glue("\n[Link to full diff]({dpath})\n"))
+    cat(glue::glue("\n\n[Link to full diff]({dpath})\n"))
     cat("\n```diff\n")
     print(waldo::compare(o2[[i]], o1[[i]], x_arg = "Rv4", y_arg = "Rv3"))
     cat("\n```\n")
