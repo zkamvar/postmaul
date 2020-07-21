@@ -153,11 +153,17 @@ After parsing, we find that we have RMarkdown files for a grand total of
 we can grab these lessons to see if we can build them with our docker container.
 
 
-The lessons we have are:
+## Lessons that use R
+
+Below is a table with all the lessons the use R in our curriculum. There are
+links within the table that take you further down this document to display a 
+diff between output from R 3.6 and R 4.0. One issue with these diffs is that
+sometimes the ordering of messages shifts the entire diff, but for the most
+part, it's clear where they came from. 
 
 ```{r, ouput = 'asis'}
 has_rmd_all %>% 
-  mutate(results = glue::glue("[results](#lesson-{user})")) %>%
+  mutate(results = glue::glue("[results](#lesson-{repository})")) %>%
   select(URL, curriculum, life_cycle, language, results) %>%
   knitr::kable()
 ```
