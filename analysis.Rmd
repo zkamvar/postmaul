@@ -4,7 +4,7 @@ author: "Zhian N. Kamvar"
 date: "3/30/2020"
 output: 
   md_document:
-    variant: markdown_github
+    variant: gfm
 ---
 
 ```{r setup, include=FALSE}
@@ -151,6 +151,13 @@ After parsing, we find that we have RMarkdown files for a grand total of
 we can grab these lessons to see if we can build them with our docker container.
 
 
+The lessons we have are:
+
+```{r, ouput = 'asis'}
+knitr::kable(has_rmd_all %>% select(URL, curriculum, life_cycle, language))
+```
+
+
 The command to use is:
 
 ```bash
@@ -181,11 +188,11 @@ Now all the repos have been downloaded, we can render the episodes under
 different versions of R and see how they go. Note that I have to use the
 geospatial R container in order to get things to work properly.
 
-```{r dokken, results = "hide"}
+```{r dokken, results = "hide", cache = TRUE}
 
 run_docker <- function(the_path, R_VERSION) {
   docker_run <- "docker run --rm -it -v {the_path}:/home/rstudio"
-  contai_ner <- "rocker/geospatial:{R_VERSION} make -C /home/rstudio lesson-md"
+  contai_ner <- "rocker/geospatial:{R_VERSION} /bin/bash -c 'install2.r checkpoint && make -C /home/rstudio lesson-md'"
   system(glue::glue("cd {the_path}; git clean -fd .; git checkout -- ."))
   system(glue::glue("rm -rf {the_path}/_episodes/*"))
   system(glue::glue("{glue::glue(docker_run)} {glue::glue(contai_ner)}"))
@@ -196,11 +203,14 @@ dockin <- function(u, r) {
   pth <- glue::glue("{u}--{r}")
   the_path <- fs::path_abs(fs::path("data", "rmd-repos", pth))
 
+  cat(glue::glue("LESSON: {pth} ==========================================="))
+  cat("    R 3.6.3 ------------------------")
   # Run with R 3.6.3 ---------------------------
   run_docker(the_path, "3.6.3")
   r3 <- try(Lesson$new(the_path, rmd = FALSE))
 
   # Run with R 4.0.0 ---------------------------
+  cat("    R 4.0.0 ------------------------")
   run_docker(the_path, "4.0.0")
   r4 <- try(Lesson$new(the_path, rmd = FALSE))
 
@@ -212,27 +222,30 @@ dockin <- function(u, r) {
 }
 
 res <- purrr::map2(has_rmd_all$user, has_rmd_all$repository, dockin)
+names(res) <- has_rmd_all$repository
 ```
 
 We can iterate and compare:
 
 ```{r}
-cmpr <- function(lesson) {
+cmpr <- function(lesson, name) {
 
+  message(glue::glue("\nLesson: {name}"))
   if (!inherits(lesson[[1]], "Lesson")) {
-    return(NULL)
+    message("----ERRORED----")
+    return(invisible(NULL))
   }
-  otag    <- ".//self::d1:code_block[@ktag='{: .output}']"
-  o1 <- map(lesson[[1]]$episodes, ~.x$code %>% xml2::xml_find_all(otag) %>% xml2::xml_text())
-  o2 <- map(lesson[[2]]$episodes, ~.x$code %>% xml2::xml_find_all(otag) %>% xml2::xml_text())
-  for (i in length(o1)) {
-    
-    message(glue::glue("Lesson: {basename(lesson[[1]]$path)}  Episode: {basename(lesson[[1]]$files[i])}"))
+
+  o1 <- map(lesson[[1]]$episodes, ~.x$output %>% xml2::xml_text())
+  o2 <- map(lesson[[2]]$episodes, ~.x$output %>% xml2::xml_text())
+
+  for (i in length(lesson[[1]]$episodes)) {
+    message(glue::glue("Episode:   {basename(lesson[[1]]$files[i])}"))
     print(waldo::compare(o1[[i]], o2[[i]]))
   }
 }
 
-purrr::walk(res, cmpr)
+purrr::walk2(res, names(res), cmpr)
 ```
 
 
