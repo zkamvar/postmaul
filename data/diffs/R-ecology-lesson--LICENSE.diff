@@ -1,0 +1,22 @@
+diff --git a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--R-ecology-lessonR3/_site/LICENSE.html b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--R-ecology-lessonR4/_site/LICENSE.html
+index 88f746c..8a259d6 100644
+--- a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--R-ecology-lessonR3/_site/LICENSE.html
++++ b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--R-ecology-lessonR4/_site/LICENSE.html
+@@ -507,7 +507,7 @@ div.tocify {
+ <p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+ <p>THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+ <p style="text-align: right; font-size: small;">
+-Page built on: 📆 2020-07-24 ‒ 🕢 19:05:11
++Page built on: 📆 2020-07-24 ‒ 🕢 19:06:01
+ </p>
+ </div>
+ </div>
+@@ -599,7 +599,7 @@ $(document).ready(function ()  {
+       theme: "bootstrap3",
+       context: '.toc-content',
+       hashGenerator: function (text) {
+-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
++        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+       },
+       ignoreSelector: ".toc-ignore",
+       scrollTo: 0

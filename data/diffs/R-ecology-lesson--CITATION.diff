@@ -1,0 +1,22 @@
+diff --git a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--R-ecology-lessonR3/_site/CITATION.html b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--R-ecology-lessonR4/_site/CITATION.html
+index b964536..4123c84 100644
+--- a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--R-ecology-lessonR3/_site/CITATION.html
++++ b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--R-ecology-lessonR4/_site/CITATION.html
+@@ -503,7 +503,7 @@ Michonneau F, Teal T, Fournier A, Seok B, Obeng A, Pawlik AN, Conrado AC, Woo K,
+   doi = {10.5281/zenodo.3264888},
+ }</code></pre>
+ <p style="text-align: right; font-size: small;">
+-Page built on: 📆 2020-07-24 ‒ 🕢 19:05:11
++Page built on: 📆 2020-07-24 ‒ 🕢 19:06:01
+ </p>
+ </div>
+ </div>
+@@ -595,7 +595,7 @@ $(document).ready(function ()  {
+       theme: "bootstrap3",
+       context: '.toc-content',
+       hashGenerator: function (text) {
+-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
++        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+       },
+       ignoreSelector: ".toc-ignore",
+       scrollTo: 0
