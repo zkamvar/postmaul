@@ -9,77 +9,16 @@ folder:
 library("fs")       # Filesystem navigation
 library("jsonlite") # parsing JSON files
 library("purrr")    # handling lists (JSON files)
-```
-
-    ## 
-    ## Attaching package: 'purrr'
-
-    ## The following object is masked from 'package:jsonlite':
-    ## 
-    ##     flatten
-
-``` r
 library("dplyr")    # handling data frames and magic
-```
-
-    ## 
-    ## Attaching package: 'dplyr'
-
-    ## The following objects are masked from 'package:stats':
-    ## 
-    ##     filter, lag
-
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     intersect, setdiff, setequal, union
-
-``` r
 library("tidyr")    # separating values
 library("ggplot2")  # visualization
 library("forcats")  # ordering factors
 library("magrittr") # for the %T>% pipe I love so well
-```
-
-    ## 
-    ## Attaching package: 'magrittr'
-
-    ## The following object is masked from 'package:tidyr':
-    ## 
-    ##     extract
-
-    ## The following object is masked from 'package:purrr':
-    ## 
-    ##     set_names
-
-``` r
 library("gh")       # accessing GitHub's API
 library("polite")   # being respectful when downloading files
 library("here")     # so I can always remember where I started
-```
-
-    ## here() starts at /home/zhian/Documents/Carpentries/Git/zkamvar--postmaul
-
-``` r
 library("pegboard") # parsing and analysis of carpentries episodes
 library("git2r")    # downloading github repositories
-```
-
-    ## 
-    ## Attaching package: 'git2r'
-
-    ## The following object is masked from 'package:magrittr':
-    ## 
-    ##     add
-
-    ## The following object is masked from 'package:dplyr':
-    ## 
-    ##     pull
-
-    ## The following objects are masked from 'package:purrr':
-    ## 
-    ##     is_empty, when
-
-``` r
 library("waldo")    # comparing objects
 ```
 
@@ -140,7 +79,7 @@ ggplot(lessons, aes(y = life_cycle, fill = curriculum)) +
   geom_bar(orientation = "y")
 ```
 
-![](analysis_files/figure-gfm/lesson%20vis-1.png)<!-- -->
+![](analysis_files/figure-gfm/lesson_vis-1.png)<!-- -->
 
 Let’s inspect the ones that are stable and then look at the ones that
 are lower down, first we should filter for those that are stable and
@@ -178,7 +117,7 @@ ggplot(stable, aes(y = curriculum, fill = language)) +
   geom_bar(orientation = "y")
 ```
 
-![](analysis_files/figure-gfm/curriculum-language-1.png)<!-- -->
+![](analysis_files/figure-gfm/curriculum_language-1.png)<!-- -->
 
 # Inspection of repository features
 
@@ -224,7 +163,7 @@ lesson_has_rmd <- . %>%
       here::here("data", "rmd_JSON", glue::glue("{.x}--{.y}.json"))
     )
   )) %>%
-  filter(lengths(JSON) > 2)
+  filter(repository == "R-ecology-lesson" | lengths(JSON) > 2)
 has_rmd <- stable %>% lesson_has_rmd
 has_rmd_all <- lessons %>% 
   lesson_has_rmd %>% 
@@ -319,7 +258,7 @@ has_rmd_all <- lessons %>%
     ## lesson.json': No such file or directory
 
 After parsing, we find that we have RMarkdown files for a grand total of
-15 lessons and 7 stable lessons. From here, we can grab these lessons to
+16 lessons and 8 stable lessons. From here, we can grab these lessons to
 see if we can build them with our docker container.
 
 ## Lessons that use R
@@ -342,6 +281,7 @@ has_rmd_all %>%
 | <https://github.com/LibraryCarpentry/lc-r>                    | lc                   | pre-alpha   | en       | [results](#lesson-lc-r)                       |
 | <https://github.com/datacarpentry/genomics-r-intro>           | dc-genomics          | alpha       | en       | [results](#lesson-genomics-r-intro)           |
 | <https://github.com/swcarpentry/r-novice-inflammation>        | swc                  | stable      | en       | [results](#lesson-r-novice-inflammation)      |
+| <https://github.com/datacarpentry/R-ecology-lesson>           | dc-ecology           | stable      | en       | [results](#lesson-R-ecology-lesson)           |
 | <https://github.com/swcarpentry/r-novice-gapminder>           | swc                  | stable      | en       | [results](#lesson-r-novice-gapminder)         |
 | <https://github.com/datacarpentry/organization-geospatial>    | dc-geospatial        | stable      | en       | [results](#lesson-organization-geospatial)    |
 | <https://github.com/swcarpentry/r-novice-gapminder-es>        | swc-es               | stable      | es       | [results](#lesson-r-novice-gapminder-es)      |
@@ -380,6 +320,7 @@ g <- function(u, r, path = rmdpath) {
   }
 }
 purrr::walk2(has_rmd_all$user, has_rmd_all$repository, g, rmdpath) 
+standard_rmd <- has_rmd_all %>% filter(repository != "R-ecology-lesson")
 ```
 
 Now all the repos have been downloaded, we can render the episodes under
@@ -391,8 +332,8 @@ get_path <- function(u, r) {
   fs::path_abs(fs::path("data", "rmd-repos", glue::glue("{u}--{r}")))
 }
 
-run_docker <- function(the_path, R_VERSION) {
-  make____it <- "install2.r checkpoint && make -B -j 4 -C /home/rstudio lesson-md"
+run_docker <- function(the_path, R_VERSION, cmd = '-C /home/rstudio lesson-md') {
+  make____it <- glue::glue("install2.r checkpoint && make -B -j 4 {cmd}")
   docker_run <- "docker run --rm -it -v {the_path}:/home/rstudio"
   contai_ner <- "rocker/geospatial:{R_VERSION} /bin/bash -c '{make____it}'"
   system(glue::glue("{glue::glue(docker_run)} {glue::glue(contai_ner)}"))
@@ -416,14 +357,14 @@ dockin <- function(u, r) {
 
 }
 
-res <- purrr::map2(has_rmd_all$user, has_rmd_all$repository, dockin)
+res <- purrr::map2(standard_rmd$user, standard_rmd$repository, dockin)
 ```
 
     ## Error: PCDATA invalid Char value 27 [9]
     ## Error: PCDATA invalid Char value 27 [9]
 
 ``` r
-names(res) <- has_rmd_all$repository
+names(res) <- standard_rmd$repository
 ```
 
 We can iterate and compare:
@@ -3790,6 +3731,72 @@ diff](data/diffs/rr-literate-programming--rmd_example.diff)
 ✔ No differences
 ```
 
+## Lesson: R-ecology-lesson
+
+> Note, this had a different build sequence, so I had to do this
+> manually and could not provide output diffs.
+
+``` r
+REL <- has_rmd_all %>% filter(repository == "R-ecology-lesson")
+cmd <- "-C /home/rstudio pages"
+ptl <- get_path(REL$user, REL$repository)
+R3 <- glue::glue("{ptl}R3")
+R4 <- glue::glue("{ptl}R4")
+run_docker(R3, "3.6.3", cmd)
+run_docker(R4, "4.0.0", cmd)
+R3res <- path(R3, "_site", gsub(".Rmd$", ".html", dir_ls(R3, glob = "*Rmd")))
+R4res <- path(R4, "_site", gsub(".Rmd$", ".html", dir_ls(R4, glob = "*Rmd")))
+episodes <- glue::glue("R-ecology-lesson--{basename(R3res)}")
+dpath <- path("data", "diffs", sub("html$", "diff", episodes))
+diffcmd <- "git diff --no-index -- {R3res} {R4res} > {dpath}"
+walk(glue::glue(diffcmd), system)
+walk2(episodes, dpath, ~cat(glue::glue("\n#### Episode: {.x}\n\n\n[Link to full diff]({.y})\n")))
+```
+
+#### Episode: R-ecology-lesson–00-before-we-start.html
+
+[Link to full
+diff](data/diffs/R-ecology-lesson--00-before-we-start.diff)\#\#\#\#
+Episode: R-ecology-lesson–01-intro-to-r.html
+
+[Link to full
+diff](data/diffs/R-ecology-lesson--01-intro-to-r.diff)\#\#\#\# Episode:
+R-ecology-lesson–02-starting-with-data.html
+
+[Link to full
+diff](data/diffs/R-ecology-lesson--02-starting-with-data.diff)\#\#\#\#
+Episode: R-ecology-lesson–03-dplyr.html
+
+[Link to full diff](data/diffs/R-ecology-lesson--03-dplyr.diff)\#\#\#\#
+Episode: R-ecology-lesson–04-visualization-ggplot2.html
+
+[Link to full
+diff](data/diffs/R-ecology-lesson--04-visualization-ggplot2.diff)\#\#\#\#
+Episode: R-ecology-lesson–05-r-and-databases.html
+
+[Link to full
+diff](data/diffs/R-ecology-lesson--05-r-and-databases.diff)\#\#\#\#
+Episode: R-ecology-lesson–CITATION.html
+
+[Link to full diff](data/diffs/R-ecology-lesson--CITATION.diff)\#\#\#\#
+Episode: R-ecology-lesson–CONDUCT.html
+
+[Link to full diff](data/diffs/R-ecology-lesson--CONDUCT.diff)\#\#\#\#
+Episode: R-ecology-lesson–CONTRIBUTING.html
+
+[Link to full
+diff](data/diffs/R-ecology-lesson--CONTRIBUTING.diff)\#\#\#\# Episode:
+R-ecology-lesson–LICENSE.html
+
+[Link to full diff](data/diffs/R-ecology-lesson--LICENSE.diff)\#\#\#\#
+Episode: R-ecology-lesson–\_page\_built\_on.html
+
+[Link to full
+diff](data/diffs/R-ecology-lesson--_page_built_on.diff)\#\#\#\# Episode:
+R-ecology-lesson–index.html
+
+[Link to full diff](data/diffs/R-ecology-lesson--index.diff)
+
 # Session Information
 
 ``` r
@@ -3806,7 +3813,7 @@ sessioninfo::session_info()
     ##  collate  en_US.UTF-8                 
     ##  ctype    en_US.UTF-8                 
     ##  tz       America/Los_Angeles         
-    ##  date     2020-07-21                  
+    ##  date     2020-07-24                  
     ## 
     ## ─ Packages ───────────────────────────────────────────────────────────────────
     ##  package     * version    date       lib source                               
@@ -3834,7 +3841,7 @@ sessioninfo::session_info()
     ##  here        * 0.1        2017-05-28 [1] CRAN (R 4.0.0)                       
     ##  highr         0.8        2019-03-20 [1] CRAN (R 4.0.0)                       
     ##  htmltools     0.5.0      2020-06-16 [1] CRAN (R 4.0.0)                       
-    ##  httr          1.4.1      2019-08-05 [1] CRAN (R 4.0.0)                       
+    ##  httr          1.4.2      2020-07-20 [1] CRAN (R 4.0.2)                       
     ##  jsonlite    * 1.7.0      2020-06-25 [1] CRAN (R 4.0.1)                       
     ##  knitr         1.29       2020-06-23 [1] CRAN (R 4.0.0)                       
     ##  labeling      0.3        2014-08-23 [1] CRAN (R 4.0.0)                       

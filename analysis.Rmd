@@ -18,7 +18,7 @@ knitr::opts_chunk$set(echo = TRUE)
 The source for all the repositories is located at <https://carpentries.github.io/curriculum-feed/carpentries_lessons.json>. To 
 avoid having to pull from it multiple times I'm going to set up a folder:
 
-```{r packages}
+```{r packages, message = FALSE}
 library("fs")       # Filesystem navigation
 library("jsonlite") # parsing JSON files
 library("purrr")    # handling lists (JSON files)
@@ -69,7 +69,7 @@ I'm going to take a look at all of the software carpentry lessons first. There
 are currently `r nrow(lessons)` available lessons, but they are in different
 stages of completion:
 
-```{r lesson vis}
+```{r lesson_vis}
 ggplot(lessons, aes(y = life_cycle, fill = curriculum)) +
   geom_bar(orientation = "y")
 ```
@@ -90,7 +90,7 @@ stable
 
 I end up with `r nrow(stable)` repositories to play with:
 
-```{r curriculum-language}
+```{r curriculum_language}
 ggplot(stable, aes(y = curriculum, fill = language)) +
   geom_bar(orientation = "y")
 ```
@@ -140,7 +140,7 @@ lesson_has_rmd <- . %>%
       here::here("data", "rmd_JSON", glue::glue("{.x}--{.y}.json"))
     )
   )) %>%
-  filter(lengths(JSON) > 2)
+  filter(repository == "R-ecology-lesson" | lengths(JSON) > 2)
 has_rmd <- stable %>% lesson_has_rmd
 has_rmd_all <- lessons %>% 
   lesson_has_rmd %>% 
@@ -195,6 +195,7 @@ g <- function(u, r, path = rmdpath) {
   }
 }
 purrr::walk2(has_rmd_all$user, has_rmd_all$repository, g, rmdpath) 
+standard_rmd <- has_rmd_all %>% filter(repository != "R-ecology-lesson")
 ```
 
 Now all the repos have been downloaded, we can render the episodes under
@@ -207,8 +208,8 @@ get_path <- function(u, r) {
   fs::path_abs(fs::path("data", "rmd-repos", glue::glue("{u}--{r}")))
 }
 
-run_docker <- function(the_path, R_VERSION) {
-  make____it <- "install2.r checkpoint && make -B -j 4 -C /home/rstudio lesson-md"
+run_docker <- function(the_path, R_VERSION, cmd = '-C /home/rstudio lesson-md') {
+  make____it <- glue::glue("install2.r checkpoint && make -B -j 4 {cmd}")
   docker_run <- "docker run --rm -it -v {the_path}:/home/rstudio"
   contai_ner <- "rocker/geospatial:{R_VERSION} /bin/bash -c '{make____it}'"
   system(glue::glue("{glue::glue(docker_run)} {glue::glue(contai_ner)}"))
@@ -232,8 +233,8 @@ dockin <- function(u, r) {
 
 }
 
-res <- purrr::map2(has_rmd_all$user, has_rmd_all$repository, dockin)
-names(res) <- has_rmd_all$repository
+res <- purrr::map2(standard_rmd$user, standard_rmd$repository, dockin)
+names(res) <- standard_rmd$repository
 ```
 
 We can iterate and compare:
@@ -268,6 +269,29 @@ cmpr <- function(lesson, name) {
 
 purrr::walk2(res, names(res), cmpr)
 ```
+
+## Lesson: R-ecology-lesson
+
+> Note, this had a different build sequence, so I had to do this manually
+> and could not provide output diffs.
+
+```{r rel, results = 'asis'}
+REL <- has_rmd_all %>% filter(repository == "R-ecology-lesson")
+cmd <- "-C /home/rstudio pages"
+ptl <- get_path(REL$user, REL$repository)
+R3 <- glue::glue("{ptl}R3")
+R4 <- glue::glue("{ptl}R4")
+run_docker(R3, "3.6.3", cmd)
+run_docker(R4, "4.0.0", cmd)
+R3res <- path(R3, "_site", gsub(".Rmd$", ".html", dir_ls(R3, glob = "*Rmd")))
+R4res <- path(R4, "_site", gsub(".Rmd$", ".html", dir_ls(R4, glob = "*Rmd")))
+episodes <- glue::glue("R-ecology-lesson--{basename(R3res)}")
+dpath <- path("data", "diffs", sub("html$", "diff", episodes))
+diffcmd <- "git diff --no-index -- {R3res} {R4res} > {dpath}"
+walk(glue::glue(diffcmd), system)
+walk2(episodes, dpath, ~cat(glue::glue("\n#### Episode: {.x}\n\n\n[Link to full diff]({.y})\n")))
+```
+
 
 
 # Session Information
