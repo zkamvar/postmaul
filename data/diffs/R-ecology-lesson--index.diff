@@ -1,31 +1,13 @@
-diff --git a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--R-ecology-lessonR3/_site/index.html b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--R-ecology-lessonR4/_site/index.html
-index 26bd929..0affd47 100644
---- a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--R-ecology-lessonR3/_site/index.html
-+++ b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--R-ecology-lessonR4/_site/index.html
-@@ -565,7 +565,7 @@ div.tocify {
- <h4>For everyone</h4>
- <p><strong>After installing R and RStudio, you need to install the <code>tidyverse</code> and <code>RSQLite</code> packages.</strong></p>
- <ul>
--<li><p>After starting RStudio, at the console type: <code>install.packages(c(&quot;tidyverse&quot;, &quot;RSQLite&quot;))</code></p></li>
-+<li><p>After starting RStudio, at the console type: <code>install.packages(c("tidyverse", "RSQLite"))</code></p></li>
- <li><p>You can also do this by going to Tools -&gt; Install Packages and typing the names of the packages separated by a comma.</p></li>
- </ul>
- </div>
-@@ -575,7 +575,7 @@ div.tocify {
- <h2>Contributors</h2>
- <p>The list of contributors to this lesson is available <a href="https://datacarpentry.org/R-ecology-lesson/CITATION">here</a>.</p>
- <p style="text-align: right; font-size: small;">
--Page built on: 📆 2020-07-24 ‒ 🕢 19:05:11
-+Page built on: 📆 2020-07-24 ‒ 🕢 19:06:01
- </p>
- </div>
+diff --git a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--R-ecology-lessonR3/_site/index.md b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--R-ecology-lessonR4/_site/index.md
+index f1f127d..ea7f7c5 100644
+--- a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--R-ecology-lessonR3/_site/index.md
++++ b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--R-ecology-lessonR4/_site/index.md
+@@ -233,7 +233,7 @@ Contributors
+ The list of contributors to this lesson is available
+ [here](https://datacarpentry.org/R-ecology-lesson/CITATION).
  
-@@ -666,7 +666,7 @@ $(document).ready(function ()  {
-       theme: "bootstrap3",
-       context: '.toc-content',
-       hashGenerator: function (text) {
--        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
-       },
-       ignoreSelector: ".toc-ignore",
-       scrollTo: 0
+-Page built on: 📆 2020-07-24 ‒ 🕢 19:46:10
++Page built on: 📆 2020-07-24 ‒ 🕢 19:46:59
+ :::
+ 
+ ------------------------------------------------------------------------

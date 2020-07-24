@@ -1,96 +1,13 @@
-diff --git a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--R-ecology-lessonR3/_site/CONTRIBUTING.html b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--R-ecology-lessonR4/_site/CONTRIBUTING.html
-index 932f2a7..9978a38 100644
---- a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--R-ecology-lessonR3/_site/CONTRIBUTING.html
-+++ b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--R-ecology-lessonR4/_site/CONTRIBUTING.html
-@@ -104,9 +104,9 @@ $(function () {
+diff --git a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--R-ecology-lessonR3/_site/CONTRIBUTING.md b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--R-ecology-lessonR4/_site/CONTRIBUTING.md
+index e4d2149..cf8ad76 100644
+--- a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--R-ecology-lessonR3/_site/CONTRIBUTING.md
++++ b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--R-ecology-lessonR4/_site/CONTRIBUTING.md
+@@ -220,7 +220,7 @@ FAQ
+     come chat with us on
+     [Slack](https://swc-slack-invite.herokuapp.com/).
  
- <style type="text/css">code{white-space: pre;}</style>
- <style type="text/css" data-origin="pandoc">
--a.sourceLine { display: inline-block; line-height: 1.25; }
--a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
--a.sourceLine:empty { height: 1.2em; }
-+code.sourceCode > span { display: inline-block; line-height: 1.25; }
-+code.sourceCode > span { color: inherit; text-decoration: inherit; }
-+code.sourceCode > span:empty { height: 1.2em; }
- .sourceCode { overflow: visible; }
- code.sourceCode { white-space: pre; position: relative; }
- div.sourceCode { margin: 1em 0; }
-@@ -116,14 +116,16 @@ div.sourceCode { overflow: auto; }
- }
- @media print {
- code.sourceCode { white-space: pre-wrap; }
--a.sourceLine { text-indent: -1em; padding-left: 1em; }
--}
--pre.numberSource a.sourceLine
--  { position: relative; left: -4em; }
--pre.numberSource a.sourceLine::before
--  { content: attr(data-line-number);
-+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-+}
-+pre.numberSource code
-+  { counter-reset: source-line 0; }
-+pre.numberSource code > span
-+  { position: relative; left: -4em; counter-increment: source-line; }
-+pre.numberSource code > span > a:first-child::before
-+  { content: counter(source-line);
-     position: relative; left: -1em; text-align: right; vertical-align: baseline;
--    border: none; pointer-events: all; display: inline-block;
-+    border: none; display: inline-block;
-     -webkit-touch-callout: none; -webkit-user-select: none;
-     -khtml-user-select: none; -moz-user-select: none;
-     -ms-user-select: none; user-select: none;
-@@ -132,9 +134,9 @@ pre.numberSource a.sourceLine::before
-   }
- pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
- div.sourceCode
--  {  }
-+  {   }
- @media screen {
--a.sourceLine::before { text-decoration: underline; }
-+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
- }
- code span.al { color: #ff0000; font-weight: bold; } /* Alert */
- code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-@@ -577,18 +579,18 @@ div.tocify {
- <ol style="list-style-type: decimal">
- <li><p>Fork the <code>datacarpentry/R-ecology-lesson</code> repository on GitHub. <em>See the “Fork” button in the top-right corner of the screen on the GitHub website.</em></p></li>
- <li><p>Clone that repository to your own machine. (It is also possible to make minor edits right on GitHub.) <em>At your terminal:</em></p>
--<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="fu">git</span> clone https://github.com/your_username/R-ecology-lesson.git R-ecology-lesson</a>
--<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="bu">cd</span> R-ecology-lesson</a>
--<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="fu">git</span> remote add upstream https://github.com/datacarpentry/R-ecology-lesson.git</a></code></pre></div></li>
-+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">git</span> clone https://github.com/your_username/R-ecology-lesson.git R-ecology-lesson</span>
-+<span id="cb1-2"><a href="#cb1-2"></a><span class="bu">cd</span> R-ecology-lesson</span>
-+<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">git</span> remote add upstream https://github.com/datacarpentry/R-ecology-lesson.git</span></code></pre></div></li>
- <li><p>Create a branch from <code>main</code> for your changes. Give your branch a meaningful name, such as <code>fix-typos-dplyr-lesson</code> or <code>add-tutorial-on-visualization</code>. <em>At your terminal:</em></p>
--<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="fu">git</span> checkout -b fix-typos-dplyr-lesson</a></code></pre></div></li>
-+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">git</span> checkout -b fix-typos-dplyr-lesson</span></code></pre></div></li>
- <li><p>Make your changes to the Rmd file. If you’d like to check the rendered version of your changes, you can do one of three things:</p>
- <ul>
- <li>if you have <code>GNU Make</code> installed on your system, type <code>make</code> at your shell terminal.</li>
- <li>if you use RStudio, click on the “Knit” button in the top-right corner of your editor pane.</li>
--<li>in other cases, you can type: <code>rmarkdown::render_site(&quot;01-intro-to-r.Rmd&quot;)</code> in your R terminal (make sure your working directory is at the root of the lesson) to generate the corresponding html file.</li>
-+<li>in other cases, you can type: <code>rmarkdown::render_site("01-intro-to-r.Rmd")</code> in your R terminal (make sure your working directory is at the root of the lesson) to generate the corresponding html file.</li>
- </ul></li>
--<li><p>Commit the Rmd file you edited (<code>git add file-you-changed.Rmd</code>, followed by <code>git commit -m &quot;fix typos in dplyr lesson&quot;</code>), and push your changes to your repository on GitHub (<code>git push origin fix-typos-dplyr-lesson</code>). If your change affects a lesson, <strong>please only commit and push the <code>Rmd</code> files</strong>. The rendered versions will be generated by the lesson maintainers to avoid merge conflicts.</p></li>
-+<li><p>Commit the Rmd file you edited (<code>git add file-you-changed.Rmd</code>, followed by <code>git commit -m "fix typos in dplyr lesson"</code>), and push your changes to your repository on GitHub (<code>git push origin fix-typos-dplyr-lesson</code>). If your change affects a lesson, <strong>please only commit and push the <code>Rmd</code> files</strong>. The rendered versions will be generated by the lesson maintainers to avoid merge conflicts.</p></li>
- <li><p>Send a pull request (PR) to the <code>main</code> branch of the <code>datacarpentry/R-ecology-lesson</code> repository for this lesson at <a href="https://github.com/datacarpentry/R-ecology-lesson" class="uri">https://github.com/datacarpentry/R-ecology-lesson</a></p></li>
- </ol>
- <p>If it is easier for you to send edits to us some other way, please mail us at <a href="mailto:board@datacarpentry.org">board@datacarpentry.org</a>. Given a choice between you creating content or wrestling with Git, we’d rather have you doing the former.</p>
-@@ -629,7 +631,7 @@ And not this format
- <li><em>Where can I get help?</em> <br/> Mail us at <a href="mailto:team@carpentriesorg">team@carpentries.org</a> or come chat with us on <a href="https://swc-slack-invite.herokuapp.com/">Slack</a>.</li>
- </ul>
- <p style="text-align: right; font-size: small;">
--Page built on: 📆 2020-07-24 ‒ 🕢 19:05:11
-+Page built on: 📆 2020-07-24 ‒ 🕢 19:06:01
- </p>
- </div>
- </div>
-@@ -721,7 +723,7 @@ $(document).ready(function ()  {
-       theme: "bootstrap3",
-       context: '.toc-content',
-       hashGenerator: function (text) {
--        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
-       },
-       ignoreSelector: ".toc-ignore",
-       scrollTo: 0
+-Page built on: 📆 2020-07-24 ‒ 🕢 19:46:10
++Page built on: 📆 2020-07-24 ‒ 🕢 19:46:59
+ :::
+ :::
+ 

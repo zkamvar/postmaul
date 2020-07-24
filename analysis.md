@@ -334,7 +334,7 @@ get_path <- function(u, r) {
 
 run_docker <- function(the_path, R_VERSION, cmd = '-C /home/rstudio lesson-md') {
   make____it <- glue::glue("install2.r checkpoint && make -B -j 4 {cmd}")
-  docker_run <- "docker run --rm -it -v {the_path}:/home/rstudio"
+  docker_run <- "docker run --rm -it -e USER=$(id -u) -e GROUP=$(id -g) -v {the_path}:/home/rstudio"
   contai_ner <- "rocker/geospatial:{R_VERSION} /bin/bash -c '{make____it}'"
   system(glue::glue("{glue::glue(docker_run)} {glue::glue(contai_ner)}"))
 }
@@ -3748,7 +3748,8 @@ R3res <- path(R3, "_site", gsub(".Rmd$", ".html", path_file(dir_ls(R3, glob = "*
 R4res <- path(R4, "_site", gsub(".Rmd$", ".html", path_file(dir_ls(R4, glob = "*Rmd"))))
 episodes <- glue::glue("R-ecology-lesson--{path_file(R3res)}")
 dpath <- path("data", "diffs", sub("html$", "diff", episodes))
-diffcmd <- "git diff --no-index -- {R3res} {R4res} > {dpath}"
+pando <- function(i) glue::glue("$(pandoc -t markdown -f html -o {sub('html', 'md', i)} {i} && echo {sub('html', 'md', i)})")
+diffcmd <- "git diff --no-index -- {pando(R3res)} {pando(R4res)} > {dpath}"
 walk(glue::glue(diffcmd), system)
 walk2(episodes, dpath, ~cat(glue::glue("\n#### Episode: {.x}\n\n\n[Link to full diff]({.y})\n")))
 ```

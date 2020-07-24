@@ -1,208 +1,108 @@
-diff --git a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--R-ecology-lessonR3/_site/00-before-we-start.html b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--R-ecology-lessonR4/_site/00-before-we-start.html
-index c4c356a..15a5606 100644
---- a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--R-ecology-lessonR3/_site/00-before-we-start.html
-+++ b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--R-ecology-lessonR4/_site/00-before-we-start.html
-@@ -105,9 +105,9 @@ $(function () {
+diff --git a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--R-ecology-lessonR3/_site/00-before-we-start.md b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--R-ecology-lessonR4/_site/00-before-we-start.md
+index d25fa26..3e03450 100644
+--- a/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--R-ecology-lessonR3/_site/00-before-we-start.md
++++ b/home/zhian/Documents/Carpentries/Git/zkamvar--postmaul/data/rmd-repos/datacarpentry--R-ecology-lessonR4/_site/00-before-we-start.md
+@@ -189,9 +189,7 @@ the plots we will generate. RStudio can also be used for other things
+ will not cover during the workshop.
  
- <style type="text/css">code{white-space: pre;}</style>
- <style type="text/css" data-origin="pandoc">
--a.sourceLine { display: inline-block; line-height: 1.25; }
--a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
--a.sourceLine:empty { height: 1.2em; }
-+code.sourceCode > span { display: inline-block; line-height: 1.25; }
-+code.sourceCode > span { color: inherit; text-decoration: inherit; }
-+code.sourceCode > span:empty { height: 1.2em; }
- .sourceCode { overflow: visible; }
- code.sourceCode { white-space: pre; position: relative; }
- div.sourceCode { margin: 1em 0; }
-@@ -117,14 +117,16 @@ div.sourceCode { overflow: auto; }
- }
- @media print {
- code.sourceCode { white-space: pre-wrap; }
--a.sourceLine { text-indent: -1em; padding-left: 1em; }
--}
--pre.numberSource a.sourceLine
--  { position: relative; left: -4em; }
--pre.numberSource a.sourceLine::before
--  { content: attr(data-line-number);
-+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-+}
-+pre.numberSource code
-+  { counter-reset: source-line 0; }
-+pre.numberSource code > span
-+  { position: relative; left: -4em; counter-increment: source-line; }
-+pre.numberSource code > span > a:first-child::before
-+  { content: counter(source-line);
-     position: relative; left: -1em; text-align: right; vertical-align: baseline;
--    border: none; pointer-events: all; display: inline-block;
-+    border: none; display: inline-block;
-     -webkit-touch-callout: none; -webkit-user-select: none;
-     -khtml-user-select: none; -moz-user-select: none;
-     -ms-user-select: none; user-select: none;
-@@ -133,9 +135,9 @@ pre.numberSource a.sourceLine::before
-   }
- pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
- div.sourceCode
--  {  }
-+  {   }
- @media screen {
--a.sourceLine::before { text-decoration: underline; }
-+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
- }
- code span.al { color: #ff0000; font-weight: bold; } /* Alert */
- code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-@@ -627,7 +629,7 @@ div.tocify {
- <p>The RStudio IDE open-source product is free under the <a href="https://www.gnu.org/licenses/agpl-3.0.en.html">Affero General Public License (AGPL) v3</a>. The RStudio IDE is also available with a commercial license and priority email support from RStudio, Inc.</p>
- <p>We will use RStudio IDE to write code, navigate the files on our computer, inspect the variables we are going to create, and visualize the plots we will generate. RStudio can also be used for other things (e.g., version control, developing packages, writing Shiny apps) that we will not cover during the workshop.</p>
- <div class="figure">
--<img src="img/rstudio-screenshot.png" alt="RStudio interface screenshot. Clockwise from top left: Source, Environment/History, Files/Plots/Packages/Help/Viewer, Console." />
-+<img src="img/rstudio-screenshot.png" alt="" />
- <p class="caption">RStudio interface screenshot. Clockwise from top left: Source, Environment/History, Files/Plots/Packages/Help/Viewer, Console.</p>
- </div>
- <p>RStudio is divided into 4 “Panes”: the <strong>Source</strong> for your scripts and documents (top-left, in the default layout), your <strong>Environment/History</strong> (top-right) which shows all the objects in your working space (Environment) and your command history (History), your <strong>Files/Plots/Packages/Help/Viewer</strong> (bottom-right), and the R <strong>Console</strong> (bottom-left). The placement of these panes and their content can be customized (see menu, Tools -&gt; Global Options -&gt; Pane Layout).</p>
-@@ -647,7 +649,7 @@ div.tocify {
- </ol>
- <p>A workspace is your current working environment in R which includes any user-defined object. By default, all of these objects will be saved, and automatically loaded, when you reopen your project. Saving a workspace to <code>.RData</code> can be cumbersome, especially if you are working with larger datasets, and it can lead to hard to debug errors by having objects in memory you forgot you had. To turn that off, go to Tools –&gt; ‘Global Options’ and select the ‘Never’ option for ‘Save workspace to .RData’ on exit.’</p>
- <div class="figure">
--<img src="img/rstudio-preferences.png" alt="Set ‘Save workspace to .RData on exit’ to ‘Never’" />
-+<img src="img/rstudio-preferences.png" alt="" />
- <p class="caption">Set ‘Save workspace to .RData on exit’ to ‘Never’</p>
- </div>
- <div id="organizing-your-working-directory" class="section level3">
-@@ -661,7 +663,7 @@ div.tocify {
- </ul>
- <p>For this workshop, we will need a <code>data_raw/</code> folder to store our raw data, and we will use <code>data/</code> for when we learn how to export data as CSV files, and a <code>fig/</code> folder for the figures that we will save.</p>
- <ul>
--<li>Under the <code>Files</code> tab on the right of the screen, click on <code>New Folder</code> and create a folder named <code>data_raw</code> within your newly created working directory (e.g., <code>~/data-carpentry/</code>). (Alternatively, type <code>dir.create(&quot;data_raw&quot;)</code> at your R console.) Repeat these operations to create a <code>data</code> and a <code>fig</code> folder.</li>
-+<li>Under the <code>Files</code> tab on the right of the screen, click on <code>New Folder</code> and create a folder named <code>data_raw</code> within your newly created working directory (e.g., <code>~/data-carpentry/</code>). (Alternatively, type <code>dir.create("data_raw")</code> at your R console.) Repeat these operations to create a <code>data</code> and a <code>fig</code> folder.</li>
- </ul>
- <p>We are going to keep the script in the root of our working directory because we are only going to use one file and it will make things easier.</p>
- <p>Your working directory should now look like this:</p>
-@@ -675,7 +677,7 @@ How it should look like at the beginning of this lesson
- <div id="the-working-directory" class="section level3">
- <h3>The working directory</h3>
- <p>The working directory is an important concept to understand. It is the place from where R will be looking for and saving the files. When you write code for your project, it should refer to files in relation to the root of your working directory and only need files within this structure.</p>
--<p>Using RStudio projects makes this easy and ensures that your working directory is set properly. If you need to check it, you can use <code>getwd()</code>. If for some reason your working directory is not what it should be, you can change it in the RStudio interface by navigating in the file browser where your working directory should be, and clicking on the blue gear icon “More”, and select “Set As Working Directory”. Alternatively you can use <code>setwd(&quot;/path/to/working/directory&quot;)</code> to reset your working directory. However, your scripts should not include this line because it will fail on someone else’s computer.</p>
-+<p>Using RStudio projects makes this easy and ensures that your working directory is set properly. If you need to check it, you can use <code>getwd()</code>. If for some reason your working directory is not what it should be, you can change it in the RStudio interface by navigating in the file browser where your working directory should be, and clicking on the blue gear icon “More”, and select “Set As Working Directory”. Alternatively you can use <code>setwd("/path/to/working/directory")</code> to reset your working directory. However, your scripts should not include this line because it will fail on someone else’s computer.</p>
- </div>
- </div>
- <div id="interacting-with-r" class="section level2">
-@@ -698,7 +700,7 @@ How it should look like at the beginning of this lesson
- <div id="use-the-built-in-rstudio-help-interface-to-search-for-more-information-on-r-functions" class="section level3">
- <h3>Use the built-in RStudio help interface to search for more information on R functions</h3>
- <div class="figure">
--<img src="img/rstudiohelp.png" alt="RStudio help interface." />
-+<img src="img/rstudiohelp.png" alt="" />
- <p class="caption">RStudio help interface.</p>
- </div>
- <p>One of the fastest ways to get help, is to use the RStudio help interface. This panel by default can be found at the lower right hand panel of RStudio. As seen in the screenshot, by typing the word “Mean”, RStudio tries to also give a number of suggestions that you might be interested in. The description is then shown in the display window.</p>
-@@ -706,20 +708,20 @@ How it should look like at the beginning of this lesson
- <div id="i-know-the-name-of-the-function-i-want-to-use-but-im-not-sure-how-to-use-it" class="section level3">
- <h3>I know the name of the function I want to use, but I’m not sure how to use it</h3>
- <p>If you need help with a specific function, let’s say <code>barplot()</code>, you can type:</p>
--<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">?barplot</a></code></pre></div>
-+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>?barplot</span></code></pre></div>
- <p>If you just need to remind yourself of the names of the arguments, you can use:</p>
--<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">args</span>(lm)</a></code></pre></div>
-+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">args</span>(lm)</span></code></pre></div>
- </div>
- <div id="i-want-to-use-a-function-that-does-x-there-must-be-a-function-for-it-but-i-dont-know-which-one" class="section level3">
- <h3>I want to use a function that does X, there must be a function for it but I don’t know which one…</h3>
- <p>If you are looking for a function to do a particular task, you can use the <code>help.search()</code> function, which is called by the double question mark <code>??</code>. However, this only looks through the installed packages for help pages with a match to your search request</p>
--<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">??kruskal</a></code></pre></div>
-+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>??kruskal</span></code></pre></div>
- <p>If you can’t find what you are looking for, you can use the <a href="https://www.rdocumentation.org">rdocumentation.org</a> website that searches through the help files across all packages available.</p>
- <p>Finally, a generic Google or internet search “R &lt;task&gt;” will often either send you to the appropriate package documentation or a helpful forum where someone else has already asked your question.</p>
- </div>
- <div id="i-am-stuck-i-get-an-error-message-that-i-dont-understand" class="section level3">
- <h3>I am stuck… I get an error message that I don’t understand</h3>
--<p>Start by googling the error message. However, this doesn’t always work very well because often, package developers rely on the error catching provided by R. You end up with general error messages that might not be very helpful to diagnose a problem (e.g. “subscript out of bounds”). If the message is very generic, you might also include the name of the function or package you’re using in your query.</p>
-+<p>Start by googling the error message. However, this doesn’t always work very well because often, package developers rely on the error catching provided by R. You end up with general error messages that might not be very helpful to diagnose a problem (e.g. “subscript out of bounds”). If the message is very generic, you might also include the name of the function or package you’re using in your query.</p>
- </div>
- <div id="asking-for-help" class="section level3">
- <h3>Asking for help</h3>
-@@ -727,13 +729,13 @@ How it should look like at the beginning of this lesson
- <p>Try to use the correct words to describe your problem. For instance, a package is not the same thing as a library. Most people will understand what you meant, but others have really strong feelings about the difference in meaning. The key point is that it can make things confusing for people trying to help you. Be as precise as possible when describing your problem.</p>
- <p>If possible, try to reduce what doesn’t work to a simple <em>reproducible example</em>. If you can reproduce the problem using a very small data frame instead of your 50,000 rows and 10,000 columns one, provide the small one with the description of your problem. When appropriate, try to generalize what you are doing so even people who are not in your field can understand the question. For instance instead of using a subset of your real dataset, create a small (3 columns, 5 rows) generic one. For more information on how to write a reproducible example see <a href="http://adv-r.had.co.nz/Reproducibility.html">this article by Hadley Wickham</a>.</p>
- <p>Last, but certainly not least, <strong>always include the output of <code>sessionInfo()</code></strong> as it provides critical information about your platform, the versions of R and the packages that you are using, and other information that can be very helpful to understand your problem.</p>
--<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">sessionInfo</span>()</a></code></pre></div>
--<pre><code>#&gt; R version 3.6.3 (2020-02-29)
-+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">sessionInfo</span>()</span></code></pre></div>
-+<pre><code>#&gt; R version 4.0.0 (2020-04-24)
- #&gt; Platform: x86_64-pc-linux-gnu (64-bit)
--#&gt; Running under: Debian GNU/Linux 10 (buster)
-+#&gt; Running under: Ubuntu 20.04 LTS
- #&gt; 
- #&gt; Matrix products: default
--#&gt; BLAS/LAPACK: /usr/lib/x86_64-linux-gnu/libopenblasp-r0.3.5.so
-+#&gt; BLAS/LAPACK: /usr/lib/x86_64-linux-gnu/openblas-openmp/libopenblasp-r0.3.8.so
- #&gt; 
- #&gt; locale:
- #&gt;  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
-@@ -747,24 +749,24 @@ How it should look like at the beginning of this lesson
- #&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     
- #&gt; 
- #&gt; other attached packages:
--#&gt;  [1] forcats_0.5.0   stringr_1.4.0   dplyr_0.8.5     purrr_0.3.4    
--#&gt;  [5] readr_1.3.1     tidyr_1.0.2     tibble_3.0.1    ggplot2_3.3.0  
-+#&gt;  [1] forcats_0.5.0   stringr_1.4.0   dplyr_1.0.0     purrr_0.3.4    
-+#&gt;  [5] readr_1.3.1     tidyr_1.1.0     tibble_3.0.1    ggplot2_3.3.1  
- #&gt;  [9] tidyverse_1.3.0 knitr_1.28     
- #&gt; 
- #&gt; loaded via a namespace (and not attached):
--#&gt;  [1] tidyselect_1.0.0 xfun_0.13        haven_2.2.0      lattice_0.20-38 
--#&gt;  [5] colorspace_1.4-1 vctrs_0.2.4      generics_0.0.2   htmltools_0.4.0 
--#&gt;  [9] yaml_2.2.1       rlang_0.4.5      pillar_1.4.3     glue_1.4.0      
--#&gt; [13] withr_2.2.0      DBI_1.1.0        dbplyr_1.4.3     modelr_0.1.6    
--#&gt; [17] readxl_1.3.1     lifecycle_0.2.0  munsell_0.5.0    gtable_0.3.0    
--#&gt; [21] cellranger_1.1.0 rvest_0.3.5      evaluate_0.14    fansi_0.4.1     
--#&gt; [25] highr_0.8        broom_0.5.6      Rcpp_1.0.4.6     scales_1.1.0    
--#&gt; [29] backports_1.1.6  jsonlite_1.6.1   fs_1.4.1         hms_0.5.3       
--#&gt; [33] digest_0.6.25    stringi_1.4.6    grid_3.6.3       cli_2.0.2       
--#&gt; [37] tools_3.6.3      magrittr_1.5     crayon_1.3.4     pkgconfig_2.0.3 
--#&gt; [41] ellipsis_0.3.0   xml2_1.3.2       reprex_0.3.0     lubridate_1.7.8 
--#&gt; [45] assertthat_0.2.1 rmarkdown_2.1    httr_1.4.1       rstudioapi_0.11 
--#&gt; [49] R6_2.4.1         nlme_3.1-144     compiler_3.6.3</code></pre>
-+#&gt;  [1] tidyselect_1.1.0 xfun_0.14        haven_2.3.1      lattice_0.20-41 
-+#&gt;  [5] colorspace_1.4-1 vctrs_0.3.1      generics_0.0.2   htmltools_0.4.0 
-+#&gt;  [9] yaml_2.2.1       blob_1.2.1       rlang_0.4.6      pillar_1.4.4    
-+#&gt; [13] glue_1.4.1       withr_2.2.0      DBI_1.1.0        dbplyr_1.4.4    
-+#&gt; [17] modelr_0.1.8     readxl_1.3.1     lifecycle_0.2.0  munsell_0.5.0   
-+#&gt; [21] gtable_0.3.0     cellranger_1.1.0 rvest_0.3.5      evaluate_0.14   
-+#&gt; [25] fansi_0.4.1      highr_0.8        broom_0.5.6      Rcpp_1.0.4.6    
-+#&gt; [29] scales_1.1.1     backports_1.1.7  jsonlite_1.6.1   fs_1.4.1        
-+#&gt; [33] hms_0.5.3        digest_0.6.25    stringi_1.4.6    grid_4.0.0      
-+#&gt; [37] cli_2.0.2        tools_4.0.0      magrittr_1.5     crayon_1.3.4    
-+#&gt; [41] pkgconfig_2.0.3  ellipsis_0.3.1   xml2_1.3.2       reprex_0.3.0    
-+#&gt; [45] lubridate_1.7.8  assertthat_0.2.1 rmarkdown_2.2    httr_1.4.1      
-+#&gt; [49] rstudioapi_0.11  R6_2.4.1         nlme_3.1-147     compiler_4.0.0</code></pre>
- </div>
- <div id="where-to-ask-for-help" class="section level3">
- <h3>Where to ask for help?</h3>
-@@ -773,7 +775,7 @@ How it should look like at the beginning of this lesson
- <li>Your friendly colleagues: if you know someone with more experience than you, they might be able and willing to help you.</li>
- <li><a href="https://stackoverflow.com/questions/tagged/r?tab=Votes">Stack Overflow’s <code>[r]</code>-tag</a>: Most questions have already been answered, but the challenge is to use the right words in the search to find the answers. If your question hasn’t been answered before and is well crafted, chances are you will get an answer in less than 5 min. Remember to follow their guidelines on <a href="https://stackoverflow.com/help/how-to-ask">how to ask a good question</a>.</li>
- <li>The <a href="https://stat.ethz.ch/mailman/listinfo/r-help">R-help mailing list</a>: it is read by a lot of people (including most of the R core team), a lot of people post to it, but the tone can be pretty dry, and it is not always very welcoming to new users. If your question is valid (Read its <a href="https://www.r-project.org/posting-guide.html">Posting Guide</a>), you are likely to get an answer very fast but don’t expect that it will come with smiley faces. Also, here more than anywhere else, be sure to use correct vocabulary (otherwise you might get an answer pointing to the misuse of your words rather than answering your question). You will also have more success if your question is about a base function rather than a specific package. <a href="https://blog.revolutionanalytics.com/2014/01/how-to-ask-for-r-help.html">blog.Revolutionanalytics.com</a> and <a href="https://codeblog.jonskeet.uk/2010/08/29/writing-the-perfect-question/">codeblog.jonskeet.uk</a> also provide comprehensive advice on how to ask programming questions.</li>
--<li>If your question is about a specific package, see if there is a mailing list for it. Usually it’s included in the DESCRIPTION file of the package that can be accessed using <code>packageDescription(&quot;name-of-package&quot;)</code>. You may also want to try to email the author of the package directly, or open an issue on the code repository (e.g., GitHub).</li>
-+<li>If your question is about a specific package, see if there is a mailing list for it. Usually it’s included in the DESCRIPTION file of the package that can be accessed using <code>packageDescription("name-of-package")</code>. You may also want to try to email the author of the package directly, or open an issue on the code repository (e.g., GitHub).</li>
- <li>There are also some topic-specific mailing lists (GIS, phylogenetics, etc…), the complete list is <a href="https://www.r-project.org/mail.html">here</a>.</li>
- </ul>
- </div>
-@@ -788,7 +790,7 @@ How it should look like at the beginning of this lesson
- <li>The <a href="https://cran.r-project.org/doc/FAQ/R-FAQ.html">R FAQ</a> is dense and technical but it is full of useful information.</li>
- </ul>
- <p style="text-align: right; font-size: small;">
--Page built on: 📆 2020-07-24 ‒ 🕢 19:04:33
-+Page built on: 📆 2020-07-24 ‒ 🕢 19:05:24
- </p>
- </div>
- </div>
-@@ -880,7 +882,7 @@ $(document).ready(function ()  {
-       theme: "bootstrap3",
-       context: '.toc-content',
-       hashGenerator: function (text) {
--        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
-       },
-       ignoreSelector: ".toc-ignore",
-       scrollTo: 0
+ ::: {.figure}
+-![RStudio interface screenshot. Clockwise from top left: Source,
+-Environment/History, Files/Plots/Packages/Help/Viewer,
+-Console.](img/rstudio-screenshot.png)
++![](img/rstudio-screenshot.png)
+ 
+ RStudio interface screenshot. Clockwise from top left: Source,
+ Environment/History, Files/Plots/Packages/Help/Viewer, Console.
+@@ -256,8 +254,7 @@ Options' and select the 'Never' option for 'Save workspace to .RData' on
+ exit.'
+ 
+ ::: {.figure}
+-![Set 'Save workspace to .RData on exit' to
+-'Never'](img/rstudio-preferences.png)
++![](img/rstudio-preferences.png)
+ 
+ Set 'Save workspace to .RData on exit' to 'Never'
+ :::
+@@ -419,7 +416,7 @@ Seeking help
+ ### Use the built-in RStudio help interface to search for more information on R functions
+ 
+ ::: {.figure}
+-![RStudio help interface.](img/rstudiohelp.png)
++![](img/rstudiohelp.png)
+ 
+ RStudio help interface.
+ :::
+@@ -482,7 +479,7 @@ forum where someone else has already asked your question.
+ Start by googling the error message. However, this doesn't always work
+ very well because often, package developers rely on the error catching
+ provided by R. You end up with general error messages that might not be
+-very helpful to diagnose a problem (e.g. "subscript out of bounds"). If
++very helpful to diagnose a problem (e.g. "subscript out of bounds"). If
+ the message is very generic, you might also include the name of the
+ function or package you're using in your query.
+ :::
+@@ -522,12 +519,12 @@ sessionInfo()
+ ```
+ :::
+ 
+-    #> R version 3.6.3 (2020-02-29)
++    #> R version 4.0.0 (2020-04-24)
+     #> Platform: x86_64-pc-linux-gnu (64-bit)
+-    #> Running under: Debian GNU/Linux 10 (buster)
++    #> Running under: Ubuntu 20.04 LTS
+     #> 
+     #> Matrix products: default
+-    #> BLAS/LAPACK: /usr/lib/x86_64-linux-gnu/libopenblasp-r0.3.5.so
++    #> BLAS/LAPACK: /usr/lib/x86_64-linux-gnu/openblas-openmp/libopenblasp-r0.3.8.so
+     #> 
+     #> locale:
+     #>  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+@@ -541,24 +538,24 @@ sessionInfo()
+     #> [1] stats     graphics  grDevices utils     datasets  methods   base     
+     #> 
+     #> other attached packages:
+-    #>  [1] forcats_0.5.0   stringr_1.4.0   dplyr_0.8.5     purrr_0.3.4    
+-    #>  [5] readr_1.3.1     tidyr_1.0.2     tibble_3.0.1    ggplot2_3.3.0  
++    #>  [1] forcats_0.5.0   stringr_1.4.0   dplyr_1.0.0     purrr_0.3.4    
++    #>  [5] readr_1.3.1     tidyr_1.1.0     tibble_3.0.1    ggplot2_3.3.1  
+     #>  [9] tidyverse_1.3.0 knitr_1.28     
+     #> 
+     #> loaded via a namespace (and not attached):
+-    #>  [1] tidyselect_1.0.0 xfun_0.13        haven_2.2.0      lattice_0.20-38 
+-    #>  [5] colorspace_1.4-1 vctrs_0.2.4      generics_0.0.2   htmltools_0.4.0 
+-    #>  [9] yaml_2.2.1       rlang_0.4.5      pillar_1.4.3     glue_1.4.0      
+-    #> [13] withr_2.2.0      DBI_1.1.0        dbplyr_1.4.3     modelr_0.1.6    
+-    #> [17] readxl_1.3.1     lifecycle_0.2.0  munsell_0.5.0    gtable_0.3.0    
+-    #> [21] cellranger_1.1.0 rvest_0.3.5      evaluate_0.14    fansi_0.4.1     
+-    #> [25] highr_0.8        broom_0.5.6      Rcpp_1.0.4.6     scales_1.1.0    
+-    #> [29] backports_1.1.6  jsonlite_1.6.1   fs_1.4.1         hms_0.5.3       
+-    #> [33] digest_0.6.25    stringi_1.4.6    grid_3.6.3       cli_2.0.2       
+-    #> [37] tools_3.6.3      magrittr_1.5     crayon_1.3.4     pkgconfig_2.0.3 
+-    #> [41] ellipsis_0.3.0   xml2_1.3.2       reprex_0.3.0     lubridate_1.7.8 
+-    #> [45] assertthat_0.2.1 rmarkdown_2.1    httr_1.4.1       rstudioapi_0.11 
+-    #> [49] R6_2.4.1         nlme_3.1-144     compiler_3.6.3
++    #>  [1] tidyselect_1.1.0 xfun_0.14        haven_2.3.1      lattice_0.20-41 
++    #>  [5] colorspace_1.4-1 vctrs_0.3.1      generics_0.0.2   htmltools_0.4.0 
++    #>  [9] yaml_2.2.1       blob_1.2.1       rlang_0.4.6      pillar_1.4.4    
++    #> [13] glue_1.4.1       withr_2.2.0      DBI_1.1.0        dbplyr_1.4.4    
++    #> [17] modelr_0.1.8     readxl_1.3.1     lifecycle_0.2.0  munsell_0.5.0   
++    #> [21] gtable_0.3.0     cellranger_1.1.0 rvest_0.3.5      evaluate_0.14   
++    #> [25] fansi_0.4.1      highr_0.8        broom_0.5.6      Rcpp_1.0.4.6    
++    #> [29] scales_1.1.1     backports_1.1.7  jsonlite_1.6.1   fs_1.4.1        
++    #> [33] hms_0.5.3        digest_0.6.25    stringi_1.4.6    grid_4.0.0      
++    #> [37] cli_2.0.2        tools_4.0.0      magrittr_1.5     crayon_1.3.4    
++    #> [41] pkgconfig_2.0.3  ellipsis_0.3.1   xml2_1.3.2       reprex_0.3.0    
++    #> [45] lubridate_1.7.8  assertthat_0.2.1 rmarkdown_2.2    httr_1.4.1      
++    #> [49] rstudioapi_0.11  R6_2.4.1         nlme_3.1-147     compiler_4.0.0
+ :::
+ 
+ ::: {#where-to-ask-for-help .section .level3}
+@@ -631,7 +628,7 @@ sessionInfo()
+ -   The [R FAQ](https://cran.r-project.org/doc/FAQ/R-FAQ.html) is dense
+     and technical but it is full of useful information.
+ 
+-Page built on: 📆 2020-07-24 ‒ 🕢 19:45:31
++Page built on: 📆 2020-07-24 ‒ 🕢 19:46:23
+ :::
+ :::
+ 
