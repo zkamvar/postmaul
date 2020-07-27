@@ -7,6 +7,7 @@ output:
     variant: gfm
 params:
   build_md: TRUE 
+  open_issue: FALSE
 ---
 
 ```{r setup, include=FALSE}
@@ -30,9 +31,13 @@ library("magrittr") # for the %T>% pipe I love so well
 library("gh")       # accessing GitHub's API
 library("polite")   # being respectful when downloading files
 library("here")     # so I can always remember where I started
-library("pegboard") # parsing and analysis of carpentries episodes
 library("git2r")    # downloading github repositories
 library("waldo")    # comparing objects
+# Github packages
+# remotes::install_github("carpentries/pegboard")
+# remotes::install_github("fmichonneau/carpenter")
+library("pegboard")  # parsing and analysis of carpentries episodes
+library("carpenter") # create an issue 
 ```
 
 
@@ -281,8 +286,10 @@ cmd <- "-C /home/rstudio pages"
 ptl <- get_path(REL$user, REL$repository)
 R3 <- glue::glue("{ptl}R3")
 R4 <- glue::glue("{ptl}R4")
-run_docker(R3, "3.6.3", cmd)
-run_docker(R4, "4.0.0", cmd)
+if (params$build_md) {
+  run_docker(R3, "3.6.3", cmd)
+  run_docker(R4, "4.0.0", cmd)
+}
 R3res <- path(R3, "_site", gsub(".Rmd$", ".html", path_file(dir_ls(R3, glob = "*Rmd"))))
 R4res <- path(R4, "_site", gsub(".Rmd$", ".html", path_file(dir_ls(R4, glob = "*Rmd"))))
 episodes <- glue::glue("R-ecology-lesson--{path_file(R3res)}")
@@ -290,9 +297,37 @@ dpath <- path("data", "diffs", sub("html$", "diff", episodes))
 pando <- function(i) glue::glue("$(pandoc -t markdown -f html -o {sub('html', 'md', i)} {i} && echo {sub('html', 'md', i)})")
 diffcmd <- "git diff --no-index -- {pando(R3res)} {pando(R4res)} > {dpath}"
 walk(glue::glue(diffcmd), system)
-walk2(episodes, dpath, ~cat(glue::glue("\n#### Episode: {.x}\n\n\n[Link to full diff]({.y})\n")))
+walk2(episodes, dpath, ~cat(glue::glue("\n#### Episode: {.x}\n\n\n[Link to full diff]({.y})\n\n")))
 ```
 
+-------------
+
+2020-07-27: I have created a blog post about this 
+(https://github.com/carpentries/carpentries.org/pull/830)
+and will now reach out to the maintainers of these lessons via github issue
+using the `{gh}` package. Note, this will only work if you have a github PAT
+associated with your profile that has permission to open issues.
+
+```{r ghissues}
+title <- "RFC: Migration to R 4.0"
+body <- "
+During the June Maintainer meeting, we asked for comments and experiences with the migration to R 4.0 so that we could create guidance for maintainers and instructors. We have drafted a short blog post (https://github.com/carpentries/carpentries.org/pull/830) to be released next week (2020-08-03) that describes our recommendations for migration. You can find a [preview of the blog post here](https://deploy-preview-830--stupefied-einstein-5bde90.netlify.app/blog/2020/08/r-4-migration/). **Please look over the blog posts and make comments by 2020-07-30 so that we can incoroporate any changes before the post goes live.**
+
+To help identify the differences between R 3.6 and R 4.0, I have run this lesson in both versions and [posted the results](https://github.com/zkamvar/postmaul/blob/master/analysis.md#{LESSON}) that show the differences in output chunks and entire markdown files. 
+"
+
+if (params$open_issue) {
+  walk2(has_rmd_all$user, has_rmd_all$repository, 
+    ~create_issue(
+      owner = .x,
+      repo = .y,
+      title = title, 
+      body = glue::glue(body, LESSON = .y),
+      labels = NULL
+    )
+  )
+}
+```
 
 
 # Session Information

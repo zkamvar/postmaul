@@ -17,9 +17,13 @@ library("magrittr") # for the %T>% pipe I love so well
 library("gh")       # accessing GitHub's API
 library("polite")   # being respectful when downloading files
 library("here")     # so I can always remember where I started
-library("pegboard") # parsing and analysis of carpentries episodes
 library("git2r")    # downloading github repositories
 library("waldo")    # comparing objects
+# Github packages
+# remotes::install_github("carpentries/pegboard")
+# remotes::install_github("fmichonneau/carpenter")
+library("pegboard")  # parsing and analysis of carpentries episodes
+library("carpenter") # create an issue 
 ```
 
 ``` r
@@ -276,24 +280,595 @@ has_rmd_all %>%
   knitr::kable()
 ```
 
-| URL                                                           | curriculum           | life\_cycle | language | results                                       |
-| :------------------------------------------------------------ | :------------------- | :---------- | :------- | :-------------------------------------------- |
-| <https://github.com/LibraryCarpentry/lc-r>                    | lc                   | pre-alpha   | en       | [results](#lesson-lc-r)                       |
-| <https://github.com/datacarpentry/genomics-r-intro>           | dc-genomics          | alpha       | en       | [results](#lesson-genomics-r-intro)           |
-| <https://github.com/swcarpentry/r-novice-inflammation>        | swc                  | stable      | en       | [results](#lesson-r-novice-inflammation)      |
-| <https://github.com/datacarpentry/R-ecology-lesson>           | dc-ecology           | stable      | en       | [results](#lesson-R-ecology-lesson)           |
-| <https://github.com/swcarpentry/r-novice-gapminder>           | swc                  | stable      | en       | [results](#lesson-r-novice-gapminder)         |
-| <https://github.com/datacarpentry/organization-geospatial>    | dc-geospatial        | stable      | en       | [results](#lesson-organization-geospatial)    |
-| <https://github.com/swcarpentry/r-novice-gapminder-es>        | swc-es               | stable      | es       | [results](#lesson-r-novice-gapminder-es)      |
-| <https://github.com/datacarpentry/r-intro-geospatial>         | dc-geospatial        | stable      | en       | [results](#lesson-r-intro-geospatial)         |
-| <https://github.com/datacarpentry/r-raster-vector-geospatial> | dc-geospatial        | stable      | en       | [results](#lesson-r-raster-vector-geospatial) |
-| <https://github.com/datacarpentry/r-socialsci>                | dc-socsci            | stable      | en       | [results](#lesson-r-socialsci)                |
-| <https://github.com/datacarpentry/rr-automation>              | reproducible-science | on-hold     | en       | [results](#lesson-rr-automation)              |
-| <https://github.com/datacarpentry/rr-publication>             | reproducible-science | on-hold     | en       | [results](#lesson-rr-publication)             |
-| <https://github.com/datacarpentry/rr-intro>                   | reproducible-science | on-hold     | en       | [results](#lesson-rr-intro)                   |
-| <https://github.com/datacarpentry/rr-version-control>         | reproducible-science | on-hold     | en       | [results](#lesson-rr-version-control)         |
-| <https://github.com/datacarpentry/rr-organization1>           | reproducible-science | on-hold     | en       | [results](#lesson-rr-organization1)           |
-| <https://github.com/datacarpentry/rr-literate-programming>    | reproducible-science | on-hold     | en       | [results](#lesson-rr-literate-programming)    |
+<table>
+
+<thead>
+
+<tr>
+
+<th style="text-align:left;">
+
+URL
+
+</th>
+
+<th style="text-align:left;">
+
+curriculum
+
+</th>
+
+<th style="text-align:left;">
+
+life\_cycle
+
+</th>
+
+<th style="text-align:left;">
+
+language
+
+</th>
+
+<th style="text-align:left;">
+
+results
+
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:left;">
+
+<https://github.com/LibraryCarpentry/lc-r>
+
+</td>
+
+<td style="text-align:left;">
+
+lc
+
+</td>
+
+<td style="text-align:left;">
+
+pre-alpha
+
+</td>
+
+<td style="text-align:left;">
+
+en
+
+</td>
+
+<td style="text-align:left;">
+
+[results](#lesson-lc-r)
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+<https://github.com/datacarpentry/genomics-r-intro>
+
+</td>
+
+<td style="text-align:left;">
+
+dc-genomics
+
+</td>
+
+<td style="text-align:left;">
+
+alpha
+
+</td>
+
+<td style="text-align:left;">
+
+en
+
+</td>
+
+<td style="text-align:left;">
+
+[results](#lesson-genomics-r-intro)
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+<https://github.com/swcarpentry/r-novice-inflammation>
+
+</td>
+
+<td style="text-align:left;">
+
+swc
+
+</td>
+
+<td style="text-align:left;">
+
+stable
+
+</td>
+
+<td style="text-align:left;">
+
+en
+
+</td>
+
+<td style="text-align:left;">
+
+[results](#lesson-r-novice-inflammation)
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+<https://github.com/datacarpentry/R-ecology-lesson>
+
+</td>
+
+<td style="text-align:left;">
+
+dc-ecology
+
+</td>
+
+<td style="text-align:left;">
+
+stable
+
+</td>
+
+<td style="text-align:left;">
+
+en
+
+</td>
+
+<td style="text-align:left;">
+
+[results](#lesson-R-ecology-lesson)
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+<https://github.com/swcarpentry/r-novice-gapminder>
+
+</td>
+
+<td style="text-align:left;">
+
+swc
+
+</td>
+
+<td style="text-align:left;">
+
+stable
+
+</td>
+
+<td style="text-align:left;">
+
+en
+
+</td>
+
+<td style="text-align:left;">
+
+[results](#lesson-r-novice-gapminder)
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+<https://github.com/datacarpentry/organization-geospatial>
+
+</td>
+
+<td style="text-align:left;">
+
+dc-geospatial
+
+</td>
+
+<td style="text-align:left;">
+
+stable
+
+</td>
+
+<td style="text-align:left;">
+
+en
+
+</td>
+
+<td style="text-align:left;">
+
+[results](#lesson-organization-geospatial)
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+<https://github.com/swcarpentry/r-novice-gapminder-es>
+
+</td>
+
+<td style="text-align:left;">
+
+swc-es
+
+</td>
+
+<td style="text-align:left;">
+
+stable
+
+</td>
+
+<td style="text-align:left;">
+
+es
+
+</td>
+
+<td style="text-align:left;">
+
+[results](#lesson-r-novice-gapminder-es)
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+<https://github.com/datacarpentry/r-intro-geospatial>
+
+</td>
+
+<td style="text-align:left;">
+
+dc-geospatial
+
+</td>
+
+<td style="text-align:left;">
+
+stable
+
+</td>
+
+<td style="text-align:left;">
+
+en
+
+</td>
+
+<td style="text-align:left;">
+
+[results](#lesson-r-intro-geospatial)
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+<https://github.com/datacarpentry/r-raster-vector-geospatial>
+
+</td>
+
+<td style="text-align:left;">
+
+dc-geospatial
+
+</td>
+
+<td style="text-align:left;">
+
+stable
+
+</td>
+
+<td style="text-align:left;">
+
+en
+
+</td>
+
+<td style="text-align:left;">
+
+[results](#lesson-r-raster-vector-geospatial)
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+<https://github.com/datacarpentry/r-socialsci>
+
+</td>
+
+<td style="text-align:left;">
+
+dc-socsci
+
+</td>
+
+<td style="text-align:left;">
+
+stable
+
+</td>
+
+<td style="text-align:left;">
+
+en
+
+</td>
+
+<td style="text-align:left;">
+
+[results](#lesson-r-socialsci)
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+<https://github.com/datacarpentry/rr-automation>
+
+</td>
+
+<td style="text-align:left;">
+
+reproducible-science
+
+</td>
+
+<td style="text-align:left;">
+
+on-hold
+
+</td>
+
+<td style="text-align:left;">
+
+en
+
+</td>
+
+<td style="text-align:left;">
+
+[results](#lesson-rr-automation)
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+<https://github.com/datacarpentry/rr-publication>
+
+</td>
+
+<td style="text-align:left;">
+
+reproducible-science
+
+</td>
+
+<td style="text-align:left;">
+
+on-hold
+
+</td>
+
+<td style="text-align:left;">
+
+en
+
+</td>
+
+<td style="text-align:left;">
+
+[results](#lesson-rr-publication)
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+<https://github.com/datacarpentry/rr-intro>
+
+</td>
+
+<td style="text-align:left;">
+
+reproducible-science
+
+</td>
+
+<td style="text-align:left;">
+
+on-hold
+
+</td>
+
+<td style="text-align:left;">
+
+en
+
+</td>
+
+<td style="text-align:left;">
+
+[results](#lesson-rr-intro)
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+<https://github.com/datacarpentry/rr-version-control>
+
+</td>
+
+<td style="text-align:left;">
+
+reproducible-science
+
+</td>
+
+<td style="text-align:left;">
+
+on-hold
+
+</td>
+
+<td style="text-align:left;">
+
+en
+
+</td>
+
+<td style="text-align:left;">
+
+[results](#lesson-rr-version-control)
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+<https://github.com/datacarpentry/rr-organization1>
+
+</td>
+
+<td style="text-align:left;">
+
+reproducible-science
+
+</td>
+
+<td style="text-align:left;">
+
+on-hold
+
+</td>
+
+<td style="text-align:left;">
+
+en
+
+</td>
+
+<td style="text-align:left;">
+
+[results](#lesson-rr-organization1)
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+<https://github.com/datacarpentry/rr-literate-programming>
+
+</td>
+
+<td style="text-align:left;">
+
+reproducible-science
+
+</td>
+
+<td style="text-align:left;">
+
+on-hold
+
+</td>
+
+<td style="text-align:left;">
+
+en
+
+</td>
+
+<td style="text-align:left;">
+
+[results](#lesson-rr-literate-programming)
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
 
 The command to use is:
 
@@ -3742,8 +4317,10 @@ cmd <- "-C /home/rstudio pages"
 ptl <- get_path(REL$user, REL$repository)
 R3 <- glue::glue("{ptl}R3")
 R4 <- glue::glue("{ptl}R4")
-run_docker(R3, "3.6.3", cmd)
-run_docker(R4, "4.0.0", cmd)
+if (params$build_md) {
+  run_docker(R3, "3.6.3", cmd)
+  run_docker(R4, "4.0.0", cmd)
+}
 R3res <- path(R3, "_site", gsub(".Rmd$", ".html", path_file(dir_ls(R3, glob = "*Rmd"))))
 R4res <- path(R4, "_site", gsub(".Rmd$", ".html", path_file(dir_ls(R4, glob = "*Rmd"))))
 episodes <- glue::glue("R-ecology-lesson--{path_file(R3res)}")
@@ -3751,52 +4328,78 @@ dpath <- path("data", "diffs", sub("html$", "diff", episodes))
 pando <- function(i) glue::glue("$(pandoc -t markdown -f html -o {sub('html', 'md', i)} {i} && echo {sub('html', 'md', i)})")
 diffcmd <- "git diff --no-index -- {pando(R3res)} {pando(R4res)} > {dpath}"
 walk(glue::glue(diffcmd), system)
-walk2(episodes, dpath, ~cat(glue::glue("\n#### Episode: {.x}\n\n\n[Link to full diff]({.y})\n")))
+walk2(episodes, dpath, ~cat(glue::glue("\n#### Episode: {.x}\n\n\n[Link to full diff]({.y})\n\n")))
 ```
 
 #### Episode: R-ecology-lesson–00-before-we-start.html
 
 [Link to full
-diff](data/diffs/R-ecology-lesson--00-before-we-start.diff)\#\#\#\#
+diff](data/diffs/R-ecology-lesson--00-before-we-start.diff) \#\#\#\#
 Episode: R-ecology-lesson–01-intro-to-r.html
 
-[Link to full
-diff](data/diffs/R-ecology-lesson--01-intro-to-r.diff)\#\#\#\# Episode:
-R-ecology-lesson–02-starting-with-data.html
+[Link to full diff](data/diffs/R-ecology-lesson--01-intro-to-r.diff)
+\#\#\#\# Episode: R-ecology-lesson–02-starting-with-data.html
 
 [Link to full
-diff](data/diffs/R-ecology-lesson--02-starting-with-data.diff)\#\#\#\#
+diff](data/diffs/R-ecology-lesson--02-starting-with-data.diff) \#\#\#\#
 Episode: R-ecology-lesson–03-dplyr.html
 
-[Link to full diff](data/diffs/R-ecology-lesson--03-dplyr.diff)\#\#\#\#
+[Link to full diff](data/diffs/R-ecology-lesson--03-dplyr.diff) \#\#\#\#
 Episode: R-ecology-lesson–04-visualization-ggplot2.html
 
 [Link to full
-diff](data/diffs/R-ecology-lesson--04-visualization-ggplot2.diff)\#\#\#\#
-Episode: R-ecology-lesson–05-r-and-databases.html
+diff](data/diffs/R-ecology-lesson--04-visualization-ggplot2.diff)
+\#\#\#\# Episode: R-ecology-lesson–05-r-and-databases.html
 
 [Link to full
-diff](data/diffs/R-ecology-lesson--05-r-and-databases.diff)\#\#\#\#
+diff](data/diffs/R-ecology-lesson--05-r-and-databases.diff) \#\#\#\#
 Episode: R-ecology-lesson–CITATION.html
 
-[Link to full diff](data/diffs/R-ecology-lesson--CITATION.diff)\#\#\#\#
+[Link to full diff](data/diffs/R-ecology-lesson--CITATION.diff) \#\#\#\#
 Episode: R-ecology-lesson–CONDUCT.html
 
-[Link to full diff](data/diffs/R-ecology-lesson--CONDUCT.diff)\#\#\#\#
+[Link to full diff](data/diffs/R-ecology-lesson--CONDUCT.diff) \#\#\#\#
 Episode: R-ecology-lesson–CONTRIBUTING.html
 
-[Link to full
-diff](data/diffs/R-ecology-lesson--CONTRIBUTING.diff)\#\#\#\# Episode:
-R-ecology-lesson–LICENSE.html
+[Link to full diff](data/diffs/R-ecology-lesson--CONTRIBUTING.diff)
+\#\#\#\# Episode: R-ecology-lesson–LICENSE.html
 
-[Link to full diff](data/diffs/R-ecology-lesson--LICENSE.diff)\#\#\#\#
+[Link to full diff](data/diffs/R-ecology-lesson--LICENSE.diff) \#\#\#\#
 Episode: R-ecology-lesson–\_page\_built\_on.html
 
-[Link to full
-diff](data/diffs/R-ecology-lesson--_page_built_on.diff)\#\#\#\# Episode:
-R-ecology-lesson–index.html
+[Link to full diff](data/diffs/R-ecology-lesson--_page_built_on.diff)
+\#\#\#\# Episode: R-ecology-lesson–index.html
 
 [Link to full diff](data/diffs/R-ecology-lesson--index.diff)
+
+-----
+
+2020-07-27: I have created a blog post about this
+(<https://github.com/carpentries/carpentries.org/pull/830>) and will now
+reach out to the maintainers of these lessons via github issue using the
+`{gh}` package. Note, this will only work if you have a github PAT
+associated with your profile that has permission to open issues.
+
+``` r
+title <- "RFC: Migration to R 4.0"
+body <- "
+During the June Maintainer meeting, we asked for comments and experiences with the migration to R 4.0 so that we could create guidance for maintainers and instructors. We have drafted a short blog post (https://github.com/carpentries/carpentries.org/pull/830) to be released next week (2020-08-03) that describes our recommendations for migration. You can find a [preview of the blog post here](https://deploy-preview-830--stupefied-einstein-5bde90.netlify.app/blog/2020/08/r-4-migration/). **Please look over the blog posts and make comments by 2020-07-30 so that we can incoroporate any changes before the post goes live.**
+
+To help identify the differences between R 3.6 and R 4.0, I have run this lesson in both versions and [posted the results](https://github.com/zkamvar/postmaul/blob/master/analysis.md#{LESSON}) that show the differences in output chunks and entire markdown files. 
+"
+
+if (params$open_issue) {
+  walk2(has_rmd_all$user, has_rmd_all$repository, 
+    ~create_issue(
+      owner = .x,
+      repo = .y,
+      title = title, 
+      body = glue::glue(body, LESSON = .y),
+      labels = NULL
+    )
+  )
+}
+```
 
 # Session Information
 
@@ -3814,72 +4417,81 @@ sessioninfo::session_info()
     ##  collate  en_US.UTF-8                 
     ##  ctype    en_US.UTF-8                 
     ##  tz       America/Los_Angeles         
-    ##  date     2020-07-24                  
+    ##  date     2020-07-27                  
     ## 
     ## ─ Packages ───────────────────────────────────────────────────────────────────
-    ##  package     * version    date       lib source                               
-    ##  assertthat    0.2.1      2019-03-21 [1] CRAN (R 4.0.0)                       
-    ##  backports     1.1.8      2020-06-17 [1] CRAN (R 4.0.0)                       
-    ##  cli           2.0.2      2020-02-28 [1] CRAN (R 4.0.0)                       
-    ##  colorspace    1.4-1      2019-03-18 [1] CRAN (R 4.0.0)                       
-    ##  commonmark    1.7        2018-12-01 [1] CRAN (R 4.0.0)                       
-    ##  crayon        1.3.4.9000 2020-05-10 [1] Github (r-lib/crayon@dcf6d44)        
-    ##  diffobj       0.3.0      2020-05-11 [1] CRAN (R 4.0.0)                       
-    ##  digest        0.6.25     2020-02-23 [1] CRAN (R 4.0.0)                       
-    ##  dplyr       * 1.0.0      2020-05-29 [1] CRAN (R 4.0.2)                       
-    ##  ellipsis      0.3.1      2020-05-15 [1] CRAN (R 4.0.0)                       
-    ##  evaluate      0.14       2019-05-28 [1] CRAN (R 4.0.0)                       
-    ##  fansi         0.4.1      2020-01-08 [1] RSPM (R 4.0.0)                       
-    ##  farver        2.0.3      2020-01-16 [1] CRAN (R 4.0.0)                       
-    ##  forcats     * 0.5.0      2020-03-01 [1] CRAN (R 4.0.0)                       
-    ##  fs          * 1.4.2      2020-06-30 [1] CRAN (R 4.0.2)                       
-    ##  generics      0.0.2      2018-11-29 [1] CRAN (R 4.0.0)                       
-    ##  ggplot2     * 3.3.2      2020-06-19 [1] CRAN (R 4.0.0)                       
-    ##  gh          * 1.1.0      2020-01-24 [1] CRAN (R 4.0.0)                       
-    ##  git2r       * 0.27.1     2020-05-03 [1] CRAN (R 4.0.0)                       
-    ##  glue          1.4.1      2020-05-13 [1] CRAN (R 4.0.0)                       
-    ##  gtable        0.3.0      2019-03-25 [1] CRAN (R 4.0.0)                       
-    ##  here        * 0.1        2017-05-28 [1] CRAN (R 4.0.0)                       
-    ##  highr         0.8        2019-03-20 [1] CRAN (R 4.0.0)                       
-    ##  htmltools     0.5.0      2020-06-16 [1] CRAN (R 4.0.0)                       
-    ##  httr          1.4.2      2020-07-20 [1] CRAN (R 4.0.2)                       
-    ##  jsonlite    * 1.7.0      2020-06-25 [1] CRAN (R 4.0.1)                       
-    ##  knitr         1.29       2020-06-23 [1] CRAN (R 4.0.0)                       
-    ##  labeling      0.3        2014-08-23 [1] CRAN (R 4.0.0)                       
-    ##  lifecycle     0.2.0      2020-03-06 [1] CRAN (R 4.0.0)                       
-    ##  magrittr    * 1.5        2014-11-22 [1] CRAN (R 4.0.0)                       
-    ##  memoise       1.1.0      2017-04-21 [1] CRAN (R 4.0.0)                       
-    ##  munsell       0.5.0      2018-06-12 [1] CRAN (R 4.0.0)                       
-    ##  pegboard    * 0.0.0.9000 2020-06-26 [1] Github (carpentries/pegboard@720c419)
-    ##  pillar        1.4.6      2020-07-10 [1] CRAN (R 4.0.2)                       
-    ##  pkgconfig     2.0.3      2019-09-22 [1] CRAN (R 4.0.0)                       
-    ##  polite      * 0.1.1      2019-11-30 [1] CRAN (R 4.0.0)                       
-    ##  purrr       * 0.3.4      2020-04-17 [1] CRAN (R 4.0.0)                       
-    ##  R6            2.4.1      2019-11-12 [1] CRAN (R 4.0.0)                       
-    ##  ratelimitr    0.4.1      2018-10-07 [1] CRAN (R 4.0.0)                       
-    ##  Rcpp          1.0.5      2020-07-06 [1] CRAN (R 4.0.2)                       
-    ##  rematch2      2.1.2      2020-05-01 [1] CRAN (R 4.0.0)                       
-    ##  rlang         0.4.7      2020-07-09 [1] CRAN (R 4.0.2)                       
-    ##  rmarkdown     2.3        2020-06-18 [1] CRAN (R 4.0.1)                       
-    ##  robotstxt     0.7.7      2020-06-27 [1] CRAN (R 4.0.1)                       
-    ##  rprojroot     1.3-2      2018-01-03 [1] CRAN (R 4.0.0)                       
-    ##  rvest         0.3.5      2019-11-08 [1] CRAN (R 4.0.0)                       
-    ##  scales        1.1.1      2020-05-11 [1] CRAN (R 4.0.0)                       
-    ##  sessioninfo   1.1.1      2018-11-05 [1] CRAN (R 4.0.0)                       
-    ##  stringi       1.4.6      2020-02-17 [1] CRAN (R 4.0.0)                       
-    ##  stringr       1.4.0      2019-02-10 [1] CRAN (R 4.0.0)                       
-    ##  tibble        3.0.3      2020-07-10 [1] CRAN (R 4.0.2)                       
-    ##  tidyr       * 1.1.0      2020-05-20 [1] CRAN (R 4.0.0)                       
-    ##  tidyselect    1.1.0      2020-05-11 [1] CRAN (R 4.0.0)                       
-    ##  tinkr         0.0.0.9000 2020-06-19 [1] Github (ropenscilabs/tinkr@9fdad3b)  
-    ##  usethis       1.6.1      2020-04-29 [1] CRAN (R 4.0.0)                       
-    ##  utf8          1.1.4      2018-05-24 [1] CRAN (R 4.0.0)                       
-    ##  vctrs         0.3.2      2020-07-15 [1] CRAN (R 4.0.2)                       
-    ##  waldo       * 0.2.0      2020-07-13 [1] CRAN (R 4.0.2)                       
-    ##  withr         2.2.0      2020-04-20 [1] CRAN (R 4.0.0)                       
-    ##  xfun          0.15       2020-06-21 [1] CRAN (R 4.0.0)                       
-    ##  xml2          1.3.2      2020-04-23 [1] CRAN (R 4.0.0)                       
-    ##  yaml          2.2.1      2020-02-01 [1] CRAN (R 4.0.0)                       
+    ##  package     * version    date       lib source                                
+    ##  assertthat    0.2.1      2019-03-21 [1] CRAN (R 4.0.0)                        
+    ##  backports     1.1.8      2020-06-17 [1] CRAN (R 4.0.0)                        
+    ##  carpenter   * 0.0.0.9002 2020-07-27 [1] Github (fmichonneau/carpenter@486e692)
+    ##  cli           2.0.2      2020-02-28 [1] CRAN (R 4.0.0)                        
+    ##  colorspace    1.4-1      2019-03-18 [1] CRAN (R 4.0.0)                        
+    ##  commonmark    1.7        2018-12-01 [1] CRAN (R 4.0.0)                        
+    ##  crayon        1.3.4.9000 2020-05-10 [1] Github (r-lib/crayon@dcf6d44)         
+    ##  curl          4.3        2019-12-02 [1] CRAN (R 4.0.0)                        
+    ##  diffobj       0.3.0      2020-05-11 [1] CRAN (R 4.0.0)                        
+    ##  digest        0.6.25     2020-02-23 [1] CRAN (R 4.0.0)                        
+    ##  dplyr       * 1.0.0      2020-05-29 [1] CRAN (R 4.0.2)                        
+    ##  ellipsis      0.3.1      2020-05-15 [1] CRAN (R 4.0.0)                        
+    ##  evaluate      0.14       2019-05-28 [1] CRAN (R 4.0.0)                        
+    ##  fansi         0.4.1      2020-01-08 [1] RSPM (R 4.0.0)                        
+    ##  farver        2.0.3      2020-01-16 [1] CRAN (R 4.0.0)                        
+    ##  forcats     * 0.5.0      2020-03-01 [1] CRAN (R 4.0.0)                        
+    ##  fs          * 1.4.2      2020-06-30 [1] CRAN (R 4.0.2)                        
+    ##  generics      0.0.2      2018-11-29 [1] CRAN (R 4.0.0)                        
+    ##  ggplot2     * 3.3.2      2020-06-19 [1] CRAN (R 4.0.0)                        
+    ##  gh          * 1.1.0      2020-01-24 [1] CRAN (R 4.0.0)                        
+    ##  git2r       * 0.27.1     2020-05-03 [1] CRAN (R 4.0.0)                        
+    ##  glue          1.4.1      2020-05-13 [1] CRAN (R 4.0.0)                        
+    ##  gtable        0.3.0      2019-03-25 [1] CRAN (R 4.0.0)                        
+    ##  here        * 0.1        2017-05-28 [1] CRAN (R 4.0.0)                        
+    ##  highr         0.8        2019-03-20 [1] CRAN (R 4.0.0)                        
+    ##  hms           0.5.3      2020-01-08 [1] CRAN (R 4.0.0)                        
+    ##  htmltools     0.5.0      2020-06-16 [1] CRAN (R 4.0.0)                        
+    ##  httr          1.4.2      2020-07-20 [1] CRAN (R 4.0.2)                        
+    ##  jsonlite    * 1.7.0      2020-06-25 [1] CRAN (R 4.0.1)                        
+    ##  kableExtra    1.1.0      2019-03-16 [1] CRAN (R 4.0.2)                        
+    ##  knitr         1.29       2020-06-23 [1] CRAN (R 4.0.0)                        
+    ##  labeling      0.3        2014-08-23 [1] CRAN (R 4.0.0)                        
+    ##  lifecycle     0.2.0      2020-03-06 [1] CRAN (R 4.0.0)                        
+    ##  magrittr    * 1.5        2014-11-22 [1] CRAN (R 4.0.0)                        
+    ##  memoise       1.1.0      2017-04-21 [1] CRAN (R 4.0.0)                        
+    ##  munsell       0.5.0      2018-06-12 [1] CRAN (R 4.0.0)                        
+    ##  pegboard    * 0.0.0.9000 2020-06-26 [1] Github (carpentries/pegboard@720c419) 
+    ##  pillar        1.4.6      2020-07-10 [1] CRAN (R 4.0.2)                        
+    ##  pkgconfig     2.0.3      2019-09-22 [1] CRAN (R 4.0.0)                        
+    ##  polite      * 0.1.1      2019-11-30 [1] CRAN (R 4.0.0)                        
+    ##  purrr       * 0.3.4      2020-04-17 [1] CRAN (R 4.0.0)                        
+    ##  R6            2.4.1      2019-11-12 [1] CRAN (R 4.0.0)                        
+    ##  ratelimitr    0.4.1      2018-10-07 [1] CRAN (R 4.0.0)                        
+    ##  Rcpp          1.0.5      2020-07-06 [1] CRAN (R 4.0.2)                        
+    ##  readr         1.3.1      2018-12-21 [1] CRAN (R 4.0.0)                        
+    ##  rematch2      2.1.2      2020-05-01 [1] CRAN (R 4.0.0)                        
+    ##  rlang         0.4.7      2020-07-09 [1] CRAN (R 4.0.2)                        
+    ##  rmarkdown     2.3        2020-06-18 [1] CRAN (R 4.0.1)                        
+    ##  robotstxt     0.7.8      2020-07-25 [1] CRAN (R 4.0.2)                        
+    ##  rprojroot     1.3-2      2018-01-03 [1] CRAN (R 4.0.0)                        
+    ##  rstudioapi    0.11       2020-02-07 [1] CRAN (R 4.0.0)                        
+    ##  rvest         0.3.6      2020-07-25 [1] CRAN (R 4.0.2)                        
+    ##  scales        1.1.1      2020-05-11 [1] CRAN (R 4.0.0)                        
+    ##  sessioninfo   1.1.1      2018-11-05 [1] CRAN (R 4.0.0)                        
+    ##  stringi       1.4.6      2020-02-17 [1] CRAN (R 4.0.0)                        
+    ##  stringr       1.4.0      2019-02-10 [1] CRAN (R 4.0.0)                        
+    ##  sys           3.4        2020-07-23 [1] CRAN (R 4.0.2)                        
+    ##  tibble        3.0.3      2020-07-10 [1] CRAN (R 4.0.2)                        
+    ##  tidyr       * 1.1.0      2020-05-20 [1] CRAN (R 4.0.0)                        
+    ##  tidyselect    1.1.0      2020-05-11 [1] CRAN (R 4.0.0)                        
+    ##  tinkr         0.0.0.9000 2020-06-19 [1] Github (ropenscilabs/tinkr@9fdad3b)   
+    ##  usethis       1.6.1      2020-04-29 [1] CRAN (R 4.0.0)                        
+    ##  utf8          1.1.4      2018-05-24 [1] CRAN (R 4.0.0)                        
+    ##  vctrs         0.3.2      2020-07-15 [1] CRAN (R 4.0.2)                        
+    ##  viridisLite   0.3.0      2018-02-01 [1] CRAN (R 4.0.0)                        
+    ##  waldo       * 0.2.0      2020-07-13 [1] CRAN (R 4.0.2)                        
+    ##  webshot       0.5.2      2019-11-22 [1] CRAN (R 4.0.2)                        
+    ##  withr         2.2.0      2020-04-20 [1] CRAN (R 4.0.0)                        
+    ##  xfun          0.16       2020-07-24 [1] CRAN (R 4.0.2)                        
+    ##  xml2          1.3.2      2020-04-23 [1] CRAN (R 4.0.0)                        
+    ##  yaml          2.2.1      2020-02-01 [1] CRAN (R 4.0.0)                        
     ## 
     ## [1] /home/zhian/R/library
     ## [2] /usr/local/lib/R/site-library
